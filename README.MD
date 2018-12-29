@@ -1,10 +1,16 @@
 ## The Hub
 
 # fsa-cms
-This is the folder where our Sanity.io powered Content-Management System lives.
+This is where our Sanity.io powered Content-Management System lives.
 
-# react-app
-The folder where our React application lives.
+# react-web
+This is where our React application lives.
+
+# react-native
+Where our React-Native application lives, built to work together with the React-Web repository.
+
+# fsa-orm
+Where our Sequelize REST API will query a PostgreSQL instance.
 
 # Branching
 The default branch is develop, while production releases are merged to master.

@@ -23,8 +23,6 @@ export default {
                     {title: 'Video', value: 'Video'},
                     {title: 'Resource', value: 'Resource'},
                     {title: 'Website', value: 'Website'}
-
-
                 ],
                 layout: 'dropdown'
             }
@@ -37,6 +35,11 @@ export default {
         {
             name: 'url',
             title: 'URL',
+            type: 'string'
+        },
+        {
+            name: 'priority',
+            title: 'Priority',
             type: 'string'
         },
         {

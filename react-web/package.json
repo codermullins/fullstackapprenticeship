@@ -1,0 +1,43 @@
+{
+  "name": "fsa-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^3.4.0",
+    "@material-ui/icons": "^3.0.1",
+    "@sanity/block-content-to-react": "^2.0.5",
+    "@sanity/client": "^0.135.3",
+    "aws-amplify": "^1.1.7",
+    "classnames": "^2.2.6",
+    "connected-react-router": "^5.0.1",
+    "history": "^4.7.2",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.0.3",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "typeface-quicksand": "0.0.54"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jest-fetch-mock": "^1.7.4",
+    "redux-devtools": "^3.4.1",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^7.1.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

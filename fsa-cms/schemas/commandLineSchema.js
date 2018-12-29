@@ -39,6 +39,11 @@ export default {
             type: 'string'
         },
         {
+            name: 'priority',
+            title: 'Priority',
+            type: 'string'
+        },
+        {
             name: 'website',
             title: 'Website',
             type: 'string'
