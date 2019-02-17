@@ -186,6 +186,15 @@ export default () =>
                                         .filter('_type == $type && !defined(parents)')
                                         .params({ type: 'eastsideSchema' })
                                 ),
+                            S.listItem()
+                                .title("New York City")
+                                .child(
+                                    S.documentList()
+                                        .title('New York City')
+                                        .menuItems(S.documentTypeList('nySchema').getMenuItems())
+                                        .filter('_type == $type && !defined(parents)')
+                                        .params({ type: 'nySchema'})
+                          ),
                                 S.listItem()
                                 .title("Tacoma")
                                 .child(

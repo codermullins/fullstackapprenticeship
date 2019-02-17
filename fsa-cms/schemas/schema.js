@@ -25,6 +25,7 @@ import dataScienceSchema from "./dataScienceSchema";
 import startupSchema from "./startupSchema";
 import securitySchema from "./securitySchema";
 import seattleSchema from "./seattleSchema";
+import nySchema from "./nySchema";
 import communitySchema from "./communitySchema";
 import nomadSchema from "./nomadSchema";
 import jobBoardSchema from "./jobBoardSchema";
@@ -63,6 +64,7 @@ export default createSchema({
     startupSchema,
     securitySchema,
     seattleSchema,
+    nySchema,
     communitySchema,
     nativeSchema,
     nomadSchema,
