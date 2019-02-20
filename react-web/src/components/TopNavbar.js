@@ -24,19 +24,19 @@ class TopNavbar extends React.Component {
         const {
             classes,
             routeHome,
-            routeknowledge,
+            routeTyping,
             routeSignup,
-            routeLogin,
+            routePayment,
             userToken,
             handleSignOut,
-            fancyLogin
+            suggest
         } = this.props;
         return (
             <AppBar position="static">
                 <Toolbar>
                     <Typography component="h6" color="inherit">
                         <Button color="inherit" onClick={() => routeHome()}>
-                            #thehub
+                            #fsahub
                         </Button>
                     </Typography>
                     <div className={classes.grow} />
@@ -44,7 +44,7 @@ class TopNavbar extends React.Component {
                         ? [
                             //   <Button
                             //       key={0}
-                            //       onClick={() => routeknowledge()}
+                            //       onClick={() => routeTyping()}
                             //       color="inherit"
                             //   >
                             //       Knowledge Base
@@ -58,34 +58,36 @@ class TopNavbar extends React.Component {
                               </Button>
                           ]
                         : [
-                            //   <Button
-                            //       key={0}
-                            //       onClick={() => routeknowledge()}
-                            //       color="inherit"
-                            //   >
-                            //       Knowledge
-                            //   </Button>,
-                               <Button
-                                   key={1}
-                                   color="inherit"
-                                   onClick={() => routeSignup()}
-                               >
-                                   Register/Login
-                               </Button>,
-                            //   <Button
-                            //       key={2}
-                            //       color="inherit"
-                            //       onClick={() => routeLogin()}
-                            //   >
-                            //       Login
-                            //   </Button>,
-                            //   <IconButton
-                            //       key={3}
-                            //       color="inherit"
-                            //       onClick={() => fancyLogin()}
-                            //   >
-                            //       <AccountCircleIcon />
-                            //   </IconButton>
+                              <Button
+                                  key={0}
+                                  onClick={() => routeTyping()}
+                                  color="inherit"
+                              >
+                                  Typing
+                              </Button>,
+                            //    <Button
+                            //        key={1}
+                            //        color="inherit"
+                            //        onClick={() => routeSignup()}
+                            //    >
+                            //        Register/Login
+                            //    </Button>,
+                              <Button
+                                  key={2}
+                                  color="inherit"
+                                  onClick={() => routePayment()}
+                              >
+                                  Payments
+                              </Button>,
+                            //   IconButton for the account circle
+                              <Button
+                                  key={3}
+                                  color="inherit"
+                                  onClick={() => suggest()}
+                              >
+                                  {/* <AccountCircleIcon /> */}
+                                  + Resource
+                              </Button>
                           ]}
                 </Toolbar>
             </AppBar>
@@ -102,10 +104,10 @@ const mapDispatchToProps = dispatch => {
         {
             routeHome: () => push("/"),
             routeSignup: () => push("/authsignup"),
-            routeLogin: () => push("/login"),
-            routeknowledge: () => push("/knowledge"),
+            routePayment: () => push("/payments"),
+            routeTyping: () => push("/typing"),
             handleSignOut: () => thunkSignOut(),
-            fancyLogin: () => push("/fancyLogin")
+            suggest: () => push("/resource/new")
         },
         dispatch
     );
