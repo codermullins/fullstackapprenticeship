@@ -118,6 +118,11 @@ export const cityByCity = [
         name: 'Everett',
         description: 'Resources, opportunities & fun things for the Everett tech community in Snohomish County.'
     },
+    {
+        type: 'nySchema',
+        name: 'New York',
+        description: 'Resources, opportunities & fun things for the New York tech community.'
+    },
 
 ]
 

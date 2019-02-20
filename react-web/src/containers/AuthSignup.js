@@ -8,8 +8,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeAuthState: (newAuthState) => dispatch(changeAuthState(newAuthState))
 })
 
-
 class AuthSignup extends Component {
+
   render() {
     const { user, changeAuthState } = this.props
     return (

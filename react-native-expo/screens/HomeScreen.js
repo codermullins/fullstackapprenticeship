@@ -83,13 +83,36 @@ export default class HomeScreen extends React.Component {
           </Body>
           <Right>
             <Button hasText transparent>
-              <Text></Text>
+              <Text>Hello World</Text>
             </Button>
           </Right>
         </Header>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
+          <RkCard>
+            <View rkCardHeader={true}>
+              <View style={{ flexDirection: 'row' }}>
+                <Image source={require('../assets/michael.jpg')} style={styles.avatar} />
+                <View style={{}}>
+                  <RkText rkType='header'>Michael Litchev</RkText>
+                  {/* <RkText rkType='subtitle'>Your FSA Instructor</RkText> */}
+                  <RkText rkType='subtitle'>Seattle & Bellevue</RkText>
+
+                </View>
+              </View>
+              <RkButton rkType='clear'>
+              <Icon name="group" style={iconButton} />
+              {/* <Text>{'\n'}</Text>
+              <Text>Switch Instructor</Text> */}
+
+                {/* <Icon style={styles.dot} name="circle" />
+                <Icon style={styles.dot} name="circle" />
+                <Icon style={styles.dot} name="circle" /> */}
+
+              </RkButton>
+            </View>            
+          </RkCard>
           <Text>{'\n'}</Text>
           <RkCard rkType='heroImage shadowed'>
             <View>
@@ -106,7 +129,33 @@ export default class HomeScreen extends React.Component {
               </View>
             </View>
           </RkCard> 
+
           <Text>{'\n'}</Text>
+          <RkCard>
+          <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Payment Request</RkText>
+                {/* <RkText rkType='subtitle'>{moment(this.props.date).format('MMMM Do YYYY, h:mm:ss a').split(",")[0]} | {this.props.start} - {this.props.end}</RkText> */}
+                <RkText rkType='subtitle'>from Michael Litchev</RkText>
+              </View>
+            </View>
+            <View rkCardFooter={true} style={styles.footer}>
+              <RkButton rkType='clear link accent'>
+                <Icon name="dollar" style={likeStyle} />
+                <RkText rkType='accent'>120.00</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="clock-o" style={iconButton} />
+                <RkText rkType='hint'>3 Hours</RkText>
+              </RkButton>
+              <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen')}>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>Pay Here</RkText>
+              </RkButton>
+            </View>
+          </RkCard>
+          <Text>{'\n'}</Text>
+
           {this.renderEvents(this.state.events)}
         </ScrollView>
       </View>
