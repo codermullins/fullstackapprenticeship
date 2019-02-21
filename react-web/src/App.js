@@ -8,6 +8,7 @@ import Routes from "./Routes";
 import awsmobile from "./aws-exports";
 // import { thunkCurrentAuthenticatedUser } from "./thunks/auth";
 import Footer from "./components/Footer";
+import TopNavbar from "./components/TopNavbar"
 
 import "./App.css";
 require("typeface-quicksand");
@@ -49,9 +50,6 @@ class App extends React.Component {
                 <CssBaseline>
                     <TopNavbar />
                     <Routes childProps={childProps} />
-                    {/* <TopNavbar /> */}
-                    {/* <LinkTabs /> */}
-                    <Routes />
                     <Footer />
                 </CssBaseline>
             </MuiThemeProvider>

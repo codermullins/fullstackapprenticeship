@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import SearchComponent from './SearchComponent';
 import Add from '../components/NewResourceButton';
-import LinkTabs from "../containers/LinkTabs";
 import { fullStackApprenticeship } from "../directories.js"
 
 const styles = {
@@ -69,16 +68,15 @@ export default class ToolsContainer extends Component {
         let linksToDisplay;
         this.state.filteredLinks.length < 1 ? linksToDisplay = this.state.links : linksToDisplay = this.state.filteredLinks;
         const schema = window.location.pathname.split('/')[2];
-        const description = fullStackApprenticeship.find(o => o.type === schema);
+        // const description = fullStackApprenticeship.find(o => o.type === schema);
         return (
             <TabContainer>
-                {/* <LinkTabs /> */}
                 <SearchComponent handleSearch={this.handleSearch} />
-                <h3>{description.description}</h3>
+                {/* <h3>{description.description}</h3> */}
                 <Grid container className={styles.root} spacing={16}>
                     <ToolCard links={linksToDisplay} />
                 </Grid>
-                <Add />
+                {/* <Add /> */}
             </TabContainer>
         );
 
