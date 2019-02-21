@@ -72,13 +72,13 @@ class TopNavbar extends React.Component {
                             //    >
                             //        Register/Login
                             //    </Button>,
-                              <Button
-                                  key={2}
-                                  color="inherit"
-                                  onClick={() => routePayment()}
-                              >
-                                  Payments
-                              </Button>,
+                            //   <Button
+                            //       key={2}
+                            //       color="inherit"
+                            //       onClick={() => routePayment()}
+                            //   >
+                            //       Payments
+                            //   </Button>,
                             //   IconButton for the account circle
                               <Button
                                   key={3}
@@ -105,7 +105,7 @@ const mapDispatchToProps = dispatch => {
             routeHome: () => push("/"),
             routeSignup: () => push("/authsignup"),
             routePayment: () => push("/payments"),
-            routeTyping: () => push("/typing"),
+            routeTyping: () => push("/typing/1"),
             handleSignOut: () => thunkSignOut(),
             suggest: () => push("/resource/new")
         },
