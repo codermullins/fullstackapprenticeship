@@ -59,6 +59,7 @@ export default class HomeScreen extends React.Component {
                 date={event.date}
                 start={event.start}
                 end={event.end}
+                link={event.link}
                 // avatar={require('../assets/Apprentice.png')}
                 />
         ))}
