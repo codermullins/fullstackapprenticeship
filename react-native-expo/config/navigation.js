@@ -25,7 +25,7 @@ import SubcategoriesScreen from '../screens/SubcategoriesScreen';
 import ContentScreen from "../screens/ContentScreen";
 import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
-import BluePrintScreen from '../screens/BlueprintScreen';
+import PaymentScreen from "../screens/PaymentScreen"
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -37,6 +37,12 @@ const AuthStackNavigator = createStackNavigator({
 const FeedNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
     BlueprintScreen: { screen: BlueprintScreen },
+    PaymentScreen: { screen: PaymentScreen },
+    // KnowledgeScreen: { screen: KnowledgeStackNavigator}
+    Subcategories: { screen: SubcategoriesScreen },
+    Content: { screen: ContentScreen },
+    SandboxScreen: { screen: SandboxScreen },
+    Profile: { screen: ProfileScreen }
   });
 
   const KnowledgeStackNavigator = createStackNavigator({
@@ -109,7 +115,14 @@ const PreviewNavigator = createStackNavigator({
 
 const AppTabNavigator = createBottomTabNavigator(
     {
-    
+    // Sandbox: {
+    //     screen: SandboxScreen,
+    //     navigationOptions: {
+    //       tabBarIcon: ({ tintColor }) => (
+    //         <Entypo name="user" size={28} color={tintColor} />
+    //       ),
+    //     },
+    //   },
       Home: {
         screen: FeedNavigator,
         navigationOptions: {
@@ -147,30 +160,9 @@ const AppTabNavigator = createBottomTabNavigator(
     },
   );
 
-// const AppStackNavigator = createStackNavigator({
-//     AppTabNavigator: {
-//         screen: AppTabNavigator,
-//         navigationOptions: ({ navigation }) => ({
-//             title: '#thehub',
-//             headerLeft: (
-//                 <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-//                     <View style={{ paddingHorizontal: 10 }}>
-//                         <Ionicons name="md-menu" size={32} />
-//                     </View>
-//                 </TouchableOpacity>
-//             ),
-//         }),
-//     },
-//     // AppDrawerNavigator: {
-//     //     screen: AppDrawerNavigator
-//     // }
-    
-// });
-
-
 const AppDrawerNavigator = createDrawerNavigator({
-    Home: AppTabNavigator,
-    // Home: AppStackNavigator,
+    // Home: AppTabNavigator,
+    Home: FeedNavigator,
     'Create Event': EventNavigator,
     Settings: { screen: SettingsScreen },
     'Preview: Messages': ChatStackNavigator,

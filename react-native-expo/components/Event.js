@@ -14,6 +14,8 @@ import { Calendar, Permissions } from "expo"
 import { UtilStyles } from '../style/styles';
 import moment from "moment";
 import { Linking } from 'react-native';
+import { Ionicons } from "@expo/vector-icons"
+
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -34,7 +36,6 @@ export default class HomeScreen extends React.Component {
       start: new Date(this.props.start),
       end: new Date(this.props.end)
     })
-
   }
 
   async openCall(link) {
@@ -64,6 +65,10 @@ export default class HomeScreen extends React.Component {
     } )
   }
 
+
+
+
+
   render() {
     const { navigation } = this.props;
 
@@ -91,8 +96,8 @@ export default class HomeScreen extends React.Component {
             </View>
             <View rkCardFooter={true}>
               <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                <RkButton rkType='outline' onPress={() => this.onAdd(this.props.start, this.props.end)} >+ CALENDAR</RkButton>
-                <RkButton rkType='outline' onPress={() => this.openCall(this.props.link)}>JOIN CALL</RkButton>
+                <RkButton rkType='outline' onPress={() => this.onAdd(this.props.start, this.props.end)}><Ionicons name="md-calendar" size={20} /> Add Event</RkButton>
+                <RkButton rkType='outline' onPress={() => this.openCall(this.props.link)}><Ionicons name="md-call" size={20} /> Join Call</RkButton>
               </View>
             </View>
           </RkCard>

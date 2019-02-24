@@ -3,7 +3,7 @@ import Amplify, { Auth, API } from "aws-amplify";
 import awsmobile from "./aws-exports"
 import { Font, AppLoading } from "expo";
 import { withAuthenticator } from "aws-amplify-react-native"
-
+import { Root } from "native-base";
 import AppNavigator from './config/navigation'
 
 Amplify.configure(awsmobile)
@@ -23,7 +23,9 @@ class App extends Component {
 
     render() {
         return (
-          <AppNavigator screenProps={{...this.props}}/>
+            <Root>
+                <AppNavigator screenProps={{...this.props}}/>
+            </Root>
         );
     }
 }
