@@ -4,7 +4,8 @@ import {
   StyleSheet,
   ScrollView,
   Image,
-  Text
+  Text,
+  Platform
 } from 'react-native';
 import {
   RkButton,
@@ -81,26 +82,26 @@ export default class HomeScreen extends React.Component {
 
 
   render() {
-    
+
     const likeStyle = [styles.buttonIcon, { color: RkTheme.colors.accent }];
     const iconButton = [styles.buttonIcon, { color: RkTheme.current.colors.text.hint }];
     const { navigation } = this.props;
 
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
         <Header>
           <Left>
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Ionicons name="md-menu" size={32} />
+              <Ionicons style={{color: Platform.OS === 'android' ? 'white' : 'black' }} name="md-menu" size={32} />
             </TouchableOpacity>
           </Left>
           <Body>
             <Title style={{textAlign: 'center'}}>#fsahub</Title>
           </Body>
           <Right>
-            <Button hasText onPress={() => navigation.navigate('Profile')} transparent>
-              <Text>My Profile</Text>
-            </Button>
+            {/* <Button hasText onPress={() => navigation.navigate('Profile')} transparent>
+              <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>My Profile</Text>
+            </Button> */}
           </Right>
         </Header>
         <ScrollView
@@ -150,7 +151,66 @@ export default class HomeScreen extends React.Component {
                   <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
                   <RkButton rkType='clear ' >EXPLORE</RkButton>
                 </View>
-          </RkCard>  */}
+          </RkCard>   */}
+
+          <RkCard>
+            <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Portfolio Product</RkText>
+                <RkText rkType='subtitle'>Status: 0 / 2000 EXP</RkText>
+              </View>
+            </View>
+            <Image rkCardImg={true} source={require('../assets/product.png')} />
+            <View rkCardContent={true}>
+              <RkText rkType='cardText'>
+                In 15 steps, you will go from a blank canvas to a scalable, performant & useful product in a production environment.
+              </RkText>
+            </View>
+            <View rkCardFooter={true}>
+              <RkButton rkType='clear link'>
+                <Icon name="check" style={likeStyle} />
+                <RkText rkType='accent'>0/15 Achievements</RkText>
+              </RkButton>
+              <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
+                schema: 'productExperienceSchema'
+              })}>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>View Progress</RkText>
+              </RkButton>
+            </View>
+          </RkCard> 
+
+          <Text>{'\n'}</Text>
+
+        <RkCard>
+            <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Apprentice => Developer</RkText>
+                <RkText rkType='subtitle'>Status: 0 / 5000 EXP</RkText>
+              </View>
+            </View>
+            <Image rkCardImg={true} source={require('../assets/exp.png')} />
+            <View rkCardContent={true}>
+              <RkText rkType='cardText'>
+                Work through these 15 tasks to achieve certified status as an FSA Developer.
+              </RkText>
+            </View>
+            <View rkCardFooter={true}>
+              <RkButton rkType='clear link'>
+                <Icon name="check" style={likeStyle} />
+                <RkText rkType='accent'>0/15 Achievements</RkText>
+              </RkButton>
+              <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
+                schema: 'apprenticeExperienceSchema'
+              })}>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>View Progress</RkText>
+              </RkButton>
+            </View>
+          </RkCard> 
+
+          <Text>{'\n'}</Text>
+
 
           <RkCard rkType='heroImage shadowed'>
             <View>
@@ -169,32 +229,7 @@ export default class HomeScreen extends React.Component {
           </RkCard> 
 
 
-          <Text>{'\n'}</Text>
-          <RkCard>
-          <View rkCardHeader={true}>
-              <View>
-                <RkText rkType='header'>March 2019 Student Membership</RkText>
-                {/* <RkText rkType='subtitle'>{moment(this.props.date).format('MMMM Do YYYY, h:mm:ss a').split(",")[0]} | {this.props.start} - {this.props.end}</RkText> */}
-                <RkText rkType='subtitle'>Paid to: Michael Litchev</RkText>
-              </View>
-            </View>
-            <View rkCardFooter={true} style={styles.footer}>
-              <RkButton rkType='clear link accent'>
-                <Icon name="dollar" style={likeStyle} />
-                <RkText rkType='accent'>245.00</RkText>
-              </RkButton>
-              <RkButton rkType='clear link'>
-                <Icon name="clock-o" style={iconButton} />
-                <RkText rkType='hint'>1 Month</RkText>
-              </RkButton>
-              <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
-                amount: '245'
-              })}>
-                <Icon name="send-o" style={iconButton} />
-                <RkText rkType='hint'>Pay Here</RkText>
-              </RkButton>
-            </View>
-          </RkCard>
+          
           <Text>{'\n'}</Text>
 
           {this.renderEvents(this.state.events)}
@@ -255,6 +290,40 @@ export default class HomeScreen extends React.Component {
                 {/* <RkButton rkType='clear action' style={{ marginRight: 16 }}>SHARE</RkButton>
                 <RkButton rkType='clear action'>EXPLORE</RkButton> */}
               </View>
+            </View>
+          </RkCard>
+          <Text>{'\n'}</Text>
+          <RkCard>
+          <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Technical Training Membership (Premium)</RkText>
+                {/* <RkText rkType='subtitle'>{moment(this.props.date).format('MMMM Do YYYY, h:mm:ss a').split(",")[0]} | {this.props.start} - {this.props.end}</RkText> */}
+                <RkText rkType='subtitle'>Includes 4 sprints</RkText>
+              </View>
+            </View>
+            <View rkCardContent={true}>
+              <RkText rkType='compactCardText'>Membership Includes:{'\n'}{'\n'}
+              - Experience system & online leaderboards to track progress towards certification as a competent Developer, which comes with lifetime membership to our React, Node, AWS focused member directory to connect you with economic opportunity.{'\n'}{'\n'}
+              - Weekly Sprint Planning Meeting (Saturday/Sunday) to plan & estimate the work to be done throughout the duration of the sprint.{'\n'}{'\n'}
+              - Daily Stand-up Meeting (Morning or After-Work) to check-in with your teacher/teammates on what you've done - what's you are stuck on - and what you are working on that day. {'\n'}{'\n'}
+              - Weekly Sprint Retrospective Meeting (Friday) to review the work that was accomplished, compare our time to our original time estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
+              </RkText>
+            </View>
+            <View rkCardFooter={true} style={styles.footer}>
+              <RkButton rkType='clear link accent'>
+                <Icon name="dollar" style={likeStyle} />
+                <RkText rkType='accent'>400.00</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="clock-o" style={iconButton} />
+                <RkText rkType='hint'>1 Month</RkText>
+              </RkButton>
+              {/* <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
+                amount: '245'
+              })}>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>Pay Here</RkText>
+              </RkButton> */}
             </View>
           </RkCard>
         </ScrollView>

@@ -14,7 +14,6 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ChatScreen from '../screens/ChatScreen';
-import KnowledgeScreen from '../screens/KnowledgeScreen';
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from '../screens/SettingsScreen';
 import CreateEventScreen from "../screens/CreateEventScreen"
@@ -25,7 +24,9 @@ import SubcategoriesScreen from '../screens/SubcategoriesScreen';
 import ContentScreen from "../screens/ContentScreen";
 import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
-import PaymentScreen from "../screens/PaymentScreen"
+import PaymentScreen from "../screens/PaymentScreen";
+import ExperienceScreen from "../screens/ExperienceScreen";
+import AchievementScreen from "../screens/AchievementScreen"
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -38,28 +39,12 @@ const FeedNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
     BlueprintScreen: { screen: BlueprintScreen },
     PaymentScreen: { screen: PaymentScreen },
-    // KnowledgeScreen: { screen: KnowledgeStackNavigator}
     Subcategories: { screen: SubcategoriesScreen },
     Content: { screen: ContentScreen },
     SandboxScreen: { screen: SandboxScreen },
-    Profile: { screen: ProfileScreen }
-  });
-
-  const KnowledgeStackNavigator = createStackNavigator({
-    Knowledge: { screen: KnowledgeScreen,
-        navigationOptions: ({ navigation }) => ({
-            title: 'Knowledge',
-            headerLeft: (
-                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                    <View style={{ paddingHorizontal: 10 }}>
-                        <Ionicons name="md-menu" size={32} />
-                    </View>
-                </TouchableOpacity>
-            ),
-          }),
-     },
-    Subcategories: { screen: SubcategoriesScreen },
-    Content: { screen: ContentScreen },
+    Profile: { screen: ProfileScreen },
+    ExperienceScreen: { screen: ExperienceScreen },
+    AchievementScreen: { screen: AchievementScreen }
   });
 
 const ChatStackNavigator = createStackNavigator({
@@ -113,60 +98,41 @@ const PreviewNavigator = createStackNavigator({
 
 
 
-const AppTabNavigator = createBottomTabNavigator(
-    {
-    // Sandbox: {
-    //     screen: SandboxScreen,
-    //     navigationOptions: {
-    //       tabBarIcon: ({ tintColor }) => (
-    //         <Entypo name="user" size={28} color={tintColor} />
-    //       ),
-    //     },
-    //   },
-      Home: {
-        screen: FeedNavigator,
-        navigationOptions: {
-          tabBarLable: 'Home',
-          tabBarIcon: ({ tintColor }) => (
-            <Ionicons name="ios-home" size={28} color={tintColor} />
-          ),
-        },
-      },
-
-      Knowledge: {
-        screen: KnowledgeStackNavigator,
-        tabBarLable: 'Knowledge',
-        navigationOptions: {
-          tabBarIcon: ({ tintColor }) => (
-            <MaterialIcons name="book" size={28} color={tintColor} />
-          ),
-          
-        },
-      },
-      // Profile: {
-      //   screen: ProfileScreen,
-      //   navigationOptions: {
-      //     tabBarIcon: ({ tintColor }) => (
-      //       <Entypo name="user" size={28} color={tintColor} />
-      //     ),
-      //   },
-      // },
-    },
-    {
-      tabBarOptions: {
-        activeTintColor: '#6200EE',
-        inactiveTintColor: '#151515',
-      },
-    },
-  );
+// const AppTabNavigator = createBottomTabNavigator(
+//     {
+//       Home: {
+//         screen: FeedNavigator,
+//         navigationOptions: {
+//           tabBarLable: 'Home',
+//           tabBarIcon: ({ tintColor }) => (
+//             <Ionicons name="ios-home" size={28} color={tintColor} />
+//           ),
+//         },
+//       },
+//       // Profile: {
+//       //   screen: ProfileScreen,
+//       //   navigationOptions: {
+//       //     tabBarIcon: ({ tintColor }) => (
+//       //       <Entypo name="user" size={28} color={tintColor} />
+//       //     ),
+//       //   },
+//       // },
+//     },
+//     {
+//       tabBarOptions: {
+//         activeTintColor: '#6200EE',
+//         inactiveTintColor: '#151515',
+//       },
+//     },
+//   );
 
 const AppDrawerNavigator = createDrawerNavigator({
     // Home: AppTabNavigator,
     Home: FeedNavigator,
     'Create Event': EventNavigator,
-    Settings: { screen: SettingsScreen },
-    'Preview: Messages': ChatStackNavigator,
-    'Preview: Dashboard': PreviewNavigator
+    'Logout': { screen: SettingsScreen },
+    // 'Preview: Messages': ChatStackNavigator,
+    // 'Preview: Dashboard': PreviewNavigator
 });
 
 // const AppNavigator = createSwitchNavigator({
