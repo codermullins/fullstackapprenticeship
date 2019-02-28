@@ -5,43 +5,80 @@ USE fsa_db_dev;
 CREATE TABLE cities (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    leader VARCHAR(255) NOT NULL,
+    teacher VARCHAR(255) NOT NULL,
+    administrator VARCHAR(255) NOT NULL,
+    city VARCHAR(255) NOT NULL,
+    county VARCHAR(255) NOT NULL,
+    country VARCHAR(255) NOT NULL,
+    region VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT NOW()
 );
 
-CREATE TABLE users (
+CREATE TABLE members (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     city_id INT(11) NOT NULL,
-    firstname VARCHAR(255) NOT NULL,
-    lastname VARCHAR(255) NOT NULL,
+    apprentice_xp_id INT(11),
+    developer_exp_id INT(11),
+    engineer_xp_id INT(11),
+    movement_xp_id INT(11),
+    leadership_exp_id INT(11),
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    experience INT NOT NULL,
+    community_rank VARCHAR(255),
+    technical_rank VARCHAR(255),
+    github VARCHAR(255),
+    mbriggs VARCHAR(255),
     created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY(city_id) REFERENCES cities(id)
+    FOREIGN KEY(city_id) REFERENCES cities(id),
+    FOREIGN KEY(apprentice_xp_id) REFERENCES experience(id),
+    FOREIGN KEY(developer_xp_id) REFERENCES experience(id),
+    FOREIGN KEY(engineer_xp_id) REFERENCES experience(id),
+    FOREIGN KEY(movement_xp_id) REFERENCES experience(id),
+    FOREIGN KEY(leadership_xp_id) REFERENCES experience(id)
 );
 
-CREATE TABLE projects (
+CREATE TABLE experience (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     user_id INT(11) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY(user_id) REFERENCES users(id)
-);
-
-CREATE TABLE features (
-    id INT(11) AUTO_INCREMENT PRIMARY KEY,
-    project_id INT(11) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    description TEXT NOT NULL,
-    due_date DATE NOT NULL,
-    url VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    FOREIGN KEY(project_id) REFERENCES projects(id)
-);
+    exp_name VARCHAR(255) NOT NULL,
+    approved BOOLEAN NOT NULL,
+    FOREIGN KEY(user_id) REFERENCES members(id),
+    _1 BOOLEAN,
+    _1_approved BOOLEAN,
+    _2 BOOLEAN,
+    _2_approved BOOLEAN,
+    _3 BOOLEAN,
+    _3_approved BOOLEAN,
+    _4 BOOLEAN,
+    _4_approved BOOLEAN,
+    _5 BOOLEAN,
+    _5_approved BOOLEAN,
+    _6 BOOLEAN,
+    _6_approved BOOLEAN,
+    _7 BOOLEAN,
+    _7_approved BOOLEAN,
+    _8 BOOLEAN,
+    _8_approved BOOLEAN,
+    _9 BOOLEAN,
+    _9_approved BOOLEAN,
+    _10 BOOLEAN,
+    _10_approved BOOLEAN,
+    _11 BOOLEAN,
+    _11_approved BOOLEAN,
+    _12 BOOLEAN,
+    _12_approved BOOLEAN,
+    _13 BOOLEAN,
+    _13_approved BOOLEAN,
+    _14 BOOLEAN,
+    _14_approved BOOLEAN,
+    _15 BOOLEAN,
+    _15_approved BOOLEAN,
+    
+)
 
 
 INSERT INTO cities (name) VALUES ('Seattle');
-INSERT INTO users (city_id, firstname, lastname) VALUES (1, 'Alan', 'Ndegwa');
-INSERT INTO projects (user_id, name, description) VALUES (1, 'FSA Hub',
-  'Hub for the FSA Community');
-INSERT INTO features (project_id, name, description, due_date, url) VALUES (1,
-  'FSA HUb DB', 'Database for the FSA Hub', '2018-12-09',
-  'https://github.com/fsapprenticeship/fsa-hub');
+INSERT INTO members (city_id, firstname, lastname) VALUES (1, 'Alan', 'Ndegwa');
+INSERT INTO experience (user_id, exp_name, approved) VALUES (1, 'Apprentice', false)

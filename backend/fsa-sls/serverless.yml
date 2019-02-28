@@ -36,8 +36,6 @@ provider:
         - dynamodb:DeleteItem
       Resource: "arn:aws:dynamodb:us-east-1:*:*"
 
-
-
 functions:
   hello:
     handler: handler.hello
@@ -45,48 +43,9 @@ functions:
       - http:
           path: hello
           method: get
-
-  createResource:
-    handler: createResource.main
+  
+  app:
+    handler: index.handler
     events:
-      - http:
-          path: resources
-          method: post
-          cors: true
-          authorizer: aws_iam
-
-  getResource:
-    handler: getResource.main
-    events:
-      - http:
-          path: resources/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  listResource:
-    handler: listResource.main
-    events:
-      - http:
-          path: resources
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  updateResource:
-    handler: updateResource.main
-    events:
-      - http: 
-          path: resources/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam
-
-  deleteResource:
-    handler: deleteResource.main
-    events:
-      - http:
-          path: reources/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam
+      - http: ANY /
+      - http: 'ANY {proxy+}'
