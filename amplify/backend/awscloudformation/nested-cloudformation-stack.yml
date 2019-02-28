@@ -78,54 +78,160 @@
 				}
 			}
 		},
-		"authfsa": {
+		"authfreetier": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/auth/fsa-cloudformation-template.yml",
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/auth/freetier-cloudformation-template.yml",
 				"Parameters": {
-					"identityPoolName": "fsahubaa54e2df_identitypool_aa54e2df",
+					"identityPoolName": "freetier",
 					"allowUnauthenticatedIdentities": false,
 					"thirdPartyAuth": false,
-					"lambdaLogPolicy": "fsa_lambda_log_policy",
-					"openIdLambdaRoleName": "fsa_openid_lambda_role",
-					"openIdRolePolicy": "fsa_openid_pass_role_policy",
-					"openIdLambdaIAMPolicy": "fsa_openid_lambda_iam_policy",
-					"openIdLogPolicy": "fsa_openid_lambda_log_policy",
-					"userPoolName": "fsaed",
+					"lambdaLogPolicy": "freetier_lambda_log_policy",
+					"openIdLambdaRoleName": "freetier_openid_lambda_role",
+					"openIdRolePolicy": "freetier_openid_pass_role_policy",
+					"openIdLambdaIAMPolicy": "freetier_openid_lambda_iam_policy",
+					"openIdLogPolicy": "freetier_openid_lambda_log_policy",
+					"userPoolName": "freetier",
 					"autoVerifiedAttributes": "email",
 					"mfaConfiguration": "OPTIONAL",
 					"mfaTypes": "SMS Text Message",
-					"roleName": "fsa_sns-role",
-					"roleExternalId": "fsa_role_external_id",
-					"policyName": "fsa-sns-policy",
+					"roleName": "freetier_sns-role",
+					"roleExternalId": "freetier_role_external_id",
+					"policyName": "freetier-sns-policy",
 					"smsAuthenticationMessage": "Your authentication code is {####}",
 					"smsVerificationMessage": "Your verification code is {####}",
-					"emailVerificationSubject": "FSA Verification Code",
+					"emailVerificationSubject": "Your verification code",
 					"emailVerificationMessage": "Your verification code is {####}",
 					"defaultPasswordPolicy": true,
 					"passwordPolicyMinLength": 8,
-					"passwordPolicyCharacters": "Requires Lowercase,Requires Uppercase,Requires Numbers,Requires Symbols",
-					"requiredAttributes": "birthdate,family_name,name,email",
-					"userpoolClientName": "fsa_app_client",
+					"passwordPolicyCharacters": "Requires Lowercase,Requires Uppercase,Requires Numbers",
+					"requiredAttributes": "phone_number,email",
+					"userpoolClientName": "freetier_app_client",
 					"userpoolClientGenerateSecret": true,
 					"userpoolClientRefreshTokenValidity": 30,
-					"userpoolClientReadAttributes": "birthdate,email,family_name,name",
-					"mfaLambdaRole": "fsa_totp_lambda_role",
-					"mfaLambdaLogPolicy": "fsa_totp_lambda_log_policy",
-					"mfaPassRolePolicy": "fsa_totp_pass_role_policy",
-					"mfaLambdaIAMPolicy": "fsa_totp_lambda_iam_policy",
-					"userpoolClientLambdaRole": "fsa_userpoolclient_lambda_role",
-					"userpoolClientLogPolicy": "fsa_userpoolclient_lambda_log_policy",
-					"userpoolClientLambdaPolicy": "fsa_userpoolclient_lambda_iam_policy",
+					"userpoolClientReadAttributes": "address,birthdate,email,family_name,given_name,locale,middle_name,name,nickname,phone_number,preferred_username,picture,profile,updated_at,website,zoneinfo,email_verified,phone_number_verified",
+					"mfaLambdaRole": "freetier_totp_lambda_role",
+					"mfaLambdaLogPolicy": "freetier_totp_lambda_log_policy",
+					"mfaPassRolePolicy": "freetier_totp_pass_role_policy",
+					"mfaLambdaIAMPolicy": "freetier_totp_lambda_iam_policy",
+					"userpoolClientLambdaRole": "freetier_userpoolclient_lambda_role",
+					"userpoolClientLogPolicy": "freetier_userpoolclient_lambda_log_policy",
+					"userpoolClientLambdaPolicy": "freetier_userpoolclient_lambda_iam_policy",
 					"userpoolClientSetAttributes": true,
 					"useDefault": "manual",
 					"authSelections": "identityPoolAndUserPool",
-					"resourceName": "fsa",
-					"userpoolClientWriteAttributes": "birthdate,email,family_name,name",
+					"resourceName": "freetier",
+					"userpoolClientWriteAttributes": "email,phone_number",
 					"unAuthRoleName": "fsahub-20181225150125-unauthRole",
 					"authRoleName": "fsahub-20181225150125-authRole",
 					"unAuthRoleArn": "arn:aws:iam::989853312915:role/fsahub-20181225150125-unauthRole",
 					"authRoleArn": "arn:aws:iam::989853312915:role/fsahub-20181225150125-authRole"
+				}
+			}
+		},
+		"storageevents": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/storage/events-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "events",
+					"partitionKeyName": "organizerId",
+					"partitionKeyType": "S",
+					"sortKeyName": "createdAt",
+					"sortKeyType": "N"
+				}
+			}
+		},
+		"storageresources": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/storage/resources-cloudformation-template.json",
+				"Parameters": {
+					"tableName": "resources",
+					"partitionKeyName": "directory",
+					"partitionKeyType": "S",
+					"sortKeyName": "timestamp",
+					"sortKeyType": "N"
+				}
+			}
+		},
+		"functioneventslambda": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/function/eventslambda-cloudformation-template.json",
+				"Parameters": {
+					"storageeventsName": {
+						"Fn::GetAtt": [
+							"storageevents",
+							"Outputs.Name"
+						]
+					},
+					"storageeventsArn": {
+						"Fn::GetAtt": [
+							"storageevents",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"functionresources": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/function/resources-cloudformation-template.json",
+				"Parameters": {
+					"storageresourcesName": {
+						"Fn::GetAtt": [
+							"storageresources",
+							"Outputs.Name"
+						]
+					},
+					"storageresourcesArn": {
+						"Fn::GetAtt": [
+							"storageresources",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"apieventscrud": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/api/eventscrud-cloudformation-template.json",
+				"Parameters": {
+					"functioneventslambdaName": {
+						"Fn::GetAtt": [
+							"functioneventslambda",
+							"Outputs.Name"
+						]
+					},
+					"functioneventslambdaArn": {
+						"Fn::GetAtt": [
+							"functioneventslambda",
+							"Outputs.Arn"
+						]
+					}
+				}
+			}
+		},
+		"apiresources": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/fsahub-20181225150125-deployment/amplify-cfn-templates/api/resources-cloudformation-template.json",
+				"Parameters": {
+					"functionresourcesName": {
+						"Fn::GetAtt": [
+							"functionresources",
+							"Outputs.Name"
+						]
+					},
+					"functionresourcesArn": {
+						"Fn::GetAtt": [
+							"functionresources",
+							"Outputs.Arn"
+						]
+					}
 				}
 			}
 		}

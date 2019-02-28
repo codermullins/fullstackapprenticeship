@@ -1,20 +1,17 @@
 import React, {Component} from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body } from 'native-base'; 
-import SubcategoriesScreen from './SubcategoriesScreen';
-import NavButton from "../components/NavButton"
+import CardScreen from "../screens/CardScreen";
+// import DashboardScreen from "./DashboardScreen"
+// import ProgressChart from "../components/ProgressChart";
 
 class SandboxScreen extends Component
 {
     render()
     {
         return (
-        <Container>
-            <Content>
-                <NavButton route="Subcategories" />
-                {/* <SubcategoriesScreen/> */}
-            </Content>
-        </Container>
+        <CardScreen />
+        // <DashboardScreen />
+        // <ProgressChart />
         );
     }
 }

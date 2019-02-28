@@ -1,6 +1,9 @@
 # fsa-hub
 The Hub for Full-Stack Apprentices worldwide to connect with each other, mentors & collaborate on projects together.
 
+## Onboarding
+* Please use yarn for installing dependencies
+
 # Major Product Backlog Items
 
 - Account Registration & Login

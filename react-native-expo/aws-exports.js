@@ -2,10 +2,33 @@
 
 const awsmobile =  {
     "aws_project_region": "us-west-2",
-    "aws_cognito_identity_pool_id": "us-west-2:cbb675a9-885e-44f1-baa5-4cb0243db6a0",
+    "aws_cognito_identity_pool_id": "us-west-2:dbe07176-613f-4324-a396-d259917d20c4",
     "aws_cognito_region": "us-west-2",
-    "aws_user_pools_id": "us-west-2_tFhRE5TRe",
-    "aws_user_pools_web_client_id": "1qqt8uh146epjiotlqs27l6ml1"
+    "aws_user_pools_id": "us-west-2_WMdmf9TDw",
+    "aws_user_pools_web_client_id": "66r3tnuff455tasdk387b6a4jk",
+    "aws_dynamodb_all_tables_region": "us-west-2",
+    "aws_dynamodb_table_schemas": [
+        {
+            "tableName": "events",
+            "region": "us-west-2"
+        },
+        {
+            "tableName": "resources",
+            "region": "us-west-2"
+        }
+    ],
+    "aws_cloud_logic_custom": [
+        {
+            "name": "eventscrud",
+            "endpoint": "https://s3pxbz9b92.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        },
+        {
+            "name": "resources",
+            "endpoint": "https://brd5q5r2o9.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        }
+    ]
 };
 
 

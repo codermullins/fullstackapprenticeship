@@ -14,8 +14,8 @@ Once you have Node.js, install the expo command line tool by running this comman
 Get the app up and running
 --
 1. Clone the repository and cd into the _react-native-expo_ directory.
-2. Run _npm install_ 
-3. To start the project _run yarn or npm start_ from the react-native-expo directory
+2. Run _yarn install_ 
+3. To start the project _expo start_ from the react-native-expo directory
 
 
 Running the app of your device

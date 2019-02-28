@@ -3,8 +3,11 @@ import { View, StyleSheet, Text, Button, AsyncStorage } from 'react-native';
 
 class SettingsScreen extends Component {
   signOut = async () => {
-    AsyncStorage.clear();
-    this.props.navigation.navigate('AuthLoading');
+    Auth.signOut()
+        .then(() => {
+           this.props.screenProps.onStateChange('signedOut', null);
+        })
+        .catch(err => console.log(err));
   };
 
   render() {

@@ -43,6 +43,7 @@ class SignInScreen extends Component {
               value={this.state.password}
               onChangeText={(password) => this.setState({ password})}
               autoCapitalize="none"
+              secureTextEntry={true}
               />
             </Item>
             {

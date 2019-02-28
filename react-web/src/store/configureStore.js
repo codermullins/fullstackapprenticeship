@@ -4,6 +4,7 @@ import createHistory from "history/createBrowserHistory";
 import userReducer from "../reducers/user";
 import authFormReducer from "../reducers/authForm";
 import authReducer from "../reducers/auth";
+import AuthStateReducer from "../reducers/authState";
 import thunk from "redux-thunk";
 
 const initialState = {};
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     router: connectRouter(history),
     user: userReducer,
     auth: authReducer,
-    authForm: authFormReducer
+    authForm: authFormReducer,
+    authState: AuthStateReducer
 });
 
 const store = createStore(rootReducer, initialState, composedEnhancers);

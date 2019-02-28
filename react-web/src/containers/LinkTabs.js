@@ -1,14 +1,17 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Add from '../components/NewResourceButton';
 import FolderContainers from "../components/FolderContainers";
 import {
     fullStackApprenticeship,
     cityByCity,
     findingWork
 } from "../directories";
+import AuthSignup from './AuthSignup';
 
 const styles = theme => ({
     root: {
@@ -16,6 +19,10 @@ const styles = theme => ({
         backgroundColor: theme.palette.background.paper
     }
 });
+
+const mapStateToProps = state => ({
+    authState: state.authState.authState
+})
 
 class LinkTabs extends Component {
     constructor(props) {
@@ -25,7 +32,8 @@ class LinkTabs extends Component {
             value: 0,
             fsaFolders: [],
             cityFolders: [],
-            workFolders: []
+            workFolders: [],
+            // authState : ''
         };
     }
 
@@ -39,9 +47,14 @@ class LinkTabs extends Component {
             []
         );
 
+    // changeAuthState = nextAuthState => {
+    //     this.setState({ authState: nextAuthState })
+    // }
+
     render() {
-        const { classes } = this.props;
+        const { classes, authState } = this.props;
         const { value } = this.state;
+        console.log('state', authState)
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -51,6 +64,7 @@ class LinkTabs extends Component {
                         <Tab label="Getting Paid" />
                     </Tabs>
                 </AppBar>
+                <AuthSignup changeAuthState={this.props.changeAuthState} />
                 {value === 0 && (
                     <FolderContainers
                         folders={fullStackApprenticeship.reduce(
@@ -87,9 +101,10 @@ class LinkTabs extends Component {
                         )}
                     />
                 )}
-            </div>
+                {/* { authState === 'signedIn' ? <Add /> : null } */}
+\            </div>
         );
     }
 }
 
-export default withStyles(styles)(LinkTabs);
+export default connect(mapStateToProps, null)(withStyles(styles)(LinkTabs));

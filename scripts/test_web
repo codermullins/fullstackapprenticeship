@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd react-web && npm install && npm test
+
+# This will need to be updated to use `yarn` once that change is made in the
+# repo

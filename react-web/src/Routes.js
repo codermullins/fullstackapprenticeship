@@ -1,30 +1,29 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { ConnectedRouter } from "connected-react-router";
 import { history } from "./store/configureStore";
 
 import AppliedRoute from "./components/AppliedRoute";
-import Home from "./containers/Home";
-import Signup from "./containers/Signup";
-import Login from "./containers/Login";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
+// import Home from "./containers/Home";
 import LinkTabs from "./containers/LinkTabs";
 import LinkComponent from "./components/LinkComponent";
 import ToolsContainer from "./components/ToolsContainer";
-import AccountContainer from "./containers/AccountContainer";
+import NewResource from "./containers/NewResource";
+import ProcessResource from "./containers/ProcessResource";
+import Billing from "./containers/Billing";
+import Typing from "./containers/Typing";
 
-export default () => (
+export default ({ childProps }) => (
     <ConnectedRouter history={history}>
         <Switch>
-            <AppliedRoute path="/" exact component={LinkTabs} />
-            <AppliedRoute path="/signup" exact component={Signup} />
-            <AppliedRoute path="/login" exact component={Login} />
-            <AppliedRoute
-                path="/fancyLogin"
-                exact
-                component={AccountContainer}
-            />
+            <AppliedRoute path="/" exact component={LinkTabs}/>
             <AppliedRoute path="/link/:id" component={LinkComponent} />
-            <Route path="/tool/:schema" component={ToolsContainer} />
+            <AppliedRoute path="/tool/:schema" component={ToolsContainer} />
+            <AppliedRoute path='/review' exact component={ProcessResource} />
+            <AppliedRoute path='/payments' exact component={Billing} />
+            <AppliedRoute path='/typing/:id' exact component={Typing} />
+            <AuthenticatedRoute path='/resource/new' exact component={NewResource} props={childProps} /> 
         </Switch>
     </ConnectedRouter>
 );

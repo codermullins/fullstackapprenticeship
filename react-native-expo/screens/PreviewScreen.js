@@ -25,7 +25,6 @@ class HomeScreen extends Component
               <Body>
                 <Text style={{ color: 'white', fontSize: 16}}>Morning Workout</Text>
                 <Text note style={{ color: 'white'}}>Lifting, crunches, take a swim.</Text>
-                <Text note style={{ color: 'white'}}>Lifting, crunches, take a swim.</Text>
               </Body>
               <Right>
                 <Text note style={{ color: 'white', fontSize: 14}}>7am - 8am</Text>

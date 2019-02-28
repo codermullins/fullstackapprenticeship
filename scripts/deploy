@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "Deployment script pending."
+
+# Deployment scripts to go here
+# Environment vars can be set here, or in .travis.yml
