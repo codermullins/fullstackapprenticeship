@@ -38,9 +38,10 @@ import learningSchema from "./learningSchema";
 import paymentsSchema from "./paymentsSchema";
 import testingSchema from "./testingSchema";
 import uxSchema from "./uxSchema";
-import apprenticeshipSchema from "./apprenticeshipSchema";
 import gettingStartedSchema from "./gettingStartedSchema";
-
+import apprenticeExperienceSchema from "./apprenticeExperienceSchema";
+import productExperienceSchema from "./productExperienceSchema"
+import apprenticeshipSchema from "./apprenticeshipSchema"
 
 // Then we give our schema to the builder and provide the result to Sanity
 
@@ -80,8 +81,10 @@ export default createSchema({
     learningSchema,
     testingSchema,
     uxSchema,
-    apprenticeshipSchema,
     gettingStartedSchema,
+    apprenticeshipSchema,
+    apprenticeExperienceSchema,
+    productExperienceSchema,
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
     blockContent,
