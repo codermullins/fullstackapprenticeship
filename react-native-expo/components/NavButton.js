@@ -6,7 +6,7 @@ class NavButton extends React.Component {
   render() {
     return <Button block style={{backgroundColor: "#6200EE"}} onPress={() => this.props.navigation.navigate(this.props.route, {
         schema: this.props.schema
-    }) }><Text>View</Text></Button>;
+    }) }><Text>{this.props.text}</Text></Button>;
   }
 }
 
