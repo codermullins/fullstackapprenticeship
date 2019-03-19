@@ -11,44 +11,55 @@ class SignUpScreen extends Component {
     this.state = {
       email: "",
       password: "",
+      phone: "+1",
       confirmPassword: "",
       confirm: false,
       code: "",
       user: {},
       fName: "",
       lName: "",
-      chosenDate: []
+      chosenDate: [],
+      username: ""
     }
   }
 
   register = async () => {
     const attributes = {
-      birthdate: "01/28/1994",
-      name: this.state.fName,
+      // birthdate: "01/28/1994",
+      // name: this.state.fName,
       email: this.state.email, 
-      family_name: this.state.lName,
+      phone_number: this.state.phone
+      // family_name: this.state.lName,
     }
 
-    const user = await Auth.signUp({
-      password: this.state.password,
-      username: this.state.email,
-      attributes: attributes,
-    });
+    try {
+      const user = await Auth.signUp({
+        password: this.state.password,
+        username: this.state.username,
+        attributes: attributes,
+      });
+  
+      // console.log('USER OBJECT: ', JSON.stringify(user))
+      // console.log('Username: ', user.username)
+  
+      // await AsyncStorage.setItem('userToken', 'fsa');
+      
+      this.setState({ confirm: true })
+    } catch(e) {
+      console.log('Auth error: ', e)
+    }
 
-    // console.log('USER OBJECT: ', JSON.stringify(user))
-    // console.log('Username: ', user.username)
-
-    await AsyncStorage.setItem('userToken', 'fsa');
     
-    this.setState({ confirm: true, user: user })
   };
 
   confirm = async () => {
-    await Auth.confirmSignUp(this.state.email, this.state.code);
+    try {
 
-    await AsyncStorage.setItem('userToken', 'fsa');
-
-    this.props.navigation.navigate('App');
+      await Auth.confirmSignUp(this.state.username, this.state.code); 
+      this.props.navigation.navigate('SignIn');
+    } catch(e) {
+      console.log('SignUp error: ', e)
+    }
   };
 
   renderConfirmation() {
@@ -82,15 +93,16 @@ class SignUpScreen extends Component {
     <Content>
           <Form>
           <Item floatingLabel>
-              <Label>First Name</Label>
+              <Label>Sign-In Username</Label>
               <Input 
               placeholder=""
               returnKeyType="search"
-              value={this.state.fName}
-              onChangeText={(fName) => this.setState({fName})}
+              value={this.state.username}
+              onChangeText={(username) => this.setState({username})}
               autoCapitalize="none"
               />
             </Item>
+            {/* 
             <Item floatingLabel>
               <Label>Last Name</Label>
               <Input 
@@ -100,7 +112,7 @@ class SignUpScreen extends Component {
               onChangeText={(lName) => this.setState({lName})}
               autoCapitalize="none"
               />
-            </Item>
+            </Item> */}
             <Item floatingLabel>
               <Label>Primary Email</Label>
               <Input
@@ -108,6 +120,16 @@ class SignUpScreen extends Component {
               returnKeyType="search"
               value={this.state.email}
               onChangeText={(email) => this.setState({ email })} 
+              autoCapitalize="none"
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Phone</Label>
+              <Input 
+              placeholder=""
+              returnKeyType="search"
+              value={this.state.phone}
+              onChangeText={(phone) => this.setState({phone})}
               autoCapitalize="none"
               />
             </Item>
@@ -125,7 +147,7 @@ class SignUpScreen extends Component {
             <Text style={{textAlign: 'center', fontSize: 14}}>Password must include at least 1 capital, 1 lowercase letter, 1 number and 1 special character.</Text>
             <Text>{'\n'}</Text>
 {
-  this.state.email.length > 0 && this.state.password.length > 0 && this.state.fName.length > 0 && this.state.lName.length > 0 ?
+  this.state.email.length > 0 && this.state.password.length > 0 ?
   (
     <Button full style={{backgroundColor: "#6200EE", color: "white", height: 80}} onPress={() => this.register()}><Text style={{color: "white", fontSize: 20}}>Sign Up</Text></Button>
     ) : (

@@ -49,11 +49,11 @@ class ExperienceScreen extends Component {
           {orderedLinks.map((list, i) => (
             <ListItem key={i}>
               <Left>
-                  <Text style={{fontSize: 24}}>{list.title}{'\n'}<Text style={{fontStyle: "italic"}}>{list.amount}</Text>{'\n'}<Text>Complete: False</Text></Text>
+                  <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}{'\n'}<Text>Complete: False</Text></Text>
               </Left>
 
               <Right>
-                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={list} />
+                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={list} text={`${list.amount}XP`} />
               </Right>
             </ListItem>
           )

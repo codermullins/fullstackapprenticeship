@@ -19,9 +19,9 @@ class ContentScreen extends Component {
     }
 
     async sanityQuery(schema) {
-       const query = `*[_type == '${schema}']{type, _type, text, title, url, _id}`
-        const links = await sanity.fetch(query);
-        this.setState({ links })
+      const query = `*[_type == '${schema}']{type, _type, text, title, url, _id}`
+      const links = await sanity.fetch(query);
+      this.setState({ links })
     }
 
     renderContentItems() {
