@@ -4,9 +4,6 @@ import DateTimePicker from "react-native-modal-datetime-picker"
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 import uuidv4 from "uuid";
 import { Text, TouchableOpacity, View } from 'react-native';
-import moment from "moment"
-
-
 
 export default class CreatEventScreen extends Component {
     constructor(props) {
@@ -18,7 +15,7 @@ export default class CreatEventScreen extends Component {
             start: "",
             end: "",
             link: "meet.google.com/bch-dizr-dkj",
-            organizerId: 'f6060e36-38ad-452a-a1f8-3bedbddca28d',
+            organizerId: '1ef9e44b-17d7-4ca5-8fc6-81bcd01bc2e3',
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false
 
@@ -86,7 +83,7 @@ export default class CreatEventScreen extends Component {
                         <Item floatingLabel>
                         <Label>Event Name</Label>
                             <Input 
-                            placeholder=""
+                            // placeholder="Name"
                             returnKeyType="search"
                             value={this.state.name}
                             onChangeText={(name) => this.setState({name})}
