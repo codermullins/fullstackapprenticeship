@@ -5,7 +5,9 @@ import {
   ScrollView,
   Image,
   Text,
-  Platform
+  Platform,
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import {
   RkButton,
@@ -14,14 +16,13 @@ import {
   RkTheme,
 } from 'react-native-ui-kitten';
 import Event from "../components/Event"
-import { TouchableOpacity } from "react-native";
 import { Header, Left, Body, Right, Button, Title, ActionSheet } from "native-base"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { UtilStyles } from '../style/styles';
 import { Ionicons } from "@expo/vector-icons"
 import { ImageIcon } from '../components/ImageIcon';
 import orderBy from "lodash.orderby";
-import { API } from "aws-amplify"
+import { API, Auth } from "aws-amplify"
 import NavIcon from "../components/NavIcon";
 
 var BUTTONS = [
@@ -47,13 +48,23 @@ export default class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
+    const session = await Auth.currentSession()    
     try {
-      // const user = await Auth.currentUserInfo()
-      // const id = user.attributes.sub;
-      const response = await API.get('eventscrud', `/events/f6060e36-38ad-452a-a1f8-3bedbddca28d`)
+      const username = await session.accessToken.payload.username;
+      const token = await session.accessToken.jwtToken;
+      const id = await session.accessToken.payload.sub;
+      const values = [['accessToken', token], ['username', username], ['id', id]]
+      await AsyncStorage.multiSet(values)
+      
+      const response = await API.get('eventscrud', `/events/1ef9e44b-17d7-4ca5-8fc6-81bcd01bc2e3`)
       // console.log('List of events: ', response)
       const orderedArray = orderBy(response, function(item) {return item.date})
       this.setState({ events: orderedArray })
+
+      const profile = await API.get('profile', `/profile/${id}`)
+      await this.setState({ profile: profile[0] })
+      await console.log(this.state.profile)
+
     } catch(e) {
       console.log(e)
     }
@@ -99,9 +110,18 @@ export default class HomeScreen extends React.Component {
             <Title style={{textAlign: 'center'}}>#fsahub</Title>
           </Body>
           <Right>
-            {/* <Button hasText onPress={() => navigation.navigate('Profile')} transparent>
+            { this.state.profile === undefined ? (
+              <Button hasText onPress={() => navigation.navigate('CreateProfile')} transparent>
+              <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>Create Profile</Text>
+            </Button>
+            ) : (
+              <Button hasText onPress={() => navigation.navigate('Profile')} transparent>
               <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>My Profile</Text>
-            </Button> */}
+            </Button>
+            )
+
+            }
+            
           </Right>
         </Header>
         <ScrollView
@@ -118,7 +138,7 @@ export default class HomeScreen extends React.Component {
 
                 </View>
               </View>
-              <RkButton rkType='clear'>
+              {/* <RkButton rkType='clear'>
               <Icon name="group" style={iconButton} onPress={() =>
             ActionSheet.show(
               {
@@ -131,14 +151,14 @@ export default class HomeScreen extends React.Component {
                 this.setState({ clicked: BUTTONS[buttonIndex] });
               }
             )}/>
-              {/* <Text>{'\n'}</Text>
-              <Text>Switch Instructor</Text> */}
+               <Text>{'\n'}</Text>
+              <Text>Switch Instructor</Text> 
 
-                {/* <Icon style={styles.dot} name="circle" />
+                 <Icon style={styles.dot} name="circle" />
                 <Icon style={styles.dot} name="circle" />
-                <Icon style={styles.dot} name="circle" /> */}
+                <Icon style={styles.dot} name="circle" /> 
 
-              </RkButton>
+              </RkButton> */}
             </View>            
           </RkCard>
           <Text>{'\n'}</Text>
@@ -153,6 +173,16 @@ export default class HomeScreen extends React.Component {
                 </View>
           </RkCard>   */}
 
+          <Text style={{textAlign: 'center', fontSize: 20}}>Upcoming Events</Text>
+          <Text>{'\n'}</Text>
+
+          {this.renderEvents(this.state.events)}
+          {/* <Text>{'\n'}</Text> */}
+
+
+          <Text style={{textAlign: 'center', fontSize: 20, paddingTop: 10}}>Learn & Earn Experience</Text>
+          <Text>{'\n'}</Text>
+
           <RkCard>
             <View rkCardHeader={true}>
               <View>
@@ -160,7 +190,11 @@ export default class HomeScreen extends React.Component {
                 <RkText rkType='subtitle'>Status: 0 / 2000 EXP</RkText>
               </View>
             </View>
+            <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
+                schema: 'productExperienceSchema'
+              })}>
             <Image rkCardImg={true} source={require('../assets/product.png')} />
+              </TouchableOpacity>
             <View rkCardContent={true}>
               <RkText rkType='cardText'>
                 In 15 steps, you will go from a blank canvas to a scalable, performant & useful product in a production environment.
@@ -169,7 +203,9 @@ export default class HomeScreen extends React.Component {
             <View rkCardFooter={true}>
               <RkButton rkType='clear link'>
                 <Icon name="check" style={likeStyle} />
-                <RkText rkType='accent'>0/15 Achievements</RkText>
+                <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
+                schema: 'productExperienceSchema'
+              })}>0/15 Achievements</RkText>
               </RkButton>
               <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                 schema: 'productExperienceSchema'
@@ -182,6 +218,7 @@ export default class HomeScreen extends React.Component {
 
           <Text>{'\n'}</Text>
 
+        
         <RkCard>
             <View rkCardHeader={true}>
               <View>
@@ -189,7 +226,11 @@ export default class HomeScreen extends React.Component {
                 <RkText rkType='subtitle'>Status: 0 / 5000 EXP</RkText>
               </View>
             </View>
+            <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
+                schema: 'apprenticeExperienceSchema'
+              })}>
             <Image rkCardImg={true} source={require('../assets/exp.png')} />
+            </TouchableOpacity>
             <View rkCardContent={true}>
               <RkText rkType='cardText'>
                 Work through these 15 tasks to achieve certified status as an FSA Developer.
@@ -198,7 +239,9 @@ export default class HomeScreen extends React.Component {
             <View rkCardFooter={true}>
               <RkButton rkType='clear link'>
                 <Icon name="check" style={likeStyle} />
-                <RkText rkType='accent'>0/15 Achievements</RkText>
+                <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
+                schema: 'apprenticeExperienceSchema'
+              })}>0/15 Achievements</RkText>
               </RkButton>
               <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                 schema: 'apprenticeExperienceSchema'
@@ -211,18 +254,18 @@ export default class HomeScreen extends React.Component {
 
           <Text>{'\n'}</Text>
 
+          <Text style={{textAlign: 'center', fontSize: 20}}>Educational Resources</Text>
+          <Text>{'\n'}</Text>
 
           <RkCard rkType='heroImage shadowed'>
             <View>
+            <TouchableOpacity onPress={() => navigation.navigate('BlueprintScreen')}>
               <Image rkCardImg={true} source={require('../assets/blueprint.jpg')} />
+              </TouchableOpacity>
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <View style={{ marginBottom: 20 }}>
                   <RkText rkType='header xxlarge' style={{ color: 'white' }}>The Blueprint</RkText>
                   <RkText rkType='subtitle' style={{ color: 'white' }}>60 page manual covering the tools of our Technical Standard, finding freelance work, building the right portfolio projects and adding structure to the learning process.</RkText>
-                </View>
-                <View style={styles.footerButtons}>
-                  <RkButton rkType='clear' style={{ marginRight: 16 }} onPress={() => {navigation.navigate('BlueprintScreen')}}>READ NOW</RkButton>
-                  {/* <RkButton rkType='clear ' >EXPLORE</RkButton> */}
                 </View>
               </View>
             </View>
@@ -232,20 +275,20 @@ export default class HomeScreen extends React.Component {
           
           <Text>{'\n'}</Text>
 
-          {this.renderEvents(this.state.events)}
 
+          
           <RkCard rkType='shadowed'>
             <View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Subcategories', {
+            schema: "findingWork"
+          })}>
               <Image rkCardImg={true} source={require('../assets/post4.png')} />
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <RkText rkType='header xxlarge' style={{ color: 'white' }}>Getting Paid</RkText>
               </View>
+              </TouchableOpacity>
+
             </View>
-            <RkButton rkType='circle accent-bg' style={styles.floating}>
-              {/* <ImageIcon name='plus' /> */}
-              
-              <NavIcon route="Subcategories" schema="findingWork" />
-            </RkButton>
             <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
               <View>
                 <RkText rkType='subtitle'>Freelancing, Full-Time, Start-ups</RkText>
@@ -258,22 +301,23 @@ export default class HomeScreen extends React.Component {
             </View>
             <View rkCardFooter={true}>
               <View style={styles.footerButtons}>
-                {/* <RkButton rkType='clear action' style={{ marginRight: 16 }}>SHARE</RkButton>
-                <RkButton rkType='clear action'>EXPLORE</RkButton> */}
+               
               </View>
             </View>
           </RkCard> 
 
           <Text>{'\n'}</Text>
 
+          
           <RkCard rkType='shadowed'>
             <View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Subcategories', {
+            schema: "fullStackApprenticeship"
+          })}>
               <Image rkCardImg={true} source={require('../assets/javascript.jpg')} />
               <View rkCardImgOverlay={true} />
+              </TouchableOpacity>
             </View>
-            <RkButton rkType='circle accent-bg' style={styles.floating}>
-            <NavIcon route="Subcategories" schema="fullStackApprenticeship" />
-            </RkButton>
             <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
               <View>
                 <RkText rkType='header xxlarge'>FSA Technical Standard</RkText>
@@ -287,12 +331,13 @@ export default class HomeScreen extends React.Component {
             </View>
             <View rkCardFooter={true}>
               <View style={styles.footerButtons}>
-                {/* <RkButton rkType='clear action' style={{ marginRight: 16 }}>SHARE</RkButton>
-                <RkButton rkType='clear action'>EXPLORE</RkButton> */}
+
               </View>
             </View>
           </RkCard>
+
           <Text>{'\n'}</Text>
+
           <RkCard>
           <View rkCardHeader={true}>
               <View>
@@ -363,6 +408,7 @@ let styles = StyleSheet.create({
     zIndex: 200,
     right: 16,
     top: 173,
+    backgroundColor: 'purple'
   },
   footerButtons: {
     flexDirection: 'row',
