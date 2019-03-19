@@ -15,6 +15,26 @@ const awsmobile =  {
         {
             "tableName": "resources",
             "region": "us-west-2"
+        },
+        {
+            "tableName": "profiles",
+            "region": "us-west-2"
+        },
+        {
+            "tableName": "payments",
+            "region": "us-west-2"
+        },
+        {
+            "tableName": "apprenticeship",
+            "region": "us-west-2"
+        },
+        {
+            "tableName": "product",
+            "region": "us-west-2"
+        },
+        {
+            "tableName": "experience",
+            "region": "us-west-2"
         }
     ],
     "aws_cloud_logic_custom": [
@@ -26,6 +46,31 @@ const awsmobile =  {
         {
             "name": "resources",
             "endpoint": "https://brd5q5r2o9.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        },
+        {
+            "name": "profile",
+            "endpoint": "https://bxgjapi33a.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        },
+        {
+            "name": "payments",
+            "endpoint": "https://hhx1hn5n2j.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        },
+        {
+            "name": "apprenticeship",
+            "endpoint": "https://ep8jootcg2.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        },
+        {
+            "name": "product",
+            "endpoint": "https://1mbybqgs4l.execute-api.us-west-2.amazonaws.com/Prod",
+            "region": "us-west-2"
+        },
+        {
+            "name": "queue",
+            "endpoint": "https://96u8dfy05c.execute-api.us-west-2.amazonaws.com/Prod",
             "region": "us-west-2"
         }
     ]
