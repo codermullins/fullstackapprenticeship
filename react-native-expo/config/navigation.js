@@ -18,6 +18,8 @@ import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from '../screens/SettingsScreen';
 import CreateEventScreen from "../screens/CreateEventScreen"
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from "../screens/EditProfileScreen";
+import CreateProfileScreen from "../screens/CreateProfileScreen";
 import PreviewScreen from "../screens/PreviewScreen";
 import SandboxScreen from '../screens/SandboxScreen';
 import SubcategoriesScreen from '../screens/SubcategoriesScreen';
@@ -33,6 +35,7 @@ const AuthStackNavigator = createStackNavigator({
     Welcome: { screen: WelcomeScreen },
     SignIn: { screen: SignInScreen },
     SignUp: { screen: SignUpScreen },
+
 });
 
 const FeedNavigator = createStackNavigator({
@@ -43,6 +46,9 @@ const FeedNavigator = createStackNavigator({
     Content: { screen: ContentScreen },
     SandboxScreen: { screen: SandboxScreen },
     Profile: { screen: ProfileScreen },
+    EditProfile: { screen: EditProfileScreen },
+    CreateProfile: { screen: CreateProfileScreen },
+
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen }
   });
@@ -96,8 +102,6 @@ const PreviewNavigator = createStackNavigator({
 },
 })
 
-
-
 // const AppTabNavigator = createBottomTabNavigator(
 //     {
 //       Home: {
@@ -127,7 +131,7 @@ const PreviewNavigator = createStackNavigator({
 //   );
 
 const AppDrawerNavigator = createDrawerNavigator({
-    // Home: AppTabNavigator,
+    // Auth: AuthStackNavigator,
     Home: FeedNavigator,
     'Create Event': EventNavigator,
     'Logout': { screen: SettingsScreen },
@@ -135,14 +139,11 @@ const AppDrawerNavigator = createDrawerNavigator({
     // 'Preview: Dashboard': PreviewNavigator
 });
 
-// const AppNavigator = createSwitchNavigator({
-//     // AuthLoading: AuthLoadingScreen,
-//     // Auth: AuthStackNavigator,
-//     App: AppDrawerNavigator,
-//     // Blueprint: BlueprintScreen,
-//     // Knowledge: KnowledgeStackNavigator,
-// });
+const AppNavigator = createSwitchNavigator({
+    AuthLoading: AuthLoadingScreen,
+    Auth: AuthStackNavigator,
+    App: AppDrawerNavigator,
 
-// Drawer navigator has two nested navigators inside - that's why the double white space. 
+});
 
-export default createAppContainer(AppDrawerNavigator);
+export default createAppContainer(AppNavigator);
