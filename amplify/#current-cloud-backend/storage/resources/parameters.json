@@ -1,7 +1,0 @@
-{
-    "tableName": "resources",
-    "partitionKeyName": "directory",
-    "partitionKeyType": "S",
-    "sortKeyName": "timestamp",
-    "sortKeyType": "N"
-}
