@@ -40,7 +40,7 @@ export default class CreateProfileScreen extends Component {
             city: this.state.city,
             region: this.state.region,
             country: this.state.country,
-            mentor: 'f6060e36-38ad-452a-a1f8-3bedbddca28d',
+            mentor: '1ef9e44b-17d7-4ca5-8fc6-81bcd01bc2e3',
             tRank: "Apprentice",
             github: this.state.github,
             product: prodId,

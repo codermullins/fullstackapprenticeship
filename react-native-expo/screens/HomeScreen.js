@@ -85,7 +85,7 @@ export default class HomeScreen extends React.Component {
                 link={event.link}
                 // avatar={require('../assets/Apprentice.png')}
                 />
-        ) : <View key={i}></View>
+        ) : <View key={i}><Text style={{textAlign: 'center', fontStyle: 'italic', paddingBottom: 20}}>No Events Yet</Text></View>
         ))}
         </View>
       )
@@ -103,7 +103,7 @@ export default class HomeScreen extends React.Component {
         <Header>
           <Left>
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Ionicons style={{color: Platform.OS === 'android' ? 'white' : 'black' }} name="md-menu" size={32} />
+              <Ionicons style={{color: Platform.OS === 'android' ? 'white' : 'black', paddingLeft: 10 }} name="md-menu" size={32} />
             </TouchableOpacity>
           </Left>
           <Body>
@@ -134,7 +134,7 @@ export default class HomeScreen extends React.Component {
                 <View style={{}}>
                   <RkText rkType='header'>Michael Litchev</RkText>
                   {/* <RkText rkType='subtitle'>Your FSA Instructor</RkText> */}
-                  <RkText rkType='subtitle'>Seattle & Bellevue</RkText>
+                  <RkText rkType='subtitle'>Seattle & Bellevue Instructor</RkText>
 
                 </View>
               </View>
