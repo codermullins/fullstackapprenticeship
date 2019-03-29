@@ -20,10 +20,8 @@ import { Header, Left, Body, Right, Button, Title, ActionSheet } from "native-ba
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { UtilStyles } from '../style/styles';
 import { Ionicons } from "@expo/vector-icons"
-import { ImageIcon } from '../components/ImageIcon';
 import orderBy from "lodash.orderby";
 import { API, Auth } from "aws-amplify"
-import NavIcon from "../components/NavIcon";
 
 var BUTTONS = [
   { text: "Taban Cosmos", icon: "american-football", iconColor: "#2c8ef4" },
@@ -56,12 +54,12 @@ export default class HomeScreen extends React.Component {
       const values = [['accessToken', token], ['username', username], ['id', id]]
       await AsyncStorage.multiSet(values)
       
-      const response = await API.get('eventscrud', `/events/1ef9e44b-17d7-4ca5-8fc6-81bcd01bc2e3`)
+      const response = await API.get('events', `/events/bdaad57c-2183-468a-a114-493c19327762`)
       // console.log('List of events: ', response)
-      const orderedArray = orderBy(response, function(item) {return item.date})
+      const orderedArray = orderBy(response, function(item) {return item.start})
       this.setState({ events: orderedArray })
 
-      const profile = await API.get('profile', `/profile/${id}`)
+      const profile = await API.get('members', `/members/${id}`)
       await this.setState({ profile: profile[0] })
       await console.log(this.state.profile)
 
@@ -127,18 +125,17 @@ export default class HomeScreen extends React.Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
-          <RkCard>
+          {/* <RkCard>
             <View rkCardHeader={true}>
               <View style={{ flexDirection: 'row' }}>
                 <Image source={require('../assets/michael.jpg')} style={styles.avatar} />
                 <View style={{}}>
                   <RkText rkType='header'>Michael Litchev</RkText>
-                  {/* <RkText rkType='subtitle'>Your FSA Instructor</RkText> */}
                   <RkText rkType='subtitle'>Seattle & Bellevue Instructor</RkText>
 
                 </View>
               </View>
-              {/* <RkButton rkType='clear'>
+              <RkButton rkType='clear'>
               <Icon name="group" style={iconButton} onPress={() =>
             ActionSheet.show(
               {
@@ -158,9 +155,9 @@ export default class HomeScreen extends React.Component {
                 <Icon style={styles.dot} name="circle" />
                 <Icon style={styles.dot} name="circle" /> 
 
-              </RkButton> */}
+              </RkButton> 
             </View>            
-          </RkCard>
+          </RkCard> */}
           <Text>{'\n'}</Text>
 
           {/* <RkCard>
@@ -177,8 +174,6 @@ export default class HomeScreen extends React.Component {
           <Text>{'\n'}</Text>
 
           {this.renderEvents(this.state.events)}
-          {/* <Text>{'\n'}</Text> */}
-
 
           <Text style={{textAlign: 'center', fontSize: 20, paddingTop: 10}}>Learn & Earn Experience</Text>
           <Text>{'\n'}</Text>
@@ -186,7 +181,7 @@ export default class HomeScreen extends React.Component {
           <RkCard>
             <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Portfolio Product</RkText>
+                <RkText rkType='header'>Preview: Portfolio Product</RkText>
                 <RkText rkType='subtitle'>Status: 0 / 2000 EXP</RkText>
               </View>
             </View>
@@ -222,7 +217,7 @@ export default class HomeScreen extends React.Component {
         <RkCard>
             <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Apprentice => Developer</RkText>
+                <RkText rkType='header'>Preview: Apprentice => Developer</RkText>
                 <RkText rkType='subtitle'>Status: 0 / 5000 EXP</RkText>
               </View>
             </View>
@@ -341,17 +336,16 @@ export default class HomeScreen extends React.Component {
           <RkCard>
           <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Technical Training Membership (Premium)</RkText>
+                <RkText rkType='header'>Sprint Training (Premium)</RkText>
                 {/* <RkText rkType='subtitle'>{moment(this.props.date).format('MMMM Do YYYY, h:mm:ss a').split(",")[0]} | {this.props.start} - {this.props.end}</RkText> */}
-                <RkText rkType='subtitle'>Includes 4 sprints</RkText>
+                <RkText rkType='subtitle'>Weekly & Monthly Options</RkText>
               </View>
             </View>
             <View rkCardContent={true}>
               <RkText rkType='compactCardText'>Membership Includes:{'\n'}{'\n'}
-              - Experience system & online leaderboards to track progress towards certification as a competent Developer, which comes with lifetime membership to our React, Node, AWS focused member directory to connect you with economic opportunity.{'\n'}{'\n'}
               - Weekly Sprint Planning Meeting (Saturday/Sunday) to plan & estimate the work to be done throughout the duration of the sprint.{'\n'}{'\n'}
-              - Daily Stand-up Meeting (Morning or After-Work) to check-in with your teacher/teammates on what you've done - what's you are stuck on - and what you are working on that day. {'\n'}{'\n'}
-              - Weekly Sprint Retrospective Meeting (Friday) to review the work that was accomplished, compare our time to our original time estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
+              - Daily Stand-up Meetings (Morning or After-Work) during the week to check-in with your team on what you've done - what you are stuck on - and what you are working on that day. Just like a professional development team. {'\n'}{'\n'}
+              - Weekly Sprint Retrospective Meeting (Friday) to review the work that was accomplished, compare our time to our original ticket estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
               </RkText>
             </View>
             <View rkCardFooter={true} style={styles.footer}>
@@ -371,6 +365,7 @@ export default class HomeScreen extends React.Component {
               </RkButton> */}
             </View>
           </RkCard>
+          <Text>{'\n'}</Text>
         </ScrollView>
       </View>
     );
