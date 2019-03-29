@@ -35,9 +35,11 @@ class SignUpScreen extends Component {
     try {
       const user = await Auth.signUp({
         password: this.state.password,
-        username: this.state.username,
+        username: this.state.email,
         attributes: attributes,
       });
+
+      await console.log('Auth: ', user)
   
       // console.log('USER OBJECT: ', JSON.stringify(user))
       // console.log('Username: ', user.username)
@@ -55,7 +57,7 @@ class SignUpScreen extends Component {
   confirm = async () => {
     try {
 
-      await Auth.confirmSignUp(this.state.username, this.state.code); 
+      await Auth.confirmSignUp(this.state.email, this.state.code); 
       this.props.navigation.navigate('SignIn');
     } catch(e) {
       console.log('SignUp error: ', e)
@@ -92,7 +94,7 @@ class SignUpScreen extends Component {
     <Container>
     <Content>
           <Form>
-          <Item floatingLabel>
+          {/* <Item floatingLabel>
               <Label>Sign-In Username</Label>
               <Input 
               placeholder=""
@@ -101,7 +103,7 @@ class SignUpScreen extends Component {
               onChangeText={(username) => this.setState({username})}
               autoCapitalize="none"
               />
-            </Item>
+            </Item> */}
             {/* 
             <Item floatingLabel>
               <Label>Last Name</Label>
@@ -147,7 +149,7 @@ class SignUpScreen extends Component {
             <Text style={{textAlign: 'center', fontSize: 14}}>Password must include at least 1 capital, 1 lowercase letter, 1 number and 1 special character.</Text>
             <Text>{'\n'}</Text>
 {
-  this.state.email.length > 0 && this.state.password.length > 0 ?
+  this.state.email.length > 0 && this.state.password.length > 7 ?
   (
     <Button full style={{backgroundColor: "#6200EE", color: "white", height: 80}} onPress={() => this.register()}><Text style={{color: "white", fontSize: 20}}>Sign Up</Text></Button>
     ) : (
