@@ -14,8 +14,8 @@ export default class CreatEventScreen extends Component {
             description: "",
             start: "",
             end: "",
-            link: "meet.google.com/bch-dizr-dkj",
-            organizerId: '1ef9e44b-17d7-4ca5-8fc6-81bcd01bc2e3',
+            link: "meet.google.com/nvj-yccv-gji",
+            mentorId: 'bdaad57c-2183-468a-a114-493c19327762',
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false
 
@@ -26,7 +26,7 @@ export default class CreatEventScreen extends Component {
           
           const body = {
               id: uuidv4(),
-              organizerId: this.state.organizerId,
+              mentorId: this.state.mentorId,
               name: this.state.name,
               description: this.state.description,
               link: this.state.link,
@@ -36,7 +36,7 @@ export default class CreatEventScreen extends Component {
               createdAt: Date.now()
             }
             try {
-                const response = await API.post('eventscrud', '/events', {body})
+                const response = await API.post('events', '/events', {body})
                 console.log('Lambda Response: ', response)
             } catch (e) {
                 console.log('ERROR: ', e)

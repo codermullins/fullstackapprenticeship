@@ -16,7 +16,7 @@ class ProfileScreen extends Component {
   async componentDidMount() {
     const id = await AsyncStorage.getItem('id')
     await console.log(id)
-    const profile = await API.get('profile', `/profile/${id}`)
+    const profile = await API.get('members', `/members/${id}`)
     await this.setState({ profile: profile[0] })
     await console.log(this.state.profile)
     // const percent = this.state.profile

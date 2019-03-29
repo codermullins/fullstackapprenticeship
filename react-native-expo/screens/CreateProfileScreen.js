@@ -40,7 +40,7 @@ export default class CreateProfileScreen extends Component {
             city: this.state.city,
             region: this.state.region,
             country: this.state.country,
-            mentor: '1ef9e44b-17d7-4ca5-8fc6-81bcd01bc2e3',
+            mentor: 'bdaad57c-2183-468a-a114-493c19327762',
             tRank: "Apprentice",
             github: this.state.github,
             product: prodId,
@@ -58,7 +58,7 @@ export default class CreateProfileScreen extends Component {
 
             try {
                 await console.log('Body for create profile: ', body)
-                const response = await API.post('profile', '/profile', {body})
+                const response = await API.post('members', '/members', {body})
                 console.log('Lambda Response: ', response)
                 // const apprenticeship = await API.post('apprenticeship', '/apprenticeship', {apprentice});
                 // console.log('Apprenticeship: ', apprenticeship)
