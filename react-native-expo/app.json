@@ -10,6 +10,8 @@
       "android"
     ],
     "version": "0.1.0",
+    "githubUrl": "https://github.com/fsapprenticeship/fsa-hub",
+    "primaryColor": "#7851a9",
     "orientation": "portrait",
     "icon": "./assets/fsa.png",
     "splash": {
@@ -25,6 +27,10 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "community.fsa.mobile",
+      "googleServicesFile": "./google-services.json"
   }
+}
 }
