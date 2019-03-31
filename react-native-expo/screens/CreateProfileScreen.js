@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Notifications } from "expo";
 import { API, Auth } from "aws-amplify";
 import { Container, Content, Form, Item, Input, Label, Button, Header } from 'native-base';
 import uuidv4 from "uuid";
@@ -20,30 +21,34 @@ export default class CreateProfileScreen extends Component {
             dob: "",
             mbriggs: "",
             startDateTimePickerVisible: false,
-            endDateTimePickerVisible: false
+            endDateTimePickerVisible: false,
+            expoToken: ""
 
         }
     }
 
     async componentDidMount() {
-        await console.log('Create Profile Mounted')
+        const notificationToken = await Notifications.getExpoPushTokenAsync();
+        console.log('Notification Token: ', notificationToken)
+        this.setState({ expoToken: notificationToken})
     }
      
       createProfile = async () => {
         const id = await AsyncStorage.getItem('id')
-
+        
           const prodId = uuidv4();
           const body = {
             id: id,
             name: this.state.name,
             xp: "0",
             city: this.state.city,
-            region: this.state.region,
+            // region: this.state.region,
             country: this.state.country,
             mentor: 'bdaad57c-2183-468a-a114-493c19327762',
             tRank: "Apprentice",
             github: this.state.github,
             product: prodId,
+            expo: this.state.expoToken,
             createdAt: new Date(),
             }
 
@@ -70,7 +75,7 @@ export default class CreateProfileScreen extends Component {
             this.setState({
                 name: "",
                 city: "",
-                region: "",
+                // region: "",
                 country: "",
                 github: "",
            
@@ -94,9 +99,6 @@ export default class CreateProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-                       
-
-
                         <Item floatingLabel>
                         <Label>City</Label>
                             <Input 
@@ -106,8 +108,7 @@ export default class CreateProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-
-                        <Item floatingLabel>
+                        {/* <Item floatingLabel>
                         <Label>Region</Label>
                             <Input 
                             returnKeyType="search"
@@ -115,8 +116,7 @@ export default class CreateProfileScreen extends Component {
                             onChangeText={(region) => this.setState({region})}
                             autoCapitalize="none"
                             />
-                        </Item> 
-
+                        </Item>  */}
                         <Item floatingLabel>
                         <Label>Country</Label>
                             <Input 
@@ -126,8 +126,6 @@ export default class CreateProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-
-
                         <Item floatingLabel>
                         <Label>GitHub Username</Label>
                             <Input 
@@ -138,11 +136,8 @@ export default class CreateProfileScreen extends Component {
                             />
                         </Item> 
 
-                        <Text>{`\n`}</Text>
-
-
-                        
-                <Button full style={{backgroundColor: "#6200EE"}} onPress={this.createProfile}>
+                        <Text>{`\n`}</Text>   
+                    <Button full style={{backgroundColor: "#6200EE"}} onPress={this.createProfile}>
                         <Text style={{color: 'white'}}>Create Profile</Text>
                         </Button>
 

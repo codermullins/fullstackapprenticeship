@@ -12,8 +12,9 @@ export default class EditProfileScreen extends Component {
  
             name: `${this.props.navigation.state.params.profile.name}`,
             city: `${this.props.navigation.state.params.profile.city}`,
-            region: `${this.props.navigation.state.params.profile.region}`,
+            // region: `${this.props.navigation.state.params.profile.region}`,
             country: `${this.props.navigation.state.params.profile.country}`,
+            expo: `${this.props.navigation.state.params.profile.expo}`,
             // tRank: props.navigation.state.params.tRank,
             cRank: "",
             github: `${this.props.navigation.state.params.profile.github}`,
@@ -28,13 +29,10 @@ export default class EditProfileScreen extends Component {
 
     async componentDidMount() {
         await console.log(JSON.stringify(this.props.navigation.state.params))
-
         // this.setState({ profile: this.props.navigation.state.params.profile})
         // await console.log(this.state.profile)
     }
      
-      
-
         editProfile = async () => {
             const id = await AsyncStorage.getItem('id')
             await console.log('Id: ', id)
@@ -43,11 +41,12 @@ export default class EditProfileScreen extends Component {
                 mentor: 'f6060e36-38ad-452a-a1f8-3bedbddca28d',
                 name: this.state.name,
                 city: this.state.city,
-                region: this.state.region,
+                // region: this.state.region,
                 country: this.state.country,
                 tRank: "Developer",
                 github: this.state.github,
-                xp: this.state.xp
+                xp: this.state.xp,
+                expo: this.state.expo
                 }
               try {
                   const response = await API.put('profile', `/profile`, {body})
@@ -69,8 +68,6 @@ export default class EditProfileScreen extends Component {
             <Container>
                 <Content>
                     <Form>
-                        
-
                     <Item stackedLabel>
                         <Label>Name</Label>
                             <Input 
@@ -80,12 +77,8 @@ export default class EditProfileScreen extends Component {
                             onChangeText={(name) => this.setState({name})}
                             autoCapitalize="none"
                             />
-                        </Item>  
-                       
+                        </Item>                  
                         <Text>{`\n`}</Text>
-                        
-
-
                         <Item stackedLabel>
                         <Label>City</Label>
                             <Input 
@@ -95,10 +88,8 @@ export default class EditProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-
-                        <Text>{`\n`}</Text>
-
-                        <Item stackedLabel>
+                        {/* <Text>{`\n`}</Text> */}
+                        {/* <Item stackedLabel>
                         <Label>Region</Label>
                             <Input 
                             returnKeyType="search"
@@ -106,8 +97,7 @@ export default class EditProfileScreen extends Component {
                             onChangeText={(region) => this.setState({region})}
                             autoCapitalize="none"
                             />
-                        </Item> 
-
+                        </Item>  */}
                         <Text>{`\n`}</Text>
                         <Item stackedLabel>
                         <Label>Country</Label>
@@ -119,9 +109,7 @@ export default class EditProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-
                         <Text>{`\n`}</Text>
-
                         <Item stackedLabel>
                         <Label>GitHub Username</Label>
                             <Input 
@@ -137,11 +125,6 @@ export default class EditProfileScreen extends Component {
                         <Button full style={{backgroundColor: "#6200EE"}} onPress={this.editProfile}>
                         <Text style={{color: 'white'}}>Edit Name</Text>
                         </Button>
-
-
-                        
-                
-
                     </Form>
                 </Content>
             </Container>

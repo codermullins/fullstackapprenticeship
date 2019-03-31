@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native';
+import { Notifications, Permissions } from "expo"
 import {
   RkButton,
   RkText,
@@ -46,27 +47,44 @@ export default class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
-    const session = await Auth.currentSession()    
+    const session = await Auth.currentSession()   
+    Permissions.askAsync(Permissions.NOTIFICATIONS)
+
+     
     try {
       const username = await session.accessToken.payload.username;
       const token = await session.accessToken.jwtToken;
       const id = await session.accessToken.payload.sub;
       const values = [['accessToken', token], ['username', username], ['id', id]]
       await AsyncStorage.multiSet(values)
+
+      await this.fetchEvents();
+      await this.fetchProfile(id)
+
+      // const notificationToken = await Notifications.getExpoPushTokenAsync();
+      // console.log('Notification Token: ', notificationToken)
       
-      const response = await API.get('events', `/events/bdaad57c-2183-468a-a114-493c19327762`)
-      // console.log('List of events: ', response)
-      const orderedArray = orderBy(response, function(item) {return item.start})
-      this.setState({ events: orderedArray })
-
-      const profile = await API.get('members', `/members/${id}`)
-      await this.setState({ profile: profile[0] })
-      await console.log(this.state.profile)
-
     } catch(e) {
       console.log(e)
     }
   }
+  
+  async fetchEvents() {
+    const response = await API.get('events', `/events/bdaad57c-2183-468a-a114-493c19327762`)
+    // console.log('List of events: ', response)
+    const orderedArray = orderBy(response, function(item) {return item.start})
+    this.setState({ events: orderedArray })
+
+  }
+  
+  async fetchProfile(id) {
+    const profile = await API.get('members', `/members/${id}`)
+    await this.setState({ profile: profile[0] })
+    await console.log(this.state.profile)
+    
+  }
+
+  
 
   renderEvents = (events) => {
     return(
@@ -83,7 +101,9 @@ export default class HomeScreen extends React.Component {
                 link={event.link}
                 // avatar={require('../assets/Apprentice.png')}
                 />
-        ) : <View key={i}><Text style={{textAlign: 'center', fontStyle: 'italic', paddingBottom: 20}}>No Events Yet</Text></View>
+        ) : <View key={i}>
+        {/* <Text style={{textAlign: 'center', fontStyle: 'italic', paddingBottom: 20}}>No Events Yet</Text> */}
+        </View>
         ))}
         </View>
       )
@@ -160,7 +180,7 @@ export default class HomeScreen extends React.Component {
           </RkCard> */}
           <Text>{'\n'}</Text>
 
-          {/* <RkCard>
+          <RkCard>
                 <View style={{ marginBottom: 20 }}>
                   <RkText rkType='header xxlarge' >Sandbox</RkText>
                 </View>
@@ -168,7 +188,7 @@ export default class HomeScreen extends React.Component {
                   <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
                   <RkButton rkType='clear ' >EXPLORE</RkButton>
                 </View>
-          </RkCard>   */}
+          </RkCard>  
 
           <Text style={{textAlign: 'center', fontSize: 20}}>Upcoming Events</Text>
           <Text>{'\n'}</Text>
