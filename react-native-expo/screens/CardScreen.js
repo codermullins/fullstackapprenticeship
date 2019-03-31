@@ -33,27 +33,54 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  async submit() {
+    let obj = [{
+      to: 'ExponentPushToken[wunh0HBmjI2FA6kkPk_kDW]',
+      data: {key: 'value'},
+      title: 'Big Money',
+      body: 'I love women',
+      // ttl: 0,
+      priority: 'high',
+      // android: {
+      //     channelId: params.channelId
+      // }
+    },
+    {
+      to: 'ExponentPushToken[wunh0HBmjI2FA6kkPk_kDW]',
+      data: {key: 'value'},
+      title: 'Big Money',
+      body: 'I love women',
+      // ttl: 0,
+      priority: 'high',
+      // android: {
+      //     channelId: params.channelId
+      // }
+    }]
+    // let { token } = await this.props.stripe.createToken({ name: "Mikhael"});
+    let uri = 'https://exp.host/--/api/v2/push/send'
+    let response = await fetch(uri, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(obj)
+    })
+    try {
+      await console.log('Response: ', response)
+      // await console.log(response._bodyInit)
+      // let responseBody = response._bodyInit
+      // await console.log('Response body type: ', typeof(responseBody))
+      // await console.log(JSON.parse(responseBody))
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   render() {
     const likeStyle = [styles.buttonIcon, { color: RkTheme.colors.accent }];
     const iconButton = [styles.buttonIcon, { color: RkTheme.current.colors.text.hint }];
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
-        <Header>
-          <Left>
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Ionicons name="md-menu" size={32} />
-            </TouchableOpacity>
-          </Left>
-          <Body>
-            <Title>FSA Feed</Title>
-          </Body>
-          <Right>
-            <Button hasText transparent>
-              <Text></Text>
-            </Button>
-          </Right>
-        </Header>
+        
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
@@ -87,6 +114,14 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
       <Text>{'\n'}</Text> 
+
+
+
+      <RkButton onPress={this.submit}>
+        <RkText>Send test Notification</RkText>
+      </RkButton>
+
+      <Text>{'\n'}</Text>
          <RkCard>
             <View rkCardHeader={true}>
               <View>
