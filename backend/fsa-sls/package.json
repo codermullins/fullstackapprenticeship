@@ -28,6 +28,7 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.3",
+    "expo-server-sdk": "^3.2.0",
     "express": "^4.16.4",
     "serverless-http": "^1.9.1",
     "source-map-support": "^0.4.18",
