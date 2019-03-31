@@ -26,7 +26,7 @@ import SubcategoriesScreen from '../screens/SubcategoriesScreen';
 import ContentScreen from "../screens/ContentScreen";
 import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
-import PaymentScreen from "../screens/PaymentScreen";
+import WebPaymentScreen from "../screens/WebPaymentScreen";
 import ExperienceScreen from "../screens/ExperienceScreen";
 import AchievementScreen from "../screens/AchievementScreen"
 
@@ -41,7 +41,7 @@ const AuthStackNavigator = createStackNavigator({
 const FeedNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
     BlueprintScreen: { screen: BlueprintScreen },
-    PaymentScreen: { screen: PaymentScreen },
+    WebPaymentScreen: { screen: WebPaymentScreen },
     Subcategories: { screen: SubcategoriesScreen },
     Content: { screen: ContentScreen },
     SandboxScreen: { screen: SandboxScreen },
@@ -102,36 +102,7 @@ const PreviewNavigator = createStackNavigator({
 },
 })
 
-// const AppTabNavigator = createBottomTabNavigator(
-//     {
-//       Home: {
-//         screen: FeedNavigator,
-//         navigationOptions: {
-//           tabBarLable: 'Home',
-//           tabBarIcon: ({ tintColor }) => (
-//             <Ionicons name="ios-home" size={28} color={tintColor} />
-//           ),
-//         },
-//       },
-//       // Profile: {
-//       //   screen: ProfileScreen,
-//       //   navigationOptions: {
-//       //     tabBarIcon: ({ tintColor }) => (
-//       //       <Entypo name="user" size={28} color={tintColor} />
-//       //     ),
-//       //   },
-//       // },
-//     },
-//     {
-//       tabBarOptions: {
-//         activeTintColor: '#6200EE',
-//         inactiveTintColor: '#151515',
-//       },
-//     },
-//   );
-
 const AppDrawerNavigator = createDrawerNavigator({
-    // Auth: AuthStackNavigator,
     Home: FeedNavigator,
     'Create Event': EventNavigator,
     'Logout': { screen: SettingsScreen },
