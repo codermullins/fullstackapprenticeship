@@ -43,9 +43,43 @@ functions:
       - http:
           path: hello
           method: get
-  
   app:
     handler: index.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+  create:
+    handler: users.create
+    events:
+      - http:
+          path: users
+          method: post
+          cors: true
+  getOne:
+    handler: users.getOne
+    events:
+      - http:
+          path: users/{id}
+          method: get
+          cors: true
+  getAll:
+    handler: users.getAll
+    events:
+     - http:
+         path: users
+         method: get
+         cors: true
+  update:
+    handler: users.update
+    events:
+     - http:
+         path: users/{id}
+         method: put
+         cors: true
+  delete:
+    handler: users.delete
+    events:
+     - http:
+         path: users/{id}
+         method: delete
+         cors: true
