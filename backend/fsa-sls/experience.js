@@ -1,90 +1,90 @@
 'use strict';
 
 require('dotenv').config({ path: './variables.env' });
-const User = require('./models/User');
+const Experience = require('./models/Experience');
 const mongoose = require('mongoose')
 
-module.exports.create = (event, context, callback) => {
+module.exports.createExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.create(JSON.parse(event.body))
+      Experience.create(JSON.parse(event.body))
     )
-    .then(user => callback(null, {
+    .then(experience => callback(null, {
       statusCode: 200,
-      body: JSON.stringify(user)
+      body: JSON.stringify(experience)
     }))
     .catch(err => callback(null, {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Could not create the user.'
+      body: 'Could not create the experience.'
     }));
 }
 
-module.exports.getOne = (event, context, callback) => {
+module.exports.getOneExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.findById(event.pathParameters.id)
+      Experience.findById(event.pathParameters.id)
     )
-    .then(user => callback(null, {
+    .then(experience => callback(null, {
       statusCode: 200,
-      body: JSON.stringify(user)
+      body: JSON.stringify(experience)
     }))
     .catch(err => callback(null, {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Could not fetch the user.'
+      body: 'Could not fetch the experience.'
     }));
 };
 
-module.exports.getAll = (event, context, callback) => {
+module.exports.getAllExperiences = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.find()
+      Experience.find()
     )
-    .then(users => callback(null, {
+    .then(experiences => callback(null, {
       statusCode: 200,
-      body: JSON.stringify(users)
+      body: JSON.stringify(experiences)
     }))
     .catch(err => callback(null, {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Could not fetch the users.'
+      body: 'Could not fetch the experiences.'
     }))
 };
 
-module.exports.update = (event, context, callback) => {
+module.exports.updateExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), { new: true })
+      Experience.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), { new: true })
     )
-    .then(user => callback(null, {
+    .then(experience => callback(null, {
       statusCode: 200,
-      body: JSON.stringify(user)
+      body: JSON.stringify(experience)
     }))
     .catch(err => callback(null, {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Could not fetch the users.'
+      body: 'Could not fetch the experiences.'
     }));
 };
 
-module.exports.delete = (event, context, callback) => {
+module.exports.deleteExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.findByIdAndRemove(event.pathParameters.id)
+      Experience.findByIdAndRemove(event.pathParameters.id)
     )
-    .then(user => callback(null, {
+    .then(experience => callback(null, {
       statusCode: 200,
-      body: JSON.stringify({ message: 'Removed user with id: ' + user.id, user: user })
+      body: JSON.stringify({ message: 'Removed experience with id: ' + experience.id, experience: experience })
     }))
     .catch(err => callback(null, {
       statusCode: err.statusCode || 500,
       headers: { 'Content-Type': 'text/plain' },
-      body: 'Could not fetch the users.'
+      body: 'Could not fetch the experiences.'
     }));
 };
