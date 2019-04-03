@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
 const UserSchema = new mongoose.Schema({ 
   id: String,
-  firstName: String,
-  lastName: String,
+  fName: String,
+  lName: String,
   mentor: String,
+  xp: Number,
   apprenticeshipId: String,
+  productId: String,
   masteryId: String,
   experience: String,   
   communityRank: String,
@@ -16,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   stripe: String,
   paypal: String,
   country: String,
+  expo: String,
   createdAt: Date,
 
 });

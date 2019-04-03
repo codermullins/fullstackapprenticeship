@@ -1,5 +1,5 @@
 # NOTE: update this with your service name
-service: fsa-sls
+service: fsa
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
@@ -16,25 +16,10 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
-  stage: dev
-  region: us-east-1
-  # To load environment variables externally
-  # rename env.example to env.yml and uncomment
-  # the following line. Also, make sure to not
-  # commit your env.yml.
-  #
-  #environment: ${file(env.yml):${self:provider.stage}}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+  stage: prod
+  region: us-west-2
+  memorySize: 128
+  timeout: 10
 
 functions:
   hello:
@@ -50,6 +35,8 @@ functions:
       - http: 'ANY {proxy+}'
   create:
     handler: users.create
+    environment:
+      DB: ${ssm:mongo}
     events:
       - http:
           path: users
@@ -57,6 +44,8 @@ functions:
           cors: true
   getOne:
     handler: users.getOne
+    environment:
+      DB: ${ssm:mongo}
     events:
       - http:
           path: users/{id}
@@ -64,6 +53,8 @@ functions:
           cors: true
   getAll:
     handler: users.getAll
+    environment:
+      DB: ${ssm:mongo}
     events:
      - http:
          path: users
@@ -71,6 +62,8 @@ functions:
          cors: true
   update:
     handler: users.update
+    environment:
+      DB: ${ssm:mongo}
     events:
      - http:
          path: users/{id}
@@ -78,43 +71,45 @@ functions:
          cors: true
   delete:
     handler: users.delete
+    environment:
+      DB: ${ssm:mongo}
     events:
      - http:
          path: users/{id}
          method: delete
          cors: true
-  createExperience:
-    handler: experience.createExperience
-    events:
-      - http:
-          path: experience
-          method: post
-          cors: true
-  getOneExperience:
-    handler: experience.getOneExperience
-    events:
-      - http:
-          path: experience/{id}
-          method: get
-          cors: true
-  getAllExperiences:
-    handler: experience.getAllExperiences
-    events:
-     - http:
-         path: experience
-         method: get
-         cors: true
-  updateExperience:
-    handler: experience.updateExperience
-    events:
-     - http:
-         path: experience/{id}
-         method: put
-         cors: true
-  deleteExperience:
-    handler: experience.delete
-    events:
-     - http:
-         path: experience/{id}
-         method: delete
-         cors: true
+  # createExperience:
+  #   handler: experience.createExperience
+  #   events:
+  #     - http:
+  #         path: experience
+  #         method: post
+  #         cors: true
+  # getOneExperience:
+  #   handler: experience.getOneExperience
+  #   events:
+  #     - http:
+  #         path: experience/{id}
+  #         method: get
+  #         cors: true
+  # getAllExperiences:
+  #   handler: experience.getAllExperiences
+  #   events:
+  #    - http:
+  #        path: experience
+  #        method: get
+  #        cors: true
+  # updateExperience:
+  #   handler: experience.updateExperience
+  #   events:
+  #    - http:
+  #        path: experience/{id}
+  #        method: put
+  #        cors: true
+  # deleteExperience:
+  #   handler: experience.delete
+  #   events:
+  #    - http:
+  #        path: experience/{id}
+  #        method: delete
+  #        cors: true

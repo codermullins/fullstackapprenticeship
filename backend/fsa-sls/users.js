@@ -1,6 +1,4 @@
-'use strict';
-
-require('dotenv').config({ path: './variables.env' });
+// require('dotenv').config({ path: './variables.env' });
 const User = require('./models/User');
 const mongoose = require('mongoose')
 
@@ -25,7 +23,8 @@ module.exports.getOne = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.findById(event.pathParameters.id)
+      // User.findById(event.pathParameters.id)
+      User.find({ id: event.pathParameters.id})
     )
     .then(user => callback(null, {
       statusCode: 200,
@@ -59,7 +58,7 @@ module.exports.update = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), { new: true })
+      User.findOneAndUpdate({ id: event.pathParameters.id}, JSON.parse(event.body), { new: true })
     )
     .then(user => callback(null, {
       statusCode: 200,
@@ -76,7 +75,7 @@ module.exports.delete = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      User.findByIdAndRemove(event.pathParameters.id)
+      User.findOneAndRemove({ id: event.pathParameters.id })
     )
     .then(user => callback(null, {
       statusCode: 200,
