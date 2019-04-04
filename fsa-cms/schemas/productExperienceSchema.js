@@ -23,6 +23,11 @@ export default {
             type: 'string'
         },
         {
+            name: 'priority',
+            title: 'Priority',
+            type: 'string'
+        },
+        {
             name: 'req1',
             title: 'Requirement 1',
             type: 'string'

@@ -1,6 +1,3 @@
-'use strict';
-
-require('dotenv').config({ path: './variables.env' });
 const Experience = require('./models/Experience');
 const mongoose = require('mongoose')
 
@@ -25,7 +22,7 @@ module.exports.getOneExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      Experience.findById(event.pathParameters.id)
+      Experience.find({ id: event.pathParameters.id})
     )
     .then(experience => callback(null, {
       statusCode: 200,
@@ -59,7 +56,7 @@ module.exports.updateExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      Experience.findByIdAndUpdate(event.pathParameters.id, JSON.parse(event.body), { new: true })
+      Experience.findOneAndUpdate({ id: event.pathParameters.id }, JSON.parse(event.body), { new: true })
     )
     .then(experience => callback(null, {
       statusCode: 200,
@@ -76,7 +73,7 @@ module.exports.deleteExperience = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
   return mongoose.connect(process.env.DB)
     .then(() =>
-      Experience.findByIdAndRemove(event.pathParameters.id)
+      Experience.findOneAndRemove({ id: event.pathParameters.id })
     )
     .then(experience => callback(null, {
       statusCode: 200,

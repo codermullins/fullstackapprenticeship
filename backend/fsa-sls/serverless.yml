@@ -78,38 +78,48 @@ functions:
          path: users/{id}
          method: delete
          cors: true
-  # createExperience:
-  #   handler: experience.createExperience
-  #   events:
-  #     - http:
-  #         path: experience
-  #         method: post
-  #         cors: true
-  # getOneExperience:
-  #   handler: experience.getOneExperience
-  #   events:
-  #     - http:
-  #         path: experience/{id}
-  #         method: get
-  #         cors: true
-  # getAllExperiences:
-  #   handler: experience.getAllExperiences
-  #   events:
-  #    - http:
-  #        path: experience
-  #        method: get
-  #        cors: true
-  # updateExperience:
-  #   handler: experience.updateExperience
-  #   events:
-  #    - http:
-  #        path: experience/{id}
-  #        method: put
-  #        cors: true
-  # deleteExperience:
-  #   handler: experience.delete
-  #   events:
-  #    - http:
-  #        path: experience/{id}
-  #        method: delete
-  #        cors: true
+  createExperience:
+    handler: experience.createExperience
+    environment:
+      DB: ${ssm:mongo}
+    events:
+      - http:
+          path: experience
+          method: post
+          cors: true
+  getOneExperience:
+    handler: experience.getOneExperience
+    environment:
+      DB: ${ssm:mongo}
+    events:
+      - http:
+          path: experience/{id}
+          method: get
+          cors: true
+  getAllExperiences:
+    handler: experience.getAllExperiences
+    environment:
+      DB: ${ssm:mongo}
+    events:
+     - http:
+         path: experience
+         method: get
+         cors: true
+  updateExperience:
+    handler: experience.updateExperience
+    environment:
+      DB: ${ssm:mongo}
+    events:
+     - http:
+         path: experience/{id}
+         method: put
+         cors: true
+  deleteExperience:
+    handler: experience.deleteExperience
+    environment:
+      DB: ${ssm:mongo}
+    events:
+     - http:
+         path: experience/{id}
+         method: delete
+         cors: true
