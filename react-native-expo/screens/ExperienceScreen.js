@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { StyleSheet, View } from 'react-native';
 import {Container, Content, List, ListItem, Text, Left, Right, Body} from 'native-base';
 import NavButton from "../components/NavButton";
-import { fullStackApprenticeship, findingWork, cityByCity } from "../directories";
 import sanity from "../sanity"
 import orderBy from "lodash.orderby"
 
@@ -12,12 +11,16 @@ class ExperienceScreen extends Component {
         this.state = {
             links: [],
             schema: [],
+            experience: []
         }
     }
 
     // we want to pass the subcategory through Props as Schema in Nav
     async componentDidMount() {
         const schema = this.props.navigation.getParam('schema', 'None')
+        const experience = this.props.navigation.getParam('experience', 'none')
+        console.log('Props Experience: ', experience)
+        this.setState({ experience: experience })
         await this.sanityQuery(schema)
         // this.determineSchema(schema)
         // await console.log('Test', this.state.links)
@@ -28,19 +31,6 @@ class ExperienceScreen extends Component {
         const links = await sanity.fetch(query);
         this.setState({ links })
       }
-
-    determineSchema(schema) {
-        switch (schema) {
-            case 'fullStackApprenticeship':
-                this.setState({ schema: fullStackApprenticeship })
-                break;
-            case 'findingWork':
-                this.setState({ schema: findingWork })
-                break;
-            case 'cityByCity':
-                this.setState({ schema: cityByCity })
-        }
-    }
 
     renderExperience() {
         const orderedLinks = orderBy(this.state.links, function(item) { return item.title})

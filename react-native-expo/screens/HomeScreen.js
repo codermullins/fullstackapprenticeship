@@ -24,22 +24,16 @@ import { Ionicons } from "@expo/vector-icons"
 import orderBy from "lodash.orderby";
 import { API, Auth } from "aws-amplify"
 
-var BUTTONS = [
-  { text: "Taban Cosmos", icon: "american-football", iconColor: "#2c8ef4" },
-  { text: "Dave Parker", icon: "analytics", iconColor: "#f42ced" },
-  { text: "Nick Ellingson", icon: "aperture", iconColor: "#ea943b" },
-  // { text: "Delete", icon: "trash", iconColor: "#fa213b" },
-  { text: "Cancel", icon: "close", iconColor: "#fa213b" }
-];
-// var DESTRUCTIVE_INDEX = 3;
-var CANCEL_INDEX = 4;
-
 export default class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      events: []
+      events: [],
+      profile: [],
+      product: [],
+      apprenticeship: []
+
     }
   }
   static navigationOptions = {
@@ -60,6 +54,13 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchEvents();
       await this.fetchProfile(id)
+      // await console.log('Profile: ', this.state.profile)
+      await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
+      // await console.log('Apprenticeship: ', this.state.apprenticeship)
+
+      await this.fetchProduct(this.state.profile.productId);
+      // await console.log('Product: ', this.state.product)
+      
 
       // const notificationToken = await Notifications.getExpoPushTokenAsync();
       // console.log('Notification Token: ', notificationToken)
@@ -71,17 +72,23 @@ export default class HomeScreen extends React.Component {
   
   async fetchEvents() {
     const response = await API.get('events', `/events/bdaad57c-2183-468a-a114-493c19327762`)
-    // console.log('List of events: ', response)
     const orderedArray = orderBy(response, function(item) {return item.start})
     this.setState({ events: orderedArray })
-
   }
   
   async fetchProfile(id) {
-    const profile = await API.get('members', `/members/${id}`)
+    const profile = await API.get('fsa', `/users/${id}`)
     await this.setState({ profile: profile[0] })
-    await console.log(this.state.profile)
-    
+  }
+
+  async fetchProduct(id) {
+    const product = await API.get('fsa', `/experience/${id}`)
+    await this.setState({ product: product[0] })
+  }
+
+  async fetchApprenticeship(id) {
+    const apprenticeship = await API.get('fsa', `/experience/${id}`)
+    await this.setState({ apprenticeship: apprenticeship[0] })
   }
 
   
@@ -89,6 +96,9 @@ export default class HomeScreen extends React.Component {
   renderEvents = (events) => {
     return(
       <View>
+        {!events ? null :
+          <Text style={{textAlign: 'center', fontSize: 20}}>Upcoming Events{'\n'}</Text> 
+        }
       {events.map((event, i) => (
         new Date().getTime() < new Date(event.start).getTime() ? (
           <Event
@@ -156,18 +166,7 @@ export default class HomeScreen extends React.Component {
                 </View>
               </View>
               <RkButton rkType='clear'>
-              <Icon name="group" style={iconButton} onPress={() =>
-            ActionSheet.show(
-              {
-                options: BUTTONS,
-                cancelButtonIndex: CANCEL_INDEX,
-                // destructiveButtonIndex: DESTRUCTIVE_INDEX,
-                title: "Switch Instructors"
-              },
-              buttonIndex => {
-                this.setState({ clicked: BUTTONS[buttonIndex] });
-              }
-            )}/>
+              <Icon name="group" style={iconButton} />
                <Text>{'\n'}</Text>
               <Text>Switch Instructor</Text> 
 
@@ -178,9 +177,8 @@ export default class HomeScreen extends React.Component {
               </RkButton> 
             </View>            
           </RkCard> */}
-          <Text>{'\n'}</Text>
 
-          <RkCard>
+          {/* <RkCard>
                 <View style={{ marginBottom: 20 }}>
                   <RkText rkType='header xxlarge' >Sandbox</RkText>
                 </View>
@@ -188,10 +186,10 @@ export default class HomeScreen extends React.Component {
                   <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
                   <RkButton rkType='clear ' >EXPLORE</RkButton>
                 </View>
-          </RkCard>  
+          </RkCard>   */}
 
-          <Text style={{textAlign: 'center', fontSize: 20}}>Upcoming Events</Text>
           <Text>{'\n'}</Text>
+          
 
           {this.renderEvents(this.state.events)}
 
@@ -206,7 +204,9 @@ export default class HomeScreen extends React.Component {
               </View>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema'
+                schema: 'productExperienceSchema',
+                experience: this.state.product
+
               })}>
             <Image rkCardImg={true} source={require('../assets/product.png')} />
               </TouchableOpacity>
@@ -242,7 +242,8 @@ export default class HomeScreen extends React.Component {
               </View>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema'
+                schema: 'apprenticeExperienceSchema',
+                experience: this.state.apprenticeship
               })}>
             <Image rkCardImg={true} source={require('../assets/exp.png')} />
             </TouchableOpacity>
