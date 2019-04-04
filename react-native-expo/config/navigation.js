@@ -28,7 +28,10 @@ import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
 import WebPaymentScreen from "../screens/WebPaymentScreen";
 import ExperienceScreen from "../screens/ExperienceScreen";
-import AchievementScreen from "../screens/AchievementScreen"
+import AchievementScreen from "../screens/AchievementScreen";
+import CreatePaymentRequestScreen from "../screens/CreatePaymentRequestScreen"
+import Students from "../components/StudentList";
+import PaymentScreen from "../screens/PaymentScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -105,7 +108,10 @@ const PreviewNavigator = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
     Home: FeedNavigator,
     'Create Event': EventNavigator,
+    'Create Payment': CreatePaymentRequestScreen,
+    'My Students': Students,
     'Logout': { screen: SettingsScreen },
+    'Payment': { screen: PaymentScreen }
     // 'Preview: Messages': ChatStackNavigator,
     // 'Preview: Dashboard': PreviewNavigator
 });

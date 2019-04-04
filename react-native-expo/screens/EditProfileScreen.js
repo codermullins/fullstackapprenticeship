@@ -10,7 +10,8 @@ export default class EditProfileScreen extends Component {
 
         this.state = {
  
-            name: `${this.props.navigation.state.params.profile.name}`,
+            fName: `${this.props.navigation.state.params.profile.fName}`,
+            lName: `${this.props.navigation.state.params.profile.lName}`,
             city: `${this.props.navigation.state.params.profile.city}`,
             // region: `${this.props.navigation.state.params.profile.region}`,
             country: `${this.props.navigation.state.params.profile.country}`,
@@ -26,30 +27,23 @@ export default class EditProfileScreen extends Component {
 
         }
     }
-
-    async componentDidMount() {
-        await console.log(JSON.stringify(this.props.navigation.state.params))
-        // this.setState({ profile: this.props.navigation.state.params.profile})
-        // await console.log(this.state.profile)
-    }
      
         editProfile = async () => {
             const id = await AsyncStorage.getItem('id')
             await console.log('Id: ', id)
             const body = {
-                id: id,
-                mentor: 'f6060e36-38ad-452a-a1f8-3bedbddca28d',
-                name: this.state.name,
+                // id: id,
+                // mentor: 'f6060e36-38ad-452a-a1f8-3bedbddca28d',
+                fName: this.state.fName,
+                lName: this.state.lName,
                 city: this.state.city,
-                // region: this.state.region,
                 country: this.state.country,
                 tRank: "Developer",
                 github: this.state.github,
-                xp: this.state.xp,
                 expo: this.state.expo
                 }
               try {
-                  const response = await API.put('profile', `/profile`, {body})
+                  const response = await API.put('fsa', `/users/${id}`, {body})
                   console.log('Lambda Response: ', response)
               } catch (e) {
                   console.log('ERROR: ', e)
@@ -63,20 +57,28 @@ export default class EditProfileScreen extends Component {
           }
 
     render() {
-        const name = `${this.props.navigation.state.params.profile.name}`
         return(
             <Container>
                 <Content>
                     <Form>
-                    <Item stackedLabel>
-                        <Label>Name</Label>
+                    <Item floatingLabel>
+                        <Label>First Name</Label>
                             <Input 
-                            placeholder={name}
                             returnKeyType="search"
-                            value={this.state.name}
-                            onChangeText={(name) => this.setState({name})}
+                            value={this.state.fName}
+                            onChangeText={(fName) => this.setState({fName})}
                             autoCapitalize="none"
                             />
+                        </Item> 
+                        <Item floatingLabel>
+                        
+                        <Label>Last Name</Label>
+                            <Input 
+                            returnKeyType="search"
+                            value={this.state.lName}
+                            onChangeText={(lName) => this.setState({lName})}
+                            autoCapitalize="none"
+                                />
                         </Item>                  
                         <Text>{`\n`}</Text>
                         <Item stackedLabel>
