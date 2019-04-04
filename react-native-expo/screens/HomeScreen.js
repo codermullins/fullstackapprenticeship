@@ -31,10 +31,11 @@ export default class HomeScreen extends React.Component {
     this.state = {
       events: [],
       profile: [],
-      product: [],
-      apprenticeship: []
+      product: { xpEarned: 0, achievements: 0 },
+      apprenticeship: { xpEarned: 0, achievements: 0 }
 
     }
+    this.updateExperience = this.updateExperience.bind(this);
   }
   static navigationOptions = {
     header: null,
@@ -55,11 +56,13 @@ export default class HomeScreen extends React.Component {
       await this.fetchEvents();
       await this.fetchProfile(id)
       // await console.log('Profile: ', this.state.profile)
+
+      await this.fetchProduct(this.state.profile.productId);
+      await console.log('Product: ', this.state.product)
+
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
       // await console.log('Apprenticeship: ', this.state.apprenticeship)
 
-      await this.fetchProduct(this.state.profile.productId);
-      // await console.log('Product: ', this.state.product)
       
 
       // const notificationToken = await Notifications.getExpoPushTokenAsync();
@@ -117,6 +120,14 @@ export default class HomeScreen extends React.Component {
         ))}
         </View>
       )
+    }
+
+    updateExperience(name, obj) {
+      if (name === 'Product') {
+        this.setState({ product: obj })
+      } else {
+        this.setState({ apprenticeship: obj})
+      }
     }
 
 
@@ -200,12 +211,13 @@ export default class HomeScreen extends React.Component {
             <View rkCardHeader={true}>
               <View>
                 <RkText rkType='header'>Preview: Portfolio Product</RkText>
-                <RkText rkType='subtitle'>Status: 0 / 2000 EXP</RkText>
+                <RkText rkType='subtitle'>Status: {this.state.product.xpEarned.toString()} / 2000 EXP</RkText>
               </View>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
                 schema: 'productExperienceSchema',
-                experience: this.state.product
+                experience: this.state.product,
+                function: this.updateExperience
 
               })}>
             <Image rkCardImg={true} source={require('../assets/product.png')} />
@@ -219,11 +231,15 @@ export default class HomeScreen extends React.Component {
               <RkButton rkType='clear link'>
                 <Icon name="check" style={likeStyle} />
                 <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema'
-              })}>0/15 Achievements</RkText>
+                schema: 'productExperienceSchema',
+                experience: this.state.product,
+                function: this.updateExperience
+              })}>{this.state.product.achievements.toString()}/15 Achievements</RkText>
               </RkButton>
               <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema'
+                schema: 'productExperienceSchema',
+                experience: this.state.product,
+                function: this.updateExperience
               })}>
                 <Icon name="send-o" style={iconButton} />
                 <RkText rkType='hint'>View Progress</RkText>
@@ -238,12 +254,13 @@ export default class HomeScreen extends React.Component {
             <View rkCardHeader={true}>
               <View>
                 <RkText rkType='header'>Preview: Apprentice => Developer</RkText>
-                <RkText rkType='subtitle'>Status: 0 / 5000 EXP</RkText>
+                <RkText rkType='subtitle'>Status: {this.state.apprenticeship.xpEarned.toString()} / 5000 EXP</RkText>
               </View>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
                 schema: 'apprenticeExperienceSchema',
-                experience: this.state.apprenticeship
+                experience: this.state.apprenticeship,
+                function: this.updateExperience
               })}>
             <Image rkCardImg={true} source={require('../assets/exp.png')} />
             </TouchableOpacity>
@@ -256,11 +273,15 @@ export default class HomeScreen extends React.Component {
               <RkButton rkType='clear link'>
                 <Icon name="check" style={likeStyle} />
                 <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema'
-              })}>0/15 Achievements</RkText>
+                schema: 'apprenticeExperienceSchema',
+                experience: this.state.apprenticeship,
+                function: this.updateExperience
+              })}>{this.state.apprenticeship.achievements.toString()}/15 Achievements</RkText>
               </RkButton>
               <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema'
+                schema: 'apprenticeExperienceSchema',
+                experience: this.state.apprenticeship,
+                function: this.updateExperience
               })}>
                 <Icon name="send-o" style={iconButton} />
                 <RkText rkType='hint'>View Progress</RkText>

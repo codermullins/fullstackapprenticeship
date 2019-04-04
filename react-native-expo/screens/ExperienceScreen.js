@@ -15,15 +15,12 @@ class ExperienceScreen extends Component {
         }
     }
 
-    // we want to pass the subcategory through Props as Schema in Nav
     async componentDidMount() {
         const schema = this.props.navigation.getParam('schema', 'None')
         const experience = this.props.navigation.getParam('experience', 'none')
         console.log('Props Experience: ', experience)
         this.setState({ experience: experience })
         await this.sanityQuery(schema)
-        // this.determineSchema(schema)
-        // await console.log('Test', this.state.links)
       }
   
       async sanityQuery(schema) {
@@ -32,21 +29,31 @@ class ExperienceScreen extends Component {
         this.setState({ links })
       }
 
-    renderExperience() {
-        const orderedLinks = orderBy(this.state.links, function(item) { return item.title})
+    renderExperience(experience) {
+        const orderedLinks = orderBy(this.state.links, function(item) { return item.priority})
+        const update = this.props.navigation.getParam('function', 'none')
         return(
           <List>
-          {orderedLinks.map((list, i) => (
+          {orderedLinks.map((list, i) => {
+            const achievementNumber = list.priority;
+            const complete = experience[achievementNumber];
+            const obj = {
+              list: list,
+              experience: experience,
+              update: update,
+              complete: complete
+            }
+            return (
             <ListItem key={i}>
               <Left>
-                  <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}{'\n'}<Text>Complete: False</Text></Text>
+                  <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}{'\n'}<Text>Complete: {`${complete}`}</Text></Text>
               </Left>
 
               <Right>
-                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={list} text={`${list.amount}XP`} />
+                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={obj} function={update} text={`${list.amount}XP`} />
               </Right>
             </ListItem>
-          )
+          )}
           )}
           </List>
         )
@@ -56,7 +63,7 @@ class ExperienceScreen extends Component {
         return (
         <Container>
             <Content>
-                { this.renderExperience()}
+                { this.renderExperience(this.state.experience)}
             </Content>
         </Container>
         )
