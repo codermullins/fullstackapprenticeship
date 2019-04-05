@@ -51,7 +51,7 @@ const FeedNavigator = createStackNavigator({
     Profile: { screen: ProfileScreen },
     EditProfile: { screen: EditProfileScreen },
     CreateProfile: { screen: CreateProfileScreen },
-
+    PaymentScreen: { screen: PaymentScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen }
   });
@@ -108,10 +108,9 @@ const PreviewNavigator = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
     Home: FeedNavigator,
     'Create Event': EventNavigator,
-    'Create Payment': CreatePaymentRequestScreen,
-    'My Students': Students,
+    // 'Create Payment': CreatePaymentRequestScreen,
+    // 'My Students': Students,
     'Logout': { screen: SettingsScreen },
-    'Payment': { screen: PaymentScreen }
     // 'Preview: Messages': ChatStackNavigator,
     // 'Preview: Dashboard': PreviewNavigator
 });

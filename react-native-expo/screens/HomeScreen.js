@@ -17,7 +17,7 @@ import {
   RkTheme,
 } from 'react-native-ui-kitten';
 import Event from "../components/Event"
-import { Header, Left, Body, Right, Button, Title, ActionSheet } from "native-base"
+import { Header, Left, Body, Right, Button, Title } from "native-base"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { UtilStyles } from '../style/styles';
 import { Ionicons } from "@expo/vector-icons"
@@ -32,7 +32,8 @@ export default class HomeScreen extends React.Component {
       events: [],
       profile: [],
       product: { xpEarned: 0, achievements: 0 },
-      apprenticeship: { xpEarned: 0, achievements: 0 }
+      apprenticeship: { xpEarned: 0, achievements: 0 },
+      xp: null
 
     }
     this.updateExperience = this.updateExperience.bind(this);
@@ -43,7 +44,9 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession()   
-    Permissions.askAsync(Permissions.NOTIFICATIONS)
+
+    
+    Platform.OS === 'android' ? Permissions.askAsync(Permissions.NOTIFICATIONS) : console.log('No iOS')
 
      
     try {
@@ -58,10 +61,14 @@ export default class HomeScreen extends React.Component {
       // await console.log('Profile: ', this.state.profile)
 
       await this.fetchProduct(this.state.profile.productId);
-      await console.log('Product: ', this.state.product)
+      // await console.log('Product: ', this.state.product)
 
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
       // await console.log('Apprenticeship: ', this.state.apprenticeship)
+
+      const xp = await this.calculateExperience()
+
+      this.setState({ xp: xp})
 
       
 
@@ -92,6 +99,13 @@ export default class HomeScreen extends React.Component {
   async fetchApprenticeship(id) {
     const apprenticeship = await API.get('fsa', `/experience/${id}`)
     await this.setState({ apprenticeship: apprenticeship[0] })
+  }
+
+  async calculateExperience() {
+    let productXP = this.state.product.xpEarned;
+    let apprenticeshipXP = this.state.apprenticeship.xpEarned;
+    const xp = productXP + apprenticeshipXP;
+    return xp;
   }
 
   
@@ -154,7 +168,10 @@ export default class HomeScreen extends React.Component {
               <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>Create Profile</Text>
             </Button>
             ) : (
-              <Button hasText onPress={() => navigation.navigate('Profile')} transparent>
+              <Button hasText onPress={() => navigation.navigate('Profile', {
+                xp: this.state.xp,
+                profile: this.state.profile
+              })} transparent>
               <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>My Profile</Text>
             </Button>
             )
@@ -378,16 +395,16 @@ export default class HomeScreen extends React.Component {
           <RkCard>
           <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Sprint Training (Premium)</RkText>
+                <RkText rkType='header'>Monthly Sprint Training</RkText>
                 {/* <RkText rkType='subtitle'>{moment(this.props.date).format('MMMM Do YYYY, h:mm:ss a').split(",")[0]} | {this.props.start} - {this.props.end}</RkText> */}
-                <RkText rkType='subtitle'>Weekly & Monthly Options</RkText>
+                <RkText rkType='subtitle'>Members Only</RkText>
               </View>
             </View>
             <View rkCardContent={true}>
-              <RkText rkType='compactCardText'>Membership Includes:{'\n'}{'\n'}
-              - Weekly Sprint Planning Meeting (Saturday/Sunday) to plan & estimate the work to be done throughout the duration of the sprint.{'\n'}{'\n'}
-              - Daily Stand-up Meetings (Morning or After-Work) during the week to check-in with your team on what you've done - what you are stuck on - and what you are working on that day. Just like a professional development team. {'\n'}{'\n'}
-              - Weekly Sprint Retrospective Meeting (Friday) to review the work that was accomplished, compare our time to our original ticket estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
+              <RkText rkType='compactCardText'>
+              Saturday/Sunday - Weekly Sprint Planning Meeting to organize & estimate the work to be done throughout the duration of the sprint.{'\n'}{'\n'}
+              Monday thru Friday - Daily Stand-up Meetings (am or pm) during the week to check-in on what you've done, are stuck on, and what you are working on that day. Accountability, structure, discipline. {'\n'}{'\n'}
+              Friday - Weekly Sprint Retrospective Meeting to review the finished work, compare the time it took compared to our original estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
               </RkText>
             </View>
             <View rkCardFooter={true} style={styles.footer}>
@@ -399,15 +416,50 @@ export default class HomeScreen extends React.Component {
                 <Icon name="clock-o" style={iconButton} />
                 <RkText rkType='hint'>1 Month</RkText>
               </RkButton>
-              {/* <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
-                amount: '245'
+              <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
+                amount: '400'
               })}>
                 <Icon name="send-o" style={iconButton} />
                 <RkText rkType='hint'>Pay Here</RkText>
-              </RkButton> */}
+              </RkButton>
             </View>
           </RkCard>
           <Text>{'\n'}</Text>
+
+          <RkCard>
+          <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Weekly Sprint Training</RkText>
+                {/* <RkText rkType='subtitle'>{moment(this.props.date).format('MMMM Do YYYY, h:mm:ss a').split(",")[0]} | {this.props.start} - {this.props.end}</RkText> */}
+                <RkText rkType='subtitle'>Members Only</RkText>
+              </View>
+            </View>
+            <View rkCardContent={true}>
+              <RkText rkType='compactCardText'>
+              Saturday/Sunday - Weekly Sprint Planning Meeting to organize & estimate the work to be done throughout the duration of the sprint.{'\n'}{'\n'}
+              Monday thru Friday - Daily Stand-up Meetings (am or pm) during the week to check-in on what you've done, are stuck on, and what you are working on that day. Accountability, structure, discipline. {'\n'}{'\n'}
+              Friday - Weekly Sprint Retrospective Meeting to review the finished work, compare the time it took compared to our original estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
+              </RkText>
+            </View>
+            <View rkCardFooter={true} style={styles.footer}>
+              <RkButton rkType='clear link accent'>
+                <Icon name="dollar" style={likeStyle} />
+                <RkText rkType='accent'>125.00</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="clock-o" style={iconButton} />
+                <RkText rkType='hint'>1 Week</RkText>
+              </RkButton>
+              <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
+                amount: '125'
+              })}>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>Pay Here</RkText>
+              </RkButton>
+            </View>
+          </RkCard>
+          <Text>{'\n'}</Text>
+
         </ScrollView>
       </View>
     );
