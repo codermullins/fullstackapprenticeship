@@ -6,7 +6,7 @@ class WelcomeScreen extends Component {
   
   async componentDidMount() {
     const token = await AsyncStorage.getItem('accessToken')
-    await console.log('Token: ', token)
+    // await console.log('Token: ', token)
   }
 
   render() {
