@@ -9,20 +9,22 @@ class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: {}
+      profile: {},
+      xp: null
     }
   }
 
   async componentDidMount() {
     const id = await AsyncStorage.getItem('id')
-    await console.log(id)
-    const profile = await API.get('fsa', `/users/${id}`)
-    await this.setState({ profile: profile[0] })
+    const xp = this.props.navigation.getParam('xp', 0)
+    const profile = this.props.navigation.getParam('profile', 'Null')
+    
+    await this.setState({ profile: profile, xp: xp })
     await console.log(this.state.profile)
   }
   render() {
 
-    const progressPercent = parseInt(this.state.profile.xp) / 5000;
+    const progressPercent = this.state.xp / 50;
 
     return (
       <Container>
@@ -43,7 +45,7 @@ class ProfileScreen extends Component {
               >
                   <Text style={{ fontSize: 18 }}>{progressPercent}%</Text>
               </ProgressCircle>
-              <Text>{parseInt(this.state.profile.xp)}/5000 EXP</Text>
+              <Text>{this.state.xp} / 5000 EXP</Text>
                 </Right>
               </View>
 
