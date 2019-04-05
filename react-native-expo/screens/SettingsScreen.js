@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Button, AsyncStorage } from 'react-native';
+import { Auth } from "aws-amplify"
 
 class SettingsScreen extends Component {
   signOut = async () => {
