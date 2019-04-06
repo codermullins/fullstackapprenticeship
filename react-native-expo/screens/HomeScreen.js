@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component {
 
     this.state = {
       events: [],
-      profile: [],
+      profile: null,
       product: { xpEarned: 0, achievements: 0 },
       apprenticeship: { xpEarned: 0, achievements: 0 },
       xp: null,
@@ -45,7 +45,7 @@ export default class HomeScreen extends React.Component {
   };
 
   async componentDidMount() {
-    const session = await Auth.currentSession()   
+    const session = await Auth.currentSession()  
 
     
     Platform.OS === 'android' ? Permissions.askAsync(Permissions.NOTIFICATIONS) : console.log('No iOS')
@@ -216,7 +216,7 @@ export default class HomeScreen extends React.Component {
 
           {this.renderEvents(this.state.events)}
 
-          {!this.state.profile === [] ? (
+          {this.state.profile !== null ? (
             <RkCard rkType='shadowed'>
             <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
