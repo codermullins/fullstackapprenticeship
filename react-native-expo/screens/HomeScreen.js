@@ -17,6 +17,7 @@ import {
   RkTheme,
 } from 'react-native-ui-kitten';
 import Event from "../components/Event"
+import Loader from "../components/Loader";
 import { Header, Left, Body, Right, Button, Title } from "native-base"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { UtilStyles } from '../style/styles';
@@ -33,7 +34,8 @@ export default class HomeScreen extends React.Component {
       profile: [],
       product: { xpEarned: 0, achievements: 0 },
       apprenticeship: { xpEarned: 0, achievements: 0 },
-      xp: null
+      xp: null,
+      loading: true
 
     }
     this.updateExperience = this.updateExperience.bind(this);
@@ -70,12 +72,14 @@ export default class HomeScreen extends React.Component {
 
       this.setState({ xp: xp})
 
-      
+      await this.stopLoading();
 
       // const notificationToken = await Notifications.getExpoPushTokenAsync();
       // console.log('Notification Token: ', notificationToken)
       
     } catch(e) {
+      // Improve error handling here
+      this.setState({ loading: false })
       console.log(e)
     }
   }
@@ -108,6 +112,10 @@ export default class HomeScreen extends React.Component {
     return xp;
   }
 
+  async stopLoading() {
+    this.setState({ loading: false })
+  }
+
   
 
   renderEvents = (events) => {
@@ -128,9 +136,7 @@ export default class HomeScreen extends React.Component {
                 link={event.link}
                 // avatar={require('../assets/Apprentice.png')}
                 />
-        ) : <View key={i}>
-        {/* <Text style={{textAlign: 'center', fontStyle: 'italic', paddingBottom: 20}}>No Events Yet</Text> */}
-        </View>
+        ) : null
         ))}
         </View>
       )
@@ -160,24 +166,10 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            <Title style={{textAlign: 'center'}}>#fsahub</Title>
+            <Title>#fsa206</Title>
           </Body>
           <Right>
-            { this.state.profile === undefined ? (
-              <Button hasText onPress={() => navigation.navigate('CreateProfile')} transparent>
-              <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>Create Profile</Text>
-            </Button>
-            ) : (
-              <Button hasText onPress={() => navigation.navigate('Profile', {
-                xp: this.state.xp,
-                profile: this.state.profile
-              })} transparent>
-              <Text style={{color: Platform.OS === 'android' ? 'white' : 'black'}}>My Profile</Text>
-            </Button>
-            )
-
-            }
-            
+            <View></View>
           </Right>
         </Header>
         <ScrollView
@@ -216,10 +208,44 @@ export default class HomeScreen extends React.Component {
                 </View>
           </RkCard>   */}
 
+          <Loader loading={this.state.loading} />
+
+
           <Text>{'\n'}</Text>
           
 
           {this.renderEvents(this.state.events)}
+
+          {!this.state.profile === [] ? (
+            <RkCard rkType='shadowed'>
+            <View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
+                xp: this.state.xp,
+                profile: this.state.profile
+              })}>
+              <Image rkCardImg={true} source={require('../assets/profiles.jpg')} />
+              <View rkCardImgOverlay={true} style={styles.overlay}>
+                <RkText rkType='header xxlarge' style={{ color: 'white' }}>My Profile</RkText>
+              </View>
+              </TouchableOpacity>
+            </View>
+          </RkCard> 
+          ) : (
+            <RkCard rkType='shadowed'>
+            <View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateProfile')}>
+              <Image rkCardImg={true} source={require('../assets/profiles.jpg')} />
+              <View rkCardImgOverlay={true} style={styles.overlay}>
+                <RkText rkType='header xxlarge' style={{ color: 'white' }}>Create Profile</RkText>
+              </View>
+              </TouchableOpacity>
+            </View>
+          </RkCard> 
+          )}
+
+          
+
+          <Text>{'\n'}</Text>
 
           <Text style={{textAlign: 'center', fontSize: 20, paddingTop: 10}}>Learn & Earn Experience</Text>
           <Text>{'\n'}</Text>
@@ -308,7 +334,37 @@ export default class HomeScreen extends React.Component {
 
           <Text>{'\n'}</Text>
 
+
+
           <Text style={{textAlign: 'center', fontSize: 20}}>Educational Resources</Text>
+          <Text>{'\n'}</Text>
+          <RkCard rkType='shadowed'>
+            <View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Subcategories', {
+            schema: "fullStackApprenticeship"
+          })}>
+              <Image rkCardImg={true} source={require('../assets/javascript.jpg')} />
+              <View rkCardImgOverlay={true} />
+              </TouchableOpacity>
+            </View>
+            <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
+              <View>
+                <RkText rkType='header xxlarge'>FSA Technical Standard</RkText>
+                <RkText rkType='subtitle'>Curated Knowledge Base</RkText>
+              </View>
+            </View>
+            <View rkCardContent={true}>
+              <RkText rkType='compactCardText'>
+                The top tutorials, articles & videos on Node.js, React, AWS & everything else needed to build scalable, performant applications.
+              </RkText>
+            </View>
+            <View rkCardFooter={true}>
+              <View style={styles.footerButtons}>
+
+              </View>
+            </View>
+          </RkCard>
+
           <Text>{'\n'}</Text>
 
           <RkCard rkType='heroImage shadowed'>
@@ -363,34 +419,7 @@ export default class HomeScreen extends React.Component {
           <Text>{'\n'}</Text>
 
           
-          <RkCard rkType='shadowed'>
-            <View>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Subcategories', {
-            schema: "fullStackApprenticeship"
-          })}>
-              <Image rkCardImg={true} source={require('../assets/javascript.jpg')} />
-              <View rkCardImgOverlay={true} />
-              </TouchableOpacity>
-            </View>
-            <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
-              <View>
-                <RkText rkType='header xxlarge'>FSA Technical Standard</RkText>
-                <RkText rkType='subtitle'>Curated Knowledge Base</RkText>
-              </View>
-            </View>
-            <View rkCardContent={true}>
-              <RkText rkType='compactCardText'>
-                The top tutorials, articles & videos on Node.js, React, AWS & everything else needed to build scalable, performant applications.
-              </RkText>
-            </View>
-            <View rkCardFooter={true}>
-              <View style={styles.footerButtons}>
-
-              </View>
-            </View>
-          </RkCard>
-
-          <Text>{'\n'}</Text>
+          
 
           <RkCard>
           <View rkCardHeader={true}>
