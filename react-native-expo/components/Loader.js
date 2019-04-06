@@ -26,12 +26,13 @@ const Loader = props => {
                 <Text style={{fontSize: 24, fontStyle: 'italic', marginTop: 250}}>is Loading</Text>
 
                             <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 200}}>
-                            <PulseLoader
+                            {/* Commented out loader until I bring it in from node_module, since i had to heavily modify it */}
+                            {/* <PulseLoader
                             avatar={fsa}
                             size={150}
                             backgroundColor="#7851a9"
                             borderColor="#7851a9"
-                          />
+                          /> */}
                           <Text style={{fontSize: 20, fontStyle: "italic", marginBottom: 250, marginRight: 10, marginLeft: 10}}>'Nothing will work unless you do.'{'\n'}{'\n'} Maya Angelou</Text>
                           </View>
                     
