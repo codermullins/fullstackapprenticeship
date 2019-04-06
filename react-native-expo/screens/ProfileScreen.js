@@ -11,37 +11,32 @@ class ProfileScreen extends Component {
     this.state = {
       profile: {},
       xp: null,
-      avatar: 'none'
+      avatar: 'none',
+      url: null
     }
   }
 
   async componentDidMount() {
-    await this.getAvatar()
     const id = await AsyncStorage.getItem('id')
     const xp = this.props.navigation.getParam('xp', 0)
     const profile = this.props.navigation.getParam('profile', 'Null')
-    
-    await this.setState({ profile: profile, xp: xp })
-    await console.log(this.state.profile)
+    const url = await this.getAvatar(profile.github)
+    await this.setState({ profile: profile, xp: xp, url: url })
 
   }
 
-  async getAvatar() {
-    const profile = this.props.navigation.getParam('profile', 'Null')
-
-    const user = await fetch(`https://api.github.com/users/${profile.github}`, {
+  async getAvatar(github) {
+    const user = await fetch(`https://api.github.com/users/${github}`, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    await console.log('User: ', user)
-    // await console.log('User inint:', userJson._bodyInit)
     const avatar = JSON.parse(user._bodyText);
     const url = avatar.avatar_url;
-    return(
-      <Thumbnail round large source={{uri: url}} style={{height: 200, width: '50%', paddingBottom: 40}} />
-
-    )
+    await console.log('URL: ', url)
+    this.setState({ url: url })
+    return url;
+    
   }
 
   render() {
@@ -54,7 +49,13 @@ class ProfileScreen extends Component {
           <Card style={{flex: 1, flexDirection: 'column'}}>
           <Text>{`\n`}</Text>
             <View style={styles.container}>
-                {/* { this.getAvatar()} */}
+
+                {this.state.url !== null ? (
+                <Thumbnail round large source={{uri: this.state.url}} style={{height: 200, width: '50%', paddingBottom: 40}} /> ) :
+                (
+                  null
+                )   
+              }
                 <Right style={{paddingRight: 30}}>
                 <Text style={{fontSize: 20}}>{this.state.profile.fName} {this.state.profile.lName}</Text>
                 <ProgressCircle
