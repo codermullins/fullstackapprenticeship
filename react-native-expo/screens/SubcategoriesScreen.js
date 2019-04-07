@@ -43,7 +43,7 @@ class SubcategoriesScreen extends Component {
               </Left>
 
               <Right >
-                <NavButton schema={list.type} navigation={this.props.navigation} route="Content" onPress={() => this.props.navigation.navigate('Content')} />
+                <NavButton schema={list.type} navigation={this.props.navigation} route="Content" onPress={() => this.props.navigation.navigate('Content')} text="View" />
               </Right>
             </ListItem>
           )

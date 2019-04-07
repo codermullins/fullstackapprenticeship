@@ -14,9 +14,7 @@ class SignInScreen extends Component {
   }
   signIn = async () => {
     await Auth.signIn(this.state.username, this.state.password);
-
     await AsyncStorage.setItem('userToken', 'fsa');
-
     this.props.navigation.navigate('App');
   };
 
@@ -46,12 +44,13 @@ class SignInScreen extends Component {
               secureTextEntry={true}
               />
             </Item>
+            <Text>{'\n'}</Text>
             {
               this.state.username.length > 0 && this.state.password.length > 0 ?
               (
                 <Button full style={{backgroundColor: "#6200EE"}} onPress={() => this.signIn()}><Text style={{color: "white"}}>Sign In</Text></Button>
               ) : (
-                <Button full disabled onPress={() => this.signIn()}><Text style={{color: "white"}}>Sign In</Text></Button>
+                <Button full disabled><Text style={{color: "white"}}>Sign In</Text></Button>
 
               )
             }

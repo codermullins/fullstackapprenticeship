@@ -85,7 +85,7 @@ export default class HomeScreen extends React.Component {
           <RkCard>
             <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Upcoming: {this.props.name}</RkText>
+                <RkText rkType='header'>{this.props.name}</RkText>
                 <RkText rkType='subtitle'>{date} | {start} - {end}</RkText>
               </View>
             </View>

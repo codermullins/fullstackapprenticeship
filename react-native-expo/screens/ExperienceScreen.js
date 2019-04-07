@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { StyleSheet, View } from 'react-native';
 import {Container, Content, List, ListItem, Text, Left, Right, Body} from 'native-base';
 import NavButton from "../components/NavButton";
-import { fullStackApprenticeship, findingWork, cityByCity } from "../directories";
 import sanity from "../sanity"
 import orderBy from "lodash.orderby"
 
@@ -12,15 +11,16 @@ class ExperienceScreen extends Component {
         this.state = {
             links: [],
             schema: [],
+            experience: []
         }
     }
 
-    // we want to pass the subcategory through Props as Schema in Nav
     async componentDidMount() {
         const schema = this.props.navigation.getParam('schema', 'None')
+        const experience = this.props.navigation.getParam('experience', 'none')
+        console.log('Props Experience: ', experience)
+        this.setState({ experience: experience })
         await this.sanityQuery(schema)
-        // this.determineSchema(schema)
-        // await console.log('Test', this.state.links)
       }
   
       async sanityQuery(schema) {
@@ -29,34 +29,31 @@ class ExperienceScreen extends Component {
         this.setState({ links })
       }
 
-    determineSchema(schema) {
-        switch (schema) {
-            case 'fullStackApprenticeship':
-                this.setState({ schema: fullStackApprenticeship })
-                break;
-            case 'findingWork':
-                this.setState({ schema: findingWork })
-                break;
-            case 'cityByCity':
-                this.setState({ schema: cityByCity })
-        }
-    }
-
-    renderExperience() {
-        const orderedLinks = orderBy(this.state.links, function(item) { return item.title})
+    renderExperience(experience) {
+        const orderedLinks = orderBy(this.state.links, function(item) { return item.priority})
+        const update = this.props.navigation.getParam('function', 'none')
         return(
           <List>
-          {orderedLinks.map((list, i) => (
+          {orderedLinks.map((list, i) => {
+            const achievementNumber = list.priority;
+            const complete = experience[achievementNumber];
+            const obj = {
+              list: list,
+              experience: experience,
+              update: update,
+              complete: complete
+            }
+            return (
             <ListItem key={i}>
               <Left>
-                  <Text style={{fontSize: 24}}>{list.title}{'\n'}<Text style={{fontStyle: "italic"}}>{list.amount}</Text>{'\n'}<Text>Complete: False</Text></Text>
+                  <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}{'\n'}<Text>Complete: {`${complete}`}</Text></Text>
               </Left>
 
               <Right>
-                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={list} />
+                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={obj} function={update} text={`${list.amount}XP`} />
               </Right>
             </ListItem>
-          )
+          )}
           )}
           </List>
         )
@@ -66,7 +63,7 @@ class ExperienceScreen extends Component {
         return (
         <Container>
             <Content>
-                { this.renderExperience()}
+                { this.renderExperience(this.state.experience)}
             </Content>
         </Container>
         )

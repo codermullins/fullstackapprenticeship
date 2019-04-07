@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, AsyncStorage } from 'react-native';
 import { Button } from "native-base";
 
 class WelcomeScreen extends Component {
+  
+  async componentDidMount() {
+    const token = await AsyncStorage.getItem('accessToken')
+    // await console.log('Token: ', token)
+  }
+
   render() {
     return (
       <ScrollView>

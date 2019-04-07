@@ -18,31 +18,40 @@ import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from '../screens/SettingsScreen';
 import CreateEventScreen from "../screens/CreateEventScreen"
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from "../screens/EditProfileScreen";
+import CreateProfileScreen from "../screens/CreateProfileScreen";
 import PreviewScreen from "../screens/PreviewScreen";
 import SandboxScreen from '../screens/SandboxScreen';
 import SubcategoriesScreen from '../screens/SubcategoriesScreen';
 import ContentScreen from "../screens/ContentScreen";
 import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
-import PaymentScreen from "../screens/PaymentScreen";
+import WebPaymentScreen from "../screens/WebPaymentScreen";
 import ExperienceScreen from "../screens/ExperienceScreen";
-import AchievementScreen from "../screens/AchievementScreen"
+import AchievementScreen from "../screens/AchievementScreen";
+import CreatePaymentRequestScreen from "../screens/CreatePaymentRequestScreen"
+import Students from "../components/StudentList";
+import PaymentScreen from "../screens/PaymentScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
     Welcome: { screen: WelcomeScreen },
     SignIn: { screen: SignInScreen },
     SignUp: { screen: SignUpScreen },
+
 });
 
 const FeedNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
     BlueprintScreen: { screen: BlueprintScreen },
-    PaymentScreen: { screen: PaymentScreen },
+    WebPaymentScreen: { screen: WebPaymentScreen },
     Subcategories: { screen: SubcategoriesScreen },
     Content: { screen: ContentScreen },
     SandboxScreen: { screen: SandboxScreen },
     Profile: { screen: ProfileScreen },
+    EditProfile: { screen: EditProfileScreen },
+    CreateProfile: { screen: CreateProfileScreen },
+    PaymentScreen: { screen: PaymentScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen }
   });
@@ -96,53 +105,21 @@ const PreviewNavigator = createStackNavigator({
 },
 })
 
-
-
-// const AppTabNavigator = createBottomTabNavigator(
-//     {
-//       Home: {
-//         screen: FeedNavigator,
-//         navigationOptions: {
-//           tabBarLable: 'Home',
-//           tabBarIcon: ({ tintColor }) => (
-//             <Ionicons name="ios-home" size={28} color={tintColor} />
-//           ),
-//         },
-//       },
-//       // Profile: {
-//       //   screen: ProfileScreen,
-//       //   navigationOptions: {
-//       //     tabBarIcon: ({ tintColor }) => (
-//       //       <Entypo name="user" size={28} color={tintColor} />
-//       //     ),
-//       //   },
-//       // },
-//     },
-//     {
-//       tabBarOptions: {
-//         activeTintColor: '#6200EE',
-//         inactiveTintColor: '#151515',
-//       },
-//     },
-//   );
-
 const AppDrawerNavigator = createDrawerNavigator({
-    // Home: AppTabNavigator,
     Home: FeedNavigator,
     'Create Event': EventNavigator,
+    // 'Create Payment': CreatePaymentRequestScreen,
+    // 'My Students': Students,
     'Logout': { screen: SettingsScreen },
     // 'Preview: Messages': ChatStackNavigator,
     // 'Preview: Dashboard': PreviewNavigator
 });
 
-// const AppNavigator = createSwitchNavigator({
-//     // AuthLoading: AuthLoadingScreen,
-//     // Auth: AuthStackNavigator,
-//     App: AppDrawerNavigator,
-//     // Blueprint: BlueprintScreen,
-//     // Knowledge: KnowledgeStackNavigator,
-// });
+const AppNavigator = createSwitchNavigator({
+    AuthLoading: AuthLoadingScreen,
+    Auth: AuthStackNavigator,
+    App: AppDrawerNavigator,
 
-// Drawer navigator has two nested navigators inside - that's why the double white space. 
+});
 
-export default createAppContainer(AppDrawerNavigator);
+export default createAppContainer(AppNavigator);

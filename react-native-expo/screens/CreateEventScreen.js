@@ -4,9 +4,6 @@ import DateTimePicker from "react-native-modal-datetime-picker"
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 import uuidv4 from "uuid";
 import { Text, TouchableOpacity, View } from 'react-native';
-import moment from "moment"
-
-
 
 export default class CreatEventScreen extends Component {
     constructor(props) {
@@ -17,8 +14,8 @@ export default class CreatEventScreen extends Component {
             description: "",
             start: "",
             end: "",
-            link: "meet.google.com/bch-dizr-dkj",
-            organizerId: 'f6060e36-38ad-452a-a1f8-3bedbddca28d',
+            link: "meet.google.com/nvj-yccv-gji",
+            mentorId: 'bdaad57c-2183-468a-a114-493c19327762',
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false
 
@@ -29,7 +26,7 @@ export default class CreatEventScreen extends Component {
           
           const body = {
               id: uuidv4(),
-              organizerId: this.state.organizerId,
+              mentorId: this.state.mentorId,
               name: this.state.name,
               description: this.state.description,
               link: this.state.link,
@@ -39,7 +36,7 @@ export default class CreatEventScreen extends Component {
               createdAt: Date.now()
             }
             try {
-                const response = await API.post('eventscrud', '/events', {body})
+                const response = await API.post('events', '/events', {body})
                 console.log('Lambda Response: ', response)
             } catch (e) {
                 console.log('ERROR: ', e)
@@ -86,7 +83,7 @@ export default class CreatEventScreen extends Component {
                         <Item floatingLabel>
                         <Label>Event Name</Label>
                             <Input 
-                            placeholder=""
+                            // placeholder="Name"
                             returnKeyType="search"
                             value={this.state.name}
                             onChangeText={(name) => this.setState({name})}

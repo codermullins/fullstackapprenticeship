@@ -12,14 +12,11 @@ import {
   RkCard,
   RkTheme,
 } from 'react-native-ui-kitten';
-import Event from "../components/Event"
 import { TouchableOpacity } from "react-native";
 import { Header, Left, Body, Right, Button, Title } from "native-base"
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ImageIcon } from "../components/ImageIcon"
 import { UtilStyles } from '../style/styles';
 import { Ionicons } from "@expo/vector-icons"
-// import { ImageIcon } from '../components/ImageIcon';
 import orderBy from "lodash.orderby";
 import { API } from "aws-amplify"
 
@@ -36,27 +33,54 @@ export default class HomeScreen extends React.Component {
     header: null,
   };
 
+  async submit() {
+    let obj = [{
+      to: 'ExponentPushToken[wunh0HBmjI2FA6kkPk_kDW]',
+      data: {key: 'value'},
+      title: 'Big Money',
+      body: 'I love women',
+      // ttl: 0,
+      priority: 'high',
+      // android: {
+      //     channelId: params.channelId
+      // }
+    },
+    {
+      to: 'ExponentPushToken[wunh0HBmjI2FA6kkPk_kDW]',
+      data: {key: 'value'},
+      title: 'Big Money',
+      body: 'I love women',
+      // ttl: 0,
+      priority: 'high',
+      // android: {
+      //     channelId: params.channelId
+      // }
+    }]
+    // let { token } = await this.props.stripe.createToken({ name: "Mikhael"});
+    let uri = 'https://exp.host/--/api/v2/push/send'
+    let response = await fetch(uri, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(obj)
+    })
+    try {
+      await console.log('Response: ', response)
+      // await console.log(response._bodyInit)
+      // let responseBody = response._bodyInit
+      // await console.log('Response body type: ', typeof(responseBody))
+      // await console.log(JSON.parse(responseBody))
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   render() {
     const likeStyle = [styles.buttonIcon, { color: RkTheme.colors.accent }];
     const iconButton = [styles.buttonIcon, { color: RkTheme.current.colors.text.hint }];
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
-        <Header>
-          <Left>
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Ionicons name="md-menu" size={32} />
-            </TouchableOpacity>
-          </Left>
-          <Body>
-            <Title>FSA Feed</Title>
-          </Body>
-          <Right>
-            <Button hasText transparent>
-              <Text></Text>
-            </Button>
-          </Right>
-        </Header>
+        
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
@@ -67,7 +91,7 @@ export default class HomeScreen extends React.Component {
                 <RkText rkType='subtitle'>Subtitle</RkText>
               </View>
             </View>
-            <Image rkCardImg={true} source={require('../assets/post1.png')} />
+            <Image rkCardImg={true} source={require('../assets/blueprint.jpg')} />
             <View rkCardContent={true}>
               <RkText rkType='cardText'>
                 Far far away, behind the word mountains, far from the
@@ -90,6 +114,14 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
       <Text>{'\n'}</Text> 
+
+
+
+      <RkButton onPress={this.submit}>
+        <RkText>Send test Notification</RkText>
+      </RkButton>
+
+      <Text>{'\n'}</Text>
          <RkCard>
             <View rkCardHeader={true}>
               <View>
@@ -123,7 +155,7 @@ export default class HomeScreen extends React.Component {
           <RkCard>
             <View rkCardHeader={true}>
               <View style={{ flexDirection: 'row' }}>
-                <Image source={require('../assets/avatar1.png')} style={styles.avatar} />
+                <Image source={require('../assets/michael.jpg')} style={styles.avatar} />
                 <View style={{}}>
                   <RkText rkType='header'>Elena Zhukova</RkText>
                   <RkText rkType='subtitle'>6 minutes ago</RkText>
@@ -163,7 +195,6 @@ export default class HomeScreen extends React.Component {
               <View rkCardImgOverlay={true} />
             </View>
             <RkButton rkType='circle accent-bg' style={styles.floating}>
-              <ImageIcon name='plus' />
             </RkButton>
             <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
               <View>
@@ -187,13 +218,12 @@ export default class HomeScreen extends React.Component {
           <Text>{'\n'}</Text>
           <RkCard rkType='shadowed'>
             <View>
-              <Image rkCardImg={true} source={require('../assets/post4.png')} />
+              <Image rkCardImg={true} source={require('../assets/blueprint.jpg')} />
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <RkText rkType='header xxlarge' style={{ color: 'white' }}>Header</RkText>
               </View>
             </View>
             <RkButton rkType='circle accent-bg' style={styles.floating}>
-              <ImageIcon name='plus' />
             </RkButton>
             <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
               <View>
