@@ -6,7 +6,7 @@ import {
     ActivityIndicator,
     Text
 } from 'react-native';
-import PulseLoader from 'react-native-pulse-loader';
+import PulseLoader from './PulseLoader';
 const fsa = require('../assets/fsa.jpeg')
 const Loader = props => {
     const {
@@ -26,16 +26,14 @@ const Loader = props => {
                 <Text style={{fontSize: 24, fontStyle: 'italic', marginTop: 250}}>is Loading</Text>
 
                             <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 200}}>
-                            {/* Commented out loader until I bring it in from node_module, since i had to heavily modify it */}
-                            {/* <PulseLoader
-                            avatar={fsa}
-                            size={150}
-                            backgroundColor="#7851a9"
-                            borderColor="#7851a9"
-                          /> */}
+                            <PulseLoader
+                                avatar={fsa}
+                                size={150}
+                                backgroundColor="#7851a9"
+                                borderColor="#7851a9"
+                            />
                           <Text style={{fontSize: 20, fontStyle: "italic", marginBottom: 250, marginRight: 10, marginLeft: 10}}>'Nothing will work unless you do.'{'\n'}{'\n'} Maya Angelou</Text>
                           </View>
-                    
                 </View>
             </View>
         </Modal>
