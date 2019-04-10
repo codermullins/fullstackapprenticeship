@@ -60,7 +60,7 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchEvents();
       await this.fetchProfile(id)
-      // await console.log('Profile: ', this.state.profile)
+      await console.log('Profile: ', this.state.profile)
 
       await this.fetchProduct(this.state.profile.productId);
       // await console.log('Product: ', this.state.product)
@@ -80,6 +80,7 @@ export default class HomeScreen extends React.Component {
     } catch(e) {
       // Improve error handling here
       this.setState({ loading: false })
+      // alert(e)
       console.log(e)
     }
   }
@@ -216,7 +217,7 @@ export default class HomeScreen extends React.Component {
 
           {this.renderEvents(this.state.events)}
 
-          {this.state.profile !== null ? (
+          {this.state.profile !== undefined ? (
             <RkCard rkType='shadowed'>
             <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
@@ -253,7 +254,7 @@ export default class HomeScreen extends React.Component {
           <RkCard>
             <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Preview: Portfolio Product</RkText>
+                <RkText rkType='header'>Portfolio Product</RkText>
                 <RkText rkType='subtitle'>Status: {this.state.product.xpEarned.toString()} / 2000 EXP</RkText>
               </View>
             </View>
@@ -296,7 +297,7 @@ export default class HomeScreen extends React.Component {
         <RkCard>
             <View rkCardHeader={true}>
               <View>
-                <RkText rkType='header'>Preview: Apprentice => Developer</RkText>
+                <RkText rkType='header'>From Apprentice => Developer</RkText>
                 <RkText rkType='subtitle'>Status: {this.state.apprenticeship.xpEarned.toString()} / 5000 EXP</RkText>
               </View>
             </View>

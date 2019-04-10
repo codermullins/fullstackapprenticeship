@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { API } from "aws-amplify";
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
-import uuidv4 from "uuid";
+import Loader from "../components/Loader";
 import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
 
 export default class EditProfileScreen extends Component {
@@ -24,11 +24,13 @@ export default class EditProfileScreen extends Component {
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false,
             xp: `${this.props.navigation.state.params.profile.xp}`,
+            loading: false
 
         }
     }
      
         editProfile = async () => {
+            this.setState({ loading: true })
             const id = await AsyncStorage.getItem('id')
             await console.log('Id: ', id)
             const body = {
@@ -43,8 +45,8 @@ export default class EditProfileScreen extends Component {
                 expo: this.state.expo
                 }
               try {
-                  const response = await API.put('fsa', `/users/${id}`, {body})
-                  console.log('Lambda Response: ', response)
+                  await API.put('fsa', `/users/${id}`, {body})
+                  this.setState({ loading: false })
               } catch (e) {
                   console.log('ERROR: ', e)
               }
@@ -60,6 +62,8 @@ export default class EditProfileScreen extends Component {
         return(
             <Container>
                 <Content>
+                <Loader loading={this.state.loading} />
+
                     <Form>
                     <Item floatingLabel>
                         <Label>First Name</Label>

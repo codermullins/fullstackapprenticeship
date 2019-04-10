@@ -4,6 +4,8 @@ import { API, Auth } from "aws-amplify";
 import { Container, Content, Form, Item, Input, Label, Button, Header } from 'native-base';
 import uuidv4 from "uuid";
 import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
+import Loader from "../components/Loader";
+
 
 export default class CreateProfileScreen extends Component {
     constructor(props) {
@@ -22,7 +24,8 @@ export default class CreateProfileScreen extends Component {
             mbriggs: "",
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false,
-            expoToken: ""
+            expoToken: "",
+            loading: false
 
         }
     }
@@ -53,6 +56,9 @@ export default class CreateProfileScreen extends Component {
     }
      
       createProfile = async () => {
+
+        
+        this.setState({ loading: true })
         const id = await AsyncStorage.getItem('id')
         const productId = uuidv4();
         const apprenticeshipId = uuidv4();
@@ -172,6 +178,8 @@ export default class CreateProfileScreen extends Component {
                 await this.createApprenticeship(apprenticeship);
                 await this.createProduct(product);
 
+                this.setState({ loading: false })
+
             } catch (e) {
                 console.log('ERROR: ', e)
             }
@@ -192,6 +200,8 @@ export default class CreateProfileScreen extends Component {
         return(
             <Container>
                 <Content>
+                <Loader loading={this.state.loading} />
+
                     <Form>
                         <Item floatingLabel>
                         <Label>First Name</Label>

@@ -16,35 +16,22 @@ class SignUpScreen extends Component {
       confirm: false,
       code: "",
       user: {},
-      fName: "",
-      lName: "",
-      chosenDate: [],
       username: ""
     }
   }
 
   register = async () => {
     const attributes = {
-      // birthdate: "01/28/1994",
-      // name: this.state.fName,
       email: this.state.email, 
       phone_number: this.state.phone
-      // family_name: this.state.lName,
     }
 
     try {
-      const user = await Auth.signUp({
+      await Auth.signUp({
         password: this.state.password,
         username: this.state.email,
         attributes: attributes,
       });
-
-      await console.log('Auth: ', user)
-  
-      // console.log('USER OBJECT: ', JSON.stringify(user))
-      // console.log('Username: ', user.username)
-  
-      // await AsyncStorage.setItem('userToken', 'fsa');
       
       this.setState({ confirm: true })
     } catch(e) {
@@ -56,7 +43,6 @@ class SignUpScreen extends Component {
 
   confirm = async () => {
     try {
-
       await Auth.confirmSignUp(this.state.email, this.state.code); 
       this.props.navigation.navigate('SignIn');
     } catch(e) {
@@ -94,27 +80,6 @@ class SignUpScreen extends Component {
     <Container>
     <Content>
           <Form>
-          {/* <Item floatingLabel>
-              <Label>Sign-In Username</Label>
-              <Input 
-              placeholder=""
-              returnKeyType="search"
-              value={this.state.username}
-              onChangeText={(username) => this.setState({username})}
-              autoCapitalize="none"
-              />
-            </Item> */}
-            {/* 
-            <Item floatingLabel>
-              <Label>Last Name</Label>
-              <Input 
-              placeholder=""
-              returnKeyType="search"
-              value={this.state.lName}
-              onChangeText={(lName) => this.setState({lName})}
-              autoCapitalize="none"
-              />
-            </Item> */}
             <Item floatingLabel>
               <Label>Primary Email</Label>
               <Input
@@ -146,17 +111,17 @@ class SignUpScreen extends Component {
               />
             </Item>
             <Text>{'\n'}</Text>
-            <Text style={{textAlign: 'center', fontSize: 14}}>Password must include at least 1 capital, 1 lowercase letter, 1 number and 1 special character.</Text>
+            <Text style={{textAlign: 'center', fontSize: 14}}>Password must include at least 1 capital letter, 1 lowercase letter, 1 number and be 8 characters long.</Text>
             <Text>{'\n'}</Text>
-{
-  this.state.email.length > 0 && this.state.password.length > 7 ?
-  (
-    <Button full style={{backgroundColor: "#6200EE", color: "white", height: 80}} onPress={() => this.register()}><Text style={{color: "white", fontSize: 20}}>Sign Up</Text></Button>
-    ) : (
-    <Button full disabled><Text style={{color: "white"}}>Sign Up</Text></Button>
+            {
+              this.state.email.length > 0 && this.state.password.length > 7 ?
+              (
+                <Button full style={{backgroundColor: "#6200EE", color: "white", height: 80}} onPress={() => this.register()}><Text style={{color: "white", fontSize: 20}}>Sign Up</Text></Button>
+                ) : (
+                <Button full disabled><Text style={{color: "white"}}>Sign Up</Text></Button>
 
-  )
-}
+              )
+            }
           </Form>
         </Content>
     </Container>
