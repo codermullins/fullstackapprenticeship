@@ -60,7 +60,7 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchEvents();
       await this.fetchProfile(id)
-      await console.log('Profile: ', this.state.profile)
+      // await console.log('Profile: ', this.state.profile)
 
       await this.fetchProduct(this.state.profile.productId);
       // await console.log('Product: ', this.state.product)
@@ -117,7 +117,7 @@ export default class HomeScreen extends React.Component {
     this.setState({ loading: false })
   }
 
-  
+
 
   renderEvents = (events) => {
     return(
@@ -183,7 +183,6 @@ export default class HomeScreen extends React.Component {
                 <View style={{}}>
                   <RkText rkType='header'>Michael Litchev</RkText>
                   <RkText rkType='subtitle'>Seattle & Bellevue Instructor</RkText>
-
                 </View>
               </View>
               <RkButton rkType='clear'>
@@ -376,7 +375,7 @@ export default class HomeScreen extends React.Component {
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <View style={{ marginBottom: 20 }}>
                   <RkText rkType='header xxlarge' style={{ color: 'white' }}>The Blueprint</RkText>
-                  <RkText rkType='subtitle' style={{ color: 'white' }}>60 page manual covering the tools of our Technical Standard, finding freelance work, building the right portfolio projects and adding structure to the learning process.</RkText>
+                  <RkText rkType='subtitle' style={{ color: 'white' }}>Manual covering the tools of our Technical Standard, finding freelance work, building the right portfolio projects and adding structure to the learning process.</RkText>
                 </View>
               </View>
             </View>

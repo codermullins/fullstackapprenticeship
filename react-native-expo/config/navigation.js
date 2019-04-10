@@ -32,6 +32,7 @@ import AchievementScreen from "../screens/AchievementScreen";
 import CreatePaymentRequestScreen from "../screens/CreatePaymentRequestScreen"
 import Students from "../components/StudentList";
 import PaymentScreen from "../screens/PaymentScreen";
+import ChapterScreen from "../screens/ChapterScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -53,7 +54,8 @@ const FeedNavigator = createStackNavigator({
     CreateProfile: { screen: CreateProfileScreen },
     PaymentScreen: { screen: PaymentScreen },
     ExperienceScreen: { screen: ExperienceScreen },
-    AchievementScreen: { screen: AchievementScreen }
+    AchievementScreen: { screen: AchievementScreen },
+    ChapterScreen: { screen: ChapterScreen}
   });
 
 const ChatStackNavigator = createStackNavigator({

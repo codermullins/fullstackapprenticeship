@@ -1,15 +1,60 @@
 import React from 'react';
 import { StyleSheet, View, WebView } from 'react-native';
+import {Container, Content, List, ListItem, Text, Left, Right, Body} from 'native-base';
+import NavButton from "../components/NavButton"
+import orderBy from "lodash.orderby"
+import sanity from "../sanity";
 
 export default class BluePrintScreen extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chapters: []
+    }
+  }
+
+  async componentDidMount() {
+    await this.downloadBlueprint()
+  }
+
+  async downloadBlueprint() {
+    const query = `*[_type == 'blueprintSchema']{title, subtitle, overview, chapter, _id}`
+      const chapters = await sanity.fetch(query);
+      this.setState({ chapters })
+  }
+
+  renderChapters() {
+    const orderedChapters = orderBy(this.state.chapters, function(chapter) { return chapter.chapter})
+ 
+    return(
+      <List>
+      {orderedChapters.map((list, i) => (
+        <ListItem key={i}>
+          <Left>
+              <Text style={{fontSize: 24}}>{list.title}{'\n'}<Text style={{fontStyle: "italic"}}>{list.subtitle}</Text></Text>
+          </Left>
+          <Right>
+            <NavButton schema={list} navigation={this.props.navigation} route="ChapterScreen" onPress={() => this.props.navigation.navigate('Chapter', {
+              chapter: list,
+              book: this.state.chapters
+            })} text="View" />
+          </Right>
+        </ListItem>
+        )
+      )}
+      </List>
+    )
+  }
+
+
   render() {
     return (
-      <View style={styles.container}>
-       <WebView
-          bounces={false}
-          scrollEnabled={false} 
-          source={{ uri: 'https://drive.google.com/open?id=1xLMpaFIgoq8EDafsU0w0K5KSmcrwlaz1' }} />
-      </View>
+      <Container>
+        <Content>
+          {this.renderChapters()}
+        </Content>
+      </Container>
     );
   }
 }
