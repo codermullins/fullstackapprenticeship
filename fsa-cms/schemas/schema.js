@@ -42,6 +42,7 @@ import gettingStartedSchema from "./gettingStartedSchema";
 import apprenticeExperienceSchema from "./apprenticeExperienceSchema";
 import productExperienceSchema from "./productExperienceSchema"
 import apprenticeshipSchema from "./apprenticeshipSchema"
+import blueprintSchema from "./blueprintSchema"
 
 // Then we give our schema to the builder and provide the result to Sanity
 
@@ -53,6 +54,7 @@ export default createSchema({
   types: schemaTypes.concat([
     // The following are document types which will appear
     // in the studio.
+    blueprintSchema,
     webSchema,
     backendSchema,
     awsSchema,

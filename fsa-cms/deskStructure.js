@@ -17,6 +17,15 @@ export default () =>
                         .title("Tools")
                         .items([
                             S.listItem()
+                                .title("The Blueprint")
+                                .child(
+                                    S.documentList()
+                                        .title('The Blueprint')
+                                        .menuItems(S.documentTypeList('blueprintSchema').getMenuItems())
+                                        .filter('_type == $type && !defined(parents)')
+                                        .params({ type: 'blueprintSchema' })
+                                ),
+                            S.listItem()
                                 .title("Getting Started")
                                 .child(
                                     S.documentList()
