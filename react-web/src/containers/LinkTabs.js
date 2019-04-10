@@ -11,7 +11,7 @@ import {
     cityByCity,
     findingWork
 } from "../directories";
-import AuthSignup from './AuthSignup';
+// import AuthSignup from './AuthSignup';
 
 const styles = theme => ({
     root: {
@@ -64,7 +64,7 @@ class LinkTabs extends Component {
                         <Tab label="Getting Paid" />
                     </Tabs>
                 </AppBar>
-                <AuthSignup changeAuthState={this.props.changeAuthState} />
+                {/* <AuthSignup changeAuthState={this.props.changeAuthState} /> */}
                 {value === 0 && (
                     <FolderContainers
                         folders={fullStackApprenticeship.reduce(

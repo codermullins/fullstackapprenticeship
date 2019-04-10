@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
 // import { withRouter } from 'react-router-dom';
 import Routes from "./Routes";
-import awsmobile from "./aws-exports";
+// import awsmobile from "./aws-exports";
 // import { thunkCurrentAuthenticatedUser } from "./thunks/auth";
 import Footer from "./components/Footer";
 import TopNavbar from "./components/TopNavbar"
@@ -13,7 +13,7 @@ import TopNavbar from "./components/TopNavbar"
 import "./App.css";
 require("typeface-quicksand");
 
-Amplify.configure(awsmobile);
+// Amplify.configure(awsmobile);
 
 const theme = createMuiTheme({
     typography: {

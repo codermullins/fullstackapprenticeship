@@ -23,7 +23,7 @@ export default ({ childProps }) => (
             <AppliedRoute path='/review' exact component={ProcessResource} />
             <AppliedRoute path='/payments' exact component={Billing} />
             <AppliedRoute path='/typing/:id' exact component={Typing} />
-            <AuthenticatedRoute path='/resource/new' exact component={NewResource} props={childProps} /> 
+            <AppliedRoute path='/resource/new' exact component={NewResource} props={childProps} /> 
         </Switch>
     </ConnectedRouter>
 );
