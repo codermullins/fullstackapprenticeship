@@ -24,7 +24,7 @@ class SignInScreen extends Component {
         <Content>
           <Form>
             <Item floatingLabel>
-              <Label>Username</Label>
+              <Label>Email</Label>
               <Input
               placeholder=""
               returnKeyType="search"
