@@ -11,8 +11,6 @@ import LinkComponent from "./components/LinkComponent";
 import ToolsContainer from "./components/ToolsContainer";
 import NewResource from "./containers/NewResource";
 import ProcessResource from "./containers/ProcessResource";
-import Billing from "./containers/Billing";
-import Typing from "./containers/Typing";
 
 export default ({ childProps }) => (
     <ConnectedRouter history={history}>
@@ -21,8 +19,6 @@ export default ({ childProps }) => (
             <AppliedRoute path="/link/:id" component={LinkComponent} />
             <AppliedRoute path="/tool/:schema" component={ToolsContainer} />
             <AppliedRoute path='/review' exact component={ProcessResource} />
-            <AppliedRoute path='/payments' exact component={Billing} />
-            <AppliedRoute path='/typing/:id' exact component={Typing} />
             <AppliedRoute path='/resource/new' exact component={NewResource} props={childProps} /> 
         </Switch>
     </ConnectedRouter>
