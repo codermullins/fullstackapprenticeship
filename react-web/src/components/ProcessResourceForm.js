@@ -66,12 +66,40 @@ export default class ProcessResourceForm extends React.Component {
       approved: true      
     }
 
+    const mutation = {
+      createOrReplace: {
+        _type: 'Replace',
+        title: this.state.name,
+        overview: this.state.description,
+        url: this.state.url,
+        priority: this.state.rank
+      }
+    }
+
     try {
       const response = await API.put('resources', '/resources', {body})
       console.log('approved response', response)
+      await this.sanityPost(mutation)
     } catch(e) {
       console.log("ERROR not approved", e)
     }
+  }
+
+  sanityPost = async (mutation) => {
+    let datasetName;
+    let projectId;
+    let tokenWithWriteAccess;
+    return fetch(`https://${projectId}.api.sanity.io/v1/data/mutate/${datasetName}`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${tokenWithWriteAccess}`
+      },
+      body: mutation
+    })
+    .then(response => response.json())
+    .then(result => console.log(result))
+    .catch(error => console.log(error))
   }
 
   handleFormDenial = async event => {
