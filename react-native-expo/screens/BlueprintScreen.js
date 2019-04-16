@@ -30,16 +30,11 @@ export default class BluePrintScreen extends React.Component {
     return(
       <List>
       {orderedChapters.map((list, i) => (
-        <ListItem key={i}>
-          <Left>
-              <Text style={{fontSize: 24}}>{list.title}{'\n'}<Text style={{fontStyle: "italic"}}>{list.subtitle}</Text></Text>
-          </Left>
-          <Right>
-            <NavButton schema={list} navigation={this.props.navigation} route="ChapterScreen" onPress={() => this.props.navigation.navigate('Chapter', {
-              chapter: list,
-              book: this.state.chapters
-            })} text="View" />
-          </Right>
+        <ListItem key={i} onPress={() => this.props.navigation.navigate('ChapterScreen', {
+          schema: list,
+          // book: this.state.chapters
+        })}>
+              <Text style={{fontSize: 24}}>{list.title}{'\n'}<Text style={{fontStyle: "italic"}}>{list.subtitle}</Text></Text>       
         </ListItem>
         )
       )}
