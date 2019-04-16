@@ -42,18 +42,8 @@ class ProcessResource extends React.Component {
 
   async componentDidMount() {
     const response = await API.get('resources', `/resources/${this.state.searchingFor}`)
-    // console.log(response);
-
-    // this.setState({ links: response })
-
     let notReviewed = response.filter(resource => resource.approved === undefined)
-
     this.setState({ links: notReviewed })
-
-    // just used fake list for testing on a larger array
-    // this.setState({
-    //   links: fakeList
-    // })
   }
 
   handleProcessResource (item, index) {
@@ -68,7 +58,6 @@ class ProcessResource extends React.Component {
       searchingFor: event.target.value
     })
    const response = await API.get('resources', `/resources/${this.state.searchingFor}`);
-  //  console.log(response)
    let notReviewed = response.filter(resource => resource.approved === undefined)
 
    this.setState({ links: notReviewed })
@@ -135,78 +124,3 @@ class ProcessResource extends React.Component {
 }
 
 export default ProcessResource;
-
-// const fakeList = [
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   },
-//   {
-//     name: 'test1',
-//     description: 'test1'
-//   }
-// ]
