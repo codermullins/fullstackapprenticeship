@@ -58,13 +58,6 @@ class TopNavbar extends React.Component {
                               </Button>
                           ]
                         : [
-                              <Button
-                                  key={0}
-                                  onClick={() => routeTyping()}
-                                  color="inherit"
-                              >
-                                  Typing
-                              </Button>,
                             //    <Button
                             //        key={1}
                             //        color="inherit"
