@@ -54,15 +54,21 @@ export default class CreateProfileScreen extends Component {
         const response = await API.post('fsa', '/experience', {body});
         await console.log('Product creation response: ', response)
     }
+
+    async createGettingStarted(begin) {
+        const body = begin;
+        const response = await API.post('fsa', '/experience', {body});
+        await console.log('Getting Started Creation success: ', response)
+    }
      
       createProfile = async () => {
-
-        
         this.setState({ loading: true })
         const id = await AsyncStorage.getItem('id')
         const productId = uuidv4();
         const apprenticeshipId = uuidv4();
         const masteryId = uuidv4();
+        const beginId = uuidv4();
+        const fetchProfile = this.props.navigation.getParam('function', 'none')
 
         const user = {
             id: id,
@@ -83,6 +89,7 @@ export default class CreateProfileScreen extends Component {
             instructor: false,
             productId: productId,
             apprenticeshipId: apprenticeshipId,
+            beginId: beginId,
             masteryId: masteryId,
             expo: this.state.expoToken,
             createdAt: new Date(),
@@ -90,7 +97,7 @@ export default class CreateProfileScreen extends Component {
 
         const apprenticeship = {
             id: apprenticeshipId,
-            xp: 3000,
+            xp: 2000,
             xpEarned: 0,
             achievements: 0,
             memberId: id,  
@@ -173,12 +180,51 @@ export default class CreateProfileScreen extends Component {
             _15_approved: false,
         }
 
+        const begin = {
+            id: beginId,
+            xp: 1000,
+            xpEarned: 0,
+            achievements: 0,
+            memberId: id,  
+            type: 'Starting',
+            approved: false,
+            title: 'Getting Started on your Full-Stack Journey',
+            description: "These 10 tasks are the pre-requisites to start learning the tools of our trade. They include things such as setting up your GitHub profile, joining our Slack channel, brainstorming your Portfolio Product idea, and more. Each task is worth 100 XP, with 1000 total bringing you 20 percent of the way to your goal of 5000.",
+            github: "Incomplete",
+            _01: false,
+            _01_approved: false,
+            _02: false,
+            _02_approved: false,
+            _03: false,
+            _03_approved: false,
+            _04: false,
+            _04_approved: false,
+            _05: false,
+            _05_approved: false,
+            _06: false,
+            _06_approved: false,
+            _07: false,
+            _07_approved: false,
+            _08: false,
+            _08_approved: false,
+            _09: false,
+            _09_approved: false,
+            _10: false,
+            _10_approved: false,
+        }
+
             try {
-                await this.createUser(user);
+                const user = await this.createUser(user);
                 await this.createApprenticeship(apprenticeship);
                 await this.createProduct(product);
+                // await this.createGettingStarted(begin);
+                await fetchProfile(user);
+
+
 
                 this.setState({ loading: false })
+
+
 
             } catch (e) {
                 console.log('ERROR: ', e)
@@ -189,9 +235,8 @@ export default class CreateProfileScreen extends Component {
                 // region: "",
                 country: "",
                 github: "",
-           
             })
-            this.props.navigation.navigate('Profile')
+            this.props.navigation.navigate('HomeScreen')
         }
 
         
@@ -249,12 +294,10 @@ export default class CreateProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-
                         <Text>{`\n`}</Text>   
                     <Button full style={{backgroundColor: "#6200EE"}} onPress={this.createProfile}>
                         <Text style={{color: 'white'}}>Create Profile</Text>
                         </Button>
-
                     </Form>
                 </Content>
             </Container>
