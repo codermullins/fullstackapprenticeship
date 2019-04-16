@@ -1,5 +1,5 @@
-# #thehub
-> Revolutionizing technical education.
+# The Full-Stack Apprenticeship
+> Transition from consumer to creator, and learn to build.
 
 We believe every city in America needs a hub for community-driven technical education. The Full-Stack Apprenticeship is a focused, repeatable educational program to teach full-stack development. Build skills through open-source projects. Mentorship for developers of all stripes & skill levels. Pairing would-be entrepreneurs with technical cofounders and teammates. Community structure, accountability & leadership at the local level. 
 
