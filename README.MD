@@ -1,21 +1,23 @@
-# #thehub
-> Revolutionizing technical education.
+# The Full-Stack Apprenticeship
+> Transition from consumer to creator, and learn to build.
 
 We believe every city in America needs a hub for community-driven technical education. The Full-Stack Apprenticeship is a focused, repeatable educational program to teach full-stack development. Build skills through open-source projects. Mentorship for developers of all stripes & skill levels. Pairing would-be entrepreneurs with technical cofounders and teammates. Community structure, accountability & leadership at the local level. 
 
-![](fsa.png)
-
 ## Installation
 
-Download on Expo: https://expo.io/@fullstackapprentice/thehub
+Download on Expo: https://expo.io/@fullstackapprentice/fullstackapprenticeship
 
 ## Current Functionality
 
-#thehub offers a way to access the FSA Knowledge Base & a 60pg ebook called 'The Blueprint' to lay out the journey for somebody looking to become a full-stack developer.
+The FSA Mobile application offers a way to access the gamified experience system, the FSA Knowledge Base & an ebook called 'The Blueprint' to lay out the journey for somebody looking to become a full-stack developer.
 
 ## Release History
 * 0.1
     * Blueprint Edition Versioned & Released
+* 0.2
+    * New UI released, Experience Preview
+* 0.3/4
+    * Experience system, profile directory released.
 
 ## Contributing
 
@@ -44,7 +46,7 @@ Requirements are simple:
 - You must commit to attending the sprint retrospective that following Friday, sometime between 4-8pm for 30 minutes (will work out schedule amongst the group). This is to compare your initial estimates against the actual time taken, and to talk about what we can do from a workflow and process perspective to improve as a development team.
 - You must commit to attending sprint 'stand-up' meetings on Tuesday & Thursday sometime between 5-8pm (or in the am if that works best) - like a real stand-up meeting, it should only last 10 minutes and is an opportunity for professional counsel & accountability. Blocked on something? Stay on the call after the meeting to talk it over.
 
-We will be meeting on Google Hangouts, the link is here: https://hangouts.google.com/call/DD7mY82pQKuHkLlrQzfHAEEE.
+We will be meeting on Google Hangouts, the link will be refreshed on the Slack channel or Meetup page.
 
 # Directory Structure
 ## fsa-cms
@@ -57,7 +59,7 @@ This is where our React application lives.
 Where our React-Native application lives, built to work together with the React-Web repository.
 
 ## fsa-db
-Where our PostgreSQL & serverless functions live.
+Where our Mongo & serverless Dynamo functions live.
 
 
 
