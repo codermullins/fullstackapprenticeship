@@ -6,6 +6,7 @@ We believe every city in America needs a hub for community-driven technical educ
 ## Installation
 
 Download on Expo: https://expo.io/@fullstackapprentice/fullstackapprenticeship
+View online: https://hub.fsa.community
 
 ## Current Functionality
 
