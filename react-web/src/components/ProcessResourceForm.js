@@ -6,6 +6,7 @@ import {
   } from '../directories';
 import { Button, Input, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core';
 import { API } from 'aws-amplify';
+import sanity from "../lib/sanity"
 
 export default class ProcessResourceForm extends React.Component {
   constructor(props) {
@@ -67,39 +68,24 @@ export default class ProcessResourceForm extends React.Component {
     }
 
     const mutation = {
-      createOrReplace: {
-        _type: 'Replace',
+        _type: this.state.schema,
         title: this.state.name,
         overview: this.state.description,
         url: this.state.url,
         priority: this.state.rank
-      }
     }
 
     try {
       const response = await API.put('resources', '/resources', {body})
       console.log('approved response', response)
-      await this.sanityPost(mutation)
+      console.log(JSON.stringify(mutation))
+      sanity.create(mutation).then(response => {
+        console.log('Document created: ', response)
+      })
+      // await this.sanityPost(JSON.stringify((mutation)))
     } catch(e) {
       console.log("ERROR not approved", e)
     }
-  }
-
-  sanityPost = async (mutation) => {
-    let datasetName;
-    let projectId;
-    let tokenWithWriteAccess;
-    return fetch(`https://${projectId}.api.sanity.io/v1/data/mutate/${datasetName}`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${tokenWithWriteAccess}`
-      },
-      body: mutation
-    })
-    .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log(error))
   }
 
   handleFormDenial = async event => {
@@ -112,7 +98,7 @@ export default class ProcessResourceForm extends React.Component {
       schema: this.state.schema,
       name: this.state.name,
       description: this.state.description,
-      author: this.state.url,
+      // author: this.state.url,
       url: this.state.url,
       rank: this.state.rank,
       approved: false      
@@ -135,6 +121,8 @@ export default class ProcessResourceForm extends React.Component {
   changeSchema = e => {
     this.setState({ schema: e.target.value })
   }
+
+  
 
   render() {
     let schemas = this.state.schemas.map((item, i) => 
@@ -203,7 +191,7 @@ export default class ProcessResourceForm extends React.Component {
         </FormControl>
         <br />
 
-        <FormControl className="formElement">
+        {/* <FormControl className="formElement">
           <InputLabel>Resource Author</InputLabel>
           <Input
               type="text"
@@ -212,7 +200,7 @@ export default class ProcessResourceForm extends React.Component {
               onChange={this.handleChange}
               required
           />
-        </FormControl>
+        </FormControl> */}
         <br />
 
         <FormControl className="formElement">

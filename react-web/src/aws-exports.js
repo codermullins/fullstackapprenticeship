@@ -34,7 +34,7 @@ const awsmobile = {
         },
         {
             "name": "resources",
-            "endpoint": "https://84xd1scx8f.execute-api.us-west-2.amazonaws.com/Prod",
+            "endpoint": "https://8qrx14jm3l.execute-api.us-west-2.amazonaws.com/Prod",
             "region": "us-west-2"
         }
     ]
