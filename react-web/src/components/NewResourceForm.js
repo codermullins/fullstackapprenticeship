@@ -23,7 +23,7 @@ class NewResourceForm extends React.Component {
       url: '',
       schema: 'Get Started',
       description: '',
-      rank: ''
+      rank: '0'
     };
   }
 
@@ -63,13 +63,17 @@ class NewResourceForm extends React.Component {
     }
   }
 
+  validateForm = () => {
+    return this.state.name.length > 0 && this.state.description.length > 0 && this.state.url.length > 0; 
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
     
     const body = {
       resourceId: uuidv4(),
       directory: this.state.directory,
-      author: this.state.author,
+      // author: this.state.author,
       name: this.state.name,
       url: this.state.url,
       schema: this.state.schema,
@@ -82,9 +86,11 @@ class NewResourceForm extends React.Component {
     try {
       const response = await API.post('resources', '/resources', {body})
       console.log('fsa-sls Response', response)
+      this.props.routeHome()
     } catch(e) {
       console.log('ERROR', e)
     }
+    
   }
 
   handleChange = event => {
@@ -163,14 +169,14 @@ class NewResourceForm extends React.Component {
         <br />
 
         {/* Maybe this is automatic depending on who submitted resource? */}
-        <div className="formElement">
+        {/* <div className="formElement">
           <InputLabel>Resource Author</InputLabel>
           <Input
               type="text"
               id="author"
               onChange={this.handleChange}
           />
-        </div>
+        </div> */}
         <br />
 
         <FormControl className="formElement">
@@ -189,9 +195,9 @@ class NewResourceForm extends React.Component {
         </FormControl>
         <br />
 
-        <div onClick={() => this.props.routeHome()}>
-          <Button onClick={this.handleSubmit}>Request</Button>
-       </div>
+        {/* <div onClick={() => this.props.routeHome()}> */}
+          <Button disabled={!this.validateForm()} onClick={this.handleSubmit}>Request</Button>
+       {/* </div> */}
 
       </form>
     )

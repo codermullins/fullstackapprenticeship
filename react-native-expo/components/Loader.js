@@ -6,7 +6,7 @@ import {
     ActivityIndicator,
     Text
 } from 'react-native';
-import PulseLoader from 'react-native-pulse-loader';
+import PulseLoader from './PulseLoader';
 const fsa = require('../assets/fsa.jpeg')
 const Loader = props => {
     const {
@@ -22,20 +22,16 @@ const Loader = props => {
             >
             <View style={styles.modalBackground}>
                 <View style={styles.activityIndicatorWrapper}>
-                <Text style={{fontSize: 30, fontStyle: 'italic', marginTop: 250, alignSelf: 'center'}}>The Full-Stack Apprenticeship</Text>
-                <Text style={{fontSize: 24, fontStyle: 'italic', marginTop: 250}}>is Loading</Text>
-
-                            <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 200}}>
-                            {/* Commented out loader until I bring it in from node_module, since i had to heavily modify it */}
-                            {/* <PulseLoader
-                            avatar={fsa}
-                            size={150}
-                            backgroundColor="#7851a9"
-                            borderColor="#7851a9"
-                          /> */}
-                          <Text style={{fontSize: 20, fontStyle: "italic", marginBottom: 250, marginRight: 10, marginLeft: 10}}>'Nothing will work unless you do.'{'\n'}{'\n'} Maya Angelou</Text>
-                          </View>
-                    
+                <Text style={{fontSize: 24, fontStyle: 'italic', marginTop: 250}}>The Full-Stack Apprenticeship</Text>
+                <View>
+                    <PulseLoader
+                        avatar={fsa}
+                        size={150}
+                        backgroundColor="#7851a9"
+                        borderColor="#7851a9"
+                    />
+                    <Text style={{fontSize: 20, fontStyle: "italic", marginBottom: 250, marginRight: 10, marginLeft: 10}}>'Nothing will work unless you do.'{'\n'}{'\n'} Maya Angelou</Text>
+                </View>
                 </View>
             </View>
         </Modal>
@@ -46,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 0,
         alignItems: 'center',
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         backgroundColor: '#00000040'
     },
     activityIndicatorWrapper: {
@@ -55,7 +51,7 @@ const styles = StyleSheet.create({
         width: '100%',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'center'
     }
 });
 export default Loader;

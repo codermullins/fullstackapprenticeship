@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {WebView, StyleSheet, Button} from 'react-native';
-import {Container, Header, Content, Card, CardItem, Thumbnail, List, ListItem, Text, Icon, Left, Right, Body} from 'native-base';
+import {Container, Header, Content, List, ListItem, Text, Icon, Left, Right, Body} from 'native-base';
 import sanity from "../sanity";
 
 class ContentScreen extends Component {
@@ -29,16 +29,10 @@ class ContentScreen extends Component {
         <Content>
         <List>
         {this.state.links.map((link, i) => (
-          <ListItem key={i}>
+          <ListItem key={i} onPress={() => this.setState({ showWebView: true, item: link.url })}>
             <Left>
                 <Text>{link.title}</Text>
             </Left>
-            <Right>
-              <Button title="View" onPress={() => this.setState({ showWebView: true, item: link.url })}
-                  >
-                <Text>=></Text>
-              </Button>
-            </Right>
           </ListItem>
         )
         )}

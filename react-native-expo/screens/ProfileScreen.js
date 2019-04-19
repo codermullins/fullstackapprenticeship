@@ -56,8 +56,8 @@ class ProfileScreen extends Component {
                   null
                 )   
               }
-                <Right style={{paddingRight: 30}}>
-                <Text style={{fontSize: 20}}>{this.state.profile.fName} {this.state.profile.lName}</Text>
+                <Right style={{paddingRight: 40}}>
+                <Text style={{fontSize: 20, paddingBottom: 20, paddingLeft: 5}}>{this.state.profile.fName} {this.state.profile.lName}</Text>
                 <ProgressCircle
                   percent={progressPercent}
                   radius={50}
@@ -66,9 +66,9 @@ class ProfileScreen extends Component {
                   shadowColor="#999"
                   bgColor="#fff"
               >
-                  <Text style={{ fontSize: 18 }}>{progressPercent}%</Text>
+                  <Text style={{ fontSize: 18}}>{progressPercent}%</Text>
               </ProgressCircle>
-              <Text>{this.state.xp} / 5000 EXP</Text>
+              <Text style={{paddingTop: 15, paddingLeft: 5}}>{this.state.xp} / 5000 EXP</Text>
                 </Right>
               </View>
 
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     // alignContent: 'left',
     // justifyContent: 'left',
     // paddingTop: '20', 
+    paddingBottom: 20
   },
   header: {
     flexDirection: 'column'

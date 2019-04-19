@@ -44,13 +44,22 @@ class ExperienceScreen extends Component {
               complete: complete
             }
             return (
-            <ListItem key={i}>
+            <ListItem key={i} onPress={() => this.props.navigation.navigate('AchievementScreen', {
+              schema: obj,
+              function: update,
+              text: `${list.amount}XP`
+            })}>
               <Left>
-                  <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}{'\n'}<Text>Complete: {`${complete}`}</Text></Text>
-              </Left>
+                {complete ? (
+                  <Text style={{fontSize: 24, paddingRight: 10, textDecorationLine: 'line-through'}}>{list.title}</Text>
 
+                ) : (
+                  <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}</Text>
+
+                )}
+              </Left>
               <Right>
-                <NavButton navigation={this.props.navigation} route="AchievementScreen" schema={obj} function={update} text={`${list.amount}XP`} />
+                <Text>{list.amount}XP</Text>
               </Right>
             </ListItem>
           )}
