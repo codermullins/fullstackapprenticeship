@@ -33,6 +33,7 @@ import CreatePaymentRequestScreen from "../screens/CreatePaymentRequestScreen"
 import Students from "../components/StudentList";
 import PaymentScreen from "../screens/PaymentScreen";
 import ChapterScreen from "../screens/ChapterScreen";
+import InstructorScreen from "../screens/InstructorScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -58,70 +59,21 @@ const FeedNavigator = createStackNavigator({
     ChapterScreen: { screen: ChapterScreen}
   });
 
-const ChatStackNavigator = createStackNavigator({
-    MessagesList: { 
-      screen: MessagesListScreen, 
-      navigationOptions: ({ navigation }) => ({
-        title: 'Messages',
-        headerLeft: (
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Ionicons name="md-menu" size={32} />
-                </View>
-            </TouchableOpacity>
-        ),
-      }),
-    },
-    Chat: { screen: ChatScreen }
-  });
-
-const EventNavigator = createStackNavigator({
-  CreateEventScreen: {
-    screen: CreateEventScreen,
-    navigationOptions: ({ navigation }) => ({
-        title: 'Preview: Create Event',
-        headerLeft: (
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Ionicons name="md-menu" size={32} />
-                </View>
-            </TouchableOpacity>
-        ),
-    }),
-},
-})
-
-const PreviewNavigator = createStackNavigator({
-  PreviewScreen: {
-    screen: PreviewScreen,
-    navigationOptions: ({ navigation }) => ({
-        title: 'Preview: Dashboard',
-        headerLeft: (
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Ionicons name="md-menu" size={32} />
-                </View>
-            </TouchableOpacity>
-        ),
-    }),
-},
+const InstructorFeedNavigator = createStackNavigator({
+    InstructorScreen: { screen: InstructorScreen },
+    CreateEventScreen: { screen: CreateEventScreen }
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
+    Instructor: InstructorFeedNavigator,
     Home: FeedNavigator,
-    'Create Event': EventNavigator,
-    // 'Create Payment': CreatePaymentRequestScreen,
-    // 'My Students': Students,
     'Logout': { screen: SettingsScreen },
-    // 'Preview: Messages': ChatStackNavigator,
-    // 'Preview: Dashboard': PreviewNavigator
 });
 
 const AppNavigator = createSwitchNavigator({
     AuthLoading: AuthLoadingScreen,
     Auth: AuthStackNavigator,
     App: AppDrawerNavigator,
-
 });
 
 export default createAppContainer(AppNavigator);

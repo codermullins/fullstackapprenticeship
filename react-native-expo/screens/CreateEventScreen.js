@@ -49,7 +49,7 @@ export default class CreatEventScreen extends Component {
                 end: "",
                 id: ""
             })
-            this.props.navigation.navigate('Home')
+            this.props.navigation.navigate('Instructor')
         }
 
         showStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: true });
