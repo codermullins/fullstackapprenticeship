@@ -125,7 +125,7 @@ export default class HomeScreen extends React.Component {
     return(
       <View>
         {!events ? null :
-          <Text style={{textAlign: 'center', fontSize: 20}}>Upcoming Events{'\n'}</Text> 
+          <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingBottom: 14}}>Upcoming Events</Text> 
         }
       {events.map((event, i) => (
         new Date().getTime() < new Date(event.start).getTime() ? (
@@ -173,7 +173,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            <Title>#fsa206</Title>
+            {/* <Title>#fsa206</Title> */}
           </Body>
           <Right>
             <View></View>
@@ -224,7 +224,7 @@ export default class HomeScreen extends React.Component {
 
           {this.state.profile !== undefined ? (
             <View>
-            <Text style={{textAlign: 'center', fontSize: 20, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text>
+            <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text>
             <RkCard rkType='shadowed'>
             <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
@@ -238,7 +238,7 @@ export default class HomeScreen extends React.Component {
           </View>
           ) : (
             <View>
-            <Text style={{textAlign: 'center', fontSize: 20, paddingTop: 20, paddingBottom: 20}}>Create Profile</Text>
+            <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingTop: 26, paddingBottom: 20}}>Create Profile</Text>
 
             <RkCard rkType='shadowed'>
 
@@ -252,7 +252,7 @@ export default class HomeScreen extends React.Component {
           )}
 
           <Text>{'\n'}</Text>
-          <Text style={{textAlign: 'center', fontSize: 20, paddingTop: 10}}>Learn & Earn Experience</Text>
+          <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Learn & Earn Experience</Text>
           <Text>{'\n'}</Text>
 
           <RkCard>
@@ -343,7 +343,7 @@ export default class HomeScreen extends React.Component {
 
 
 
-          <Text style={{textAlign: 'center', fontSize: 20}}>Educational Resources</Text>
+          <Text style={{textAlign: 'left', fontSize: 20}}>Educational Resources</Text>
           <Text>{'\n'}</Text>
           <RkCard rkType='shadowed'>
             <View>
@@ -517,6 +517,11 @@ let styles = StyleSheet.create({
     height: 42,
     borderRadius: 21,
     marginRight: 17,
+  },
+  header: {
+    fontSize: 30,
+    paddingLeft: 14,
+    textAlign: 'left'
   },
   dot: {
     fontSize: 6.5,
