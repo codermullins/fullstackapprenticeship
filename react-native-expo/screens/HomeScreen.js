@@ -62,9 +62,10 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchEvents();
       await this.fetchProfile(id)
-      // await console.log('Profile: ', this.state.profile)
+      await console.log('Profile: ', this.state.profile)
 
       await this.fetchProduct(this.state.profile.productId);
+
       // await console.log('Product: ', this.state.product)
 
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
@@ -95,7 +96,12 @@ export default class HomeScreen extends React.Component {
   
   async fetchProfile(id) {
     const profile = await API.get('fsa', `/users/${id}`)
-    await this.setState({ profile: profile[0] })
+    console.log('Length: ', profile.length)
+    if (profile.length === 0) {
+      this.props.navigation.navigate('CreateProfile', { function: this.updateProfile })
+    } else {
+      await this.setState({ profile: profile[0] })
+    } 
   }
 
   async fetchProduct(id) {
@@ -125,7 +131,7 @@ export default class HomeScreen extends React.Component {
     return(
       <View>
         {!events ? null :
-          <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingBottom: 14}}>Upcoming Events</Text> 
+          <Text style={{textAlign: 'center', paddingLeft: 14, fontSize: 30, paddingBottom: 14}}>Upcoming Events</Text> 
         }
       {events.map((event, i) => (
         new Date().getTime() < new Date(event.start).getTime() ? (
@@ -224,7 +230,7 @@ export default class HomeScreen extends React.Component {
 
           {this.state.profile !== undefined ? (
             <View>
-            <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text>
+            <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text>
             <RkCard rkType='shadowed'>
             <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
@@ -252,7 +258,7 @@ export default class HomeScreen extends React.Component {
           )}
 
           <Text>{'\n'}</Text>
-          <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Learn & Earn Experience</Text>
+          <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Learn & Earn Experience</Text>
           <Text>{'\n'}</Text>
 
           <RkCard>
@@ -265,7 +271,8 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
                 schema: 'apprenticeExperienceSchema',
                 experience: this.state.apprenticeship,
-                function: this.updateExperience
+                function: this.updateExperience,
+                origin: 'Apprentice'
               })}>
             <Image rkCardImg={true} source={require('../assets/exp.png')} />
             </TouchableOpacity>
@@ -280,13 +287,17 @@ export default class HomeScreen extends React.Component {
                 <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                 schema: 'apprenticeExperienceSchema',
                 experience: this.state.apprenticeship,
-                function: this.updateExperience
+                function: this.updateExperience,
+                origin: 'Apprentice'
+
               })}>{this.state.apprenticeship.achievements.toString()}/15 Achievements</RkText>
               </RkButton>
               <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                 schema: 'apprenticeExperienceSchema',
                 experience: this.state.apprenticeship,
-                function: this.updateExperience
+                function: this.updateExperience,
+                origin: 'Apprentice'
+
               })}>
                 <Icon name="send-o" style={iconButton} />
                 <RkText rkType='hint'>View Progress</RkText>
@@ -306,7 +317,9 @@ export default class HomeScreen extends React.Component {
             <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
                 schema: 'productExperienceSchema',
                 experience: this.state.product,
-                function: this.updateExperience
+                function: this.updateExperience,
+                origin: 'Apprentice'
+
 
               })}>
             <Image rkCardImg={true} source={require('../assets/product.png')} />
@@ -322,13 +335,17 @@ export default class HomeScreen extends React.Component {
                 <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                 schema: 'productExperienceSchema',
                 experience: this.state.product,
-                function: this.updateExperience
+                function: this.updateExperience,
+                origin: 'Apprentice'
+
               })}>{this.state.product.achievements.toString()}/15 Achievements</RkText>
               </RkButton>
               <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                 schema: 'productExperienceSchema',
                 experience: this.state.product,
-                function: this.updateExperience
+                function: this.updateExperience,
+                origin: 'Apprentice'
+
               })}>
                 <Icon name="send-o" style={iconButton} />
                 <RkText rkType='hint'>View Progress</RkText>
@@ -343,7 +360,7 @@ export default class HomeScreen extends React.Component {
 
 
 
-          <Text style={{textAlign: 'left', fontSize: 20}}>Educational Resources</Text>
+          <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Educational Resources</Text>
           <Text>{'\n'}</Text>
           <RkCard rkType='shadowed'>
             <View>
@@ -426,7 +443,8 @@ export default class HomeScreen extends React.Component {
           <Text>{'\n'}</Text>
 
           
-          
+          <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Premium Training</Text>
+
 
           <RkCard>
           <View rkCardHeader={true}>

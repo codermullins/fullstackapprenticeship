@@ -34,6 +34,7 @@ import Students from "../components/StudentList";
 import PaymentScreen from "../screens/PaymentScreen";
 import ChapterScreen from "../screens/ChapterScreen";
 import InstructorScreen from "../screens/InstructorScreen";
+import StudentProfileScreen from "../screens/StudentProfileScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -61,12 +62,15 @@ const FeedNavigator = createStackNavigator({
 
 const InstructorFeedNavigator = createStackNavigator({
     InstructorScreen: { screen: InstructorScreen },
-    CreateEventScreen: { screen: CreateEventScreen }
+    CreateEventScreen: { screen: CreateEventScreen },
+    StudentProfileScreen: { screen: StudentProfileScreen },
+    ExperienceScreen: { screen: ExperienceScreen },
+    AchievementScreen: { screen: AchievementScreen },
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
-    Instructor: InstructorFeedNavigator,
-    Home: FeedNavigator,
+    Apprenticeship: FeedNavigator,
+    'Instructor (Preview)': InstructorFeedNavigator,
     'Logout': { screen: SettingsScreen },
 });
 
