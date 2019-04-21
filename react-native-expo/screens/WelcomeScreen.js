@@ -17,14 +17,14 @@ class WelcomeScreen extends Component {
       <View style={styles.container}>
         {/* <Text style={{ fontSize: 40, lineHeight:40, paddingTop: 10, paddingBottom: 5, margin: 0}}>Refresh Your Life</Text> */}    
         <Image source={require('../assets/fsa.jpeg')} rounded style={{ marginBottom: 1, padding:0}} />
-        <Row>
+        <Row rounded style={{ marginBottom: 10}}>
           <Col>
             <Button
               onPress={() => this.props.navigation.navigate('SignIn')}
               full
               light
-              style={{ backgroundColor: '#9c27b0', height: 80 }}>
-              <Text style={{color: 'white', fontSize: 20}}>Sign In</Text>
+              style={{ backgroundColor: '#9c27b0', height: 60 }}>
+              <Text style={{color: 'white', fontSize: 20}}>Sign In</Text> 
             </Button>
           </Col>
           <Col>
@@ -32,14 +32,13 @@ class WelcomeScreen extends Component {
               onPress={() => this.props.navigation.navigate('SignUp')}
               full
               light
-              style={{ backgroundColor: "#6200EE", height: 80 }}>
+              style={{ backgroundColor: "#6200EE", height: 60 }}>
               <Text style={{color: 'white', fontSize: 20}}>Register</Text>
             </Button>
           </Col>          
         {/* <Text>{'\n'}</Text> */}          
         </Row>
-        
-        
+        <Text style={{ fontStyle:'italic', fontSize: 30, lineHeight:30, paddingTop: 15, paddingBottom: 0, margin: 0}}>Refresh Your Life</Text>        
       </View>  
       </Grid>
       </ScrollView>      
