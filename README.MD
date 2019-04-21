@@ -23,6 +23,7 @@ The FSA Mobile application offers a way to access the gamified experience system
 ## Contributing
 
 1. Fork it (<https://github.com/yourname/yourproject/fork>)
+Syncing your forked repository to the original repository is an important step before submitting any pull request to the original repository for the changes in your forked repository. Even if you are not going to submit a pull request to the original repository, there are times that you want the additional features and/or bug fixes that have been done since you forked the original repository. (Sync a fork of a repository to keep it up-to-date with the upstream repository. https://help.github.com/en/articles/syncing-a-fork)
 2. Please use yarn for installing and adding dependencies.
 3. Create your feature branch (`git checkout -b feature/fooBar`)
 4. Commit your changes (`git commit -am 'Add some fooBar'`)
