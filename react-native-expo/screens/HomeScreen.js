@@ -62,10 +62,10 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchEvents();
       await this.fetchProfile(id)
-      await console.log('Profile: ', this.state.profile)
+      // await console.log('Profile: ', this.state.profile)
 
       await this.fetchProduct(this.state.profile.productId);
-
+      
       // await console.log('Product: ', this.state.product)
 
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
