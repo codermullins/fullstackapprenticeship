@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, AsyncStorage } from 'react-native';
 import { Button } from "native-base";
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 class WelcomeScreen extends Component {
   
@@ -12,27 +13,35 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <ScrollView>
-        <View style={styles.container}>
-        <Text style={{ fontSize: 40, paddingTop: 10, paddingBottom: 10}}>Refresh Your Life</Text>
-        <Image source={require('../assets/blueprint.jpg')} rounded />
-        <Text style={{ fontSize: 36, fontStyle: 'italic', padding: 15}}>#thehub</Text>
-        <Button
-          onPress={() => this.props.navigation.navigate('SignIn')}
-          full
-          light
-          style={{ backgroundColor: '#9c27b0', height: 80 }}
-
-        ><Text style={{color: 'white', fontSize: 20}}>Sign In</Text></Button>
-        {/* <Text>{'\n'}</Text> */}
-        <Button
-          onPress={() => this.props.navigation.navigate('SignUp')}
-          full
-          light
-          style={{ backgroundColor: "#6200EE", height: 80 }}
-        ><Text style={{color: 'white', fontSize: 20}}>Register</Text></Button>
-      </View>
-      </ScrollView>
-      
+      <Grid>
+      <View style={styles.container}>
+        {/* <Text style={{ fontSize: 40, lineHeight:40, paddingTop: 10, paddingBottom: 5, margin: 0}}>Refresh Your Life</Text> */}    
+        <Image source={require('../assets/fsa.jpeg')} rounded style={{ marginBottom: 1, padding:0}} />
+        <Row rounded style={{ marginBottom: 10}}>
+          <Col>
+            <Button
+              onPress={() => this.props.navigation.navigate('SignIn')}
+              full
+              light
+              style={{ backgroundColor: '#9c27b0', height: 60 }}>
+              <Text style={{color: 'white', fontSize: 20}}>Sign In</Text> 
+            </Button>
+          </Col>
+          <Col>
+            <Button
+              onPress={() => this.props.navigation.navigate('SignUp')}
+              full
+              light
+              style={{ backgroundColor: "#6200EE", height: 60 }}>
+              <Text style={{color: 'white', fontSize: 20}}>Register</Text>
+            </Button>
+          </Col>          
+        {/* <Text>{'\n'}</Text> */}          
+        </Row>
+        <Text style={{ fontStyle:'italic', fontSize: 30, lineHeight:30, paddingTop: 15, paddingBottom: 0, margin: 0}}>Refresh Your Life</Text>        
+      </View>  
+      </Grid>
+      </ScrollView>      
     );
   }
 }
