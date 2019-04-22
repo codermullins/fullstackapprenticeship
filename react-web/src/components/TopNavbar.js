@@ -9,8 +9,8 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+// import IconButton from "@material-ui/core/IconButton";
+// import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import { thunkSignOut } from "../thunks/auth";
 
@@ -24,12 +24,12 @@ class TopNavbar extends React.Component {
         const {
             classes,
             routeHome,
-            routeknowledge,
+            // routeknowledge,
             routeSignup,
-            routeLogin,
+            // routeLogin,
             userToken,
             handleSignOut,
-            fancyLogin
+            // fancyLogin
         } = this.props;
         return (
             <AppBar position="static">

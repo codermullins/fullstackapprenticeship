@@ -25,6 +25,8 @@ import SubcategoriesScreen from '../screens/SubcategoriesScreen';
 import ContentScreen from "../screens/ContentScreen";
 import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
+import CreateResourceScreen from '../screens/CreateResourceScreen';
+import ReviewResourcesScreen from '../screens/ReviewResourcesScreen';
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -167,9 +169,43 @@ const PreviewNavigator = createStackNavigator({
 },
 })
 
+const CreateResource = createStackNavigator({
+  CreateResourceScreen: {
+    screen: CreateResourceScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Create Resource',
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <View style={{ paddingHorizontal: 10 }}>
+              <Ionicons name='md-menu' size={32} />
+          </View>
+        </TouchableOpacity>
+      ),
+    }),
+  },
+})
+
+const ReviewResources = createStackNavigator({
+  ReviewResourcesScreen: {
+    screen: ReviewResourcesScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Review Resources',
+      headerLeft: (
+        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+          <View style={{ paddingHorizontal: 10 }}>
+            <Ionicons name='md-menu' size={32} />  
+          </View>
+        </TouchableOpacity>
+      )
+    })
+  }
+})
+
 const AppDrawerNavigator = createDrawerNavigator({
     Home: AppStackNavigator,
     'Create Event': EventNavigator,
+    'Create Resource': CreateResource,
+    'Review Resources': ReviewResources,
     Settings: { screen: SettingsScreen },
     'Preview: Messages': ChatStackNavigator,
     'Preview: Dashboard': PreviewNavigator

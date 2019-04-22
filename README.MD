@@ -59,5 +59,9 @@ Where our React-Native application lives, built to work together with the React-
 ## fsa-db
 Where our PostgreSQL & serverless functions live.
 
+## git troubleshooting
+Had trouble pulling from github, had to do the following commands to pull
 
-
+git remote add upstream https://github.com/fsapprenticeship/fsa-hub
+git fetch upstream
+git pull upstream develop
