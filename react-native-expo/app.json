@@ -16,8 +16,8 @@
     "icon": "./assets/fsa.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#7851a9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
