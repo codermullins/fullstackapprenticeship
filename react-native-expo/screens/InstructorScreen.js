@@ -31,14 +31,16 @@ export default class HomeScreen extends React.Component {
 
     this.state = {
       events: [],
-      profile: null,
+      profile: { instructor: false},
       product: { xpEarned: 0, achievements: 0 },
       apprenticeship: { xpEarned: 0, achievements: 0 },
       xp: null,
       loading: true,
-      apprentices: []
+      apprentices: [],
+      instructor: false
 
     }
+    this.updateProfile = this.updateProfile.bind(this)
   }
   static navigationOptions = {
     header: null,
@@ -58,7 +60,7 @@ export default class HomeScreen extends React.Component {
       const values = [['accessToken', token], ['username', username], ['id', id]]
       await AsyncStorage.multiSet(values)
 
-    //   await this.fetchProfile(id)
+      await this.fetchProfile(id)
 
  
 
@@ -81,6 +83,20 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  async fetchProfile(id) {
+    const profile = await API.get('fsa', `/users/${id}`)
+    console.log('Profile: ', profile[0])
+    if (profile[0].instructor === false) {
+      console.log('Not an instructor')
+    } else {
+      await this.setState({ profile: profile[0], instructor: true })
+    } 
+  }
+
+  updateProfile(obj) {
+    this.setState({ profile: obj})
+  }
+
   async fetchApprentices() {
       const response = await API.get('fsa', `/users/`);
     //   await console.log('Apprentices: ', response)
@@ -96,17 +112,6 @@ export default class HomeScreen extends React.Component {
 
   async stopLoading() {
     this.setState({ loading: false })
-  }
-
-  getAvatar = async (github) => {
-    const user = await fetch(`https://api.github.com/users/${github}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    const avatar = JSON.parse(user._bodyText);
-    const url = avatar.avatar_url;
-    return url;
   }
 
   renderApprentices = (apprentices) => {
@@ -156,9 +161,6 @@ export default class HomeScreen extends React.Component {
       }
     }
 
-    updateProfile(obj) {
-      this.setState({ profile: obj})
-    }
 
 
   render() {
@@ -176,7 +178,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            {/* <Title>#fsa206</Title> */}
+            <Title>Instructor</Title>
           </Body>
           <Right>
             <View></View>
@@ -185,41 +187,25 @@ export default class HomeScreen extends React.Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
-          {/* <RkCard>
-            <View rkCardHeader={true}>
-              <View style={{ flexDirection: 'row' }}>
-                <Image source={require('../assets/michael.jpg')} style={styles.avatar} />
-                <View style={{}}>
-                  <RkText rkType='header'>Michael Litchev</RkText>
-                  <RkText rkType='subtitle'>Seattle & Bellevue Instructor</RkText>
+          
+          { this.state.profile.instructor === false ? (
+            <RkCard rkType='heroImage shadowed'>
+            <View>
+            <TouchableOpacity onPress={() => navigation.navigate('InstructorRegistrationScreen', {
+              function: this.updateProfile
+            })}>
+              <Image rkCardImg={true} source={require('../assets/mentors.png')} />
+              </TouchableOpacity>
+              <View rkCardImgOverlay={true} style={styles.overlay}>
+                <View style={{ marginBottom: 20 }}>
+                  <RkText rkType='header xxlarge' style={{ color: 'white' }}>Become an Instructor</RkText>
+                  <RkText rkType='subtitle' style={{ color: 'white' }}>Apply to become a senior member of the FSA, and mentor the next generation of full-stack developers.</RkText>
                 </View>
               </View>
-              <RkButton rkType='clear'>
-              <Icon name="group" style={iconButton} />
-               <Text>{'\n'}</Text>
-              <Text>Switch Instructor</Text> 
-
-                 <Icon style={styles.dot} name="circle" />
-                <Icon style={styles.dot} name="circle" />
-                <Icon style={styles.dot} name="circle" /> 
-
-              </RkButton> 
-            </View>            
-          </RkCard> */}
-
-          {/* <RkCard>
-                <View style={{ marginBottom: 20 }}>
-                  <RkText rkType='header xxlarge' >Sandbox</RkText>
-                </View>
-                <View style={styles.footerButtons}>
-                  <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
-                  <RkButton rkType='clear ' >EXPLORE</RkButton>
-                </View>
-          </RkCard>   */}
-
-<Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Create Event</Text>
-          <Text>{'\n'}</Text> 
-
+            </View>
+          </RkCard> 
+          ) : (
+            <View>
             <RkCard rkType='heroImage shadowed'>
             <View>
             <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen')}>
@@ -235,11 +221,20 @@ export default class HomeScreen extends React.Component {
           </RkCard> 
 
           <Text>{'\n'}</Text>
+
           <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>My Students</Text>
           <Text>{'\n'}</Text> 
 
           { this.renderApprentices(this.state.apprentices)}
+          </View>
 
+          )
+          
+        
+        }
+          
+
+          
           <Loader loading={this.state.loading} />
 
           <Text>{'\n'}</Text>

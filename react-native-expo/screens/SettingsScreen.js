@@ -4,14 +4,9 @@ import { Auth } from "aws-amplify"
 
 class SettingsScreen extends Component {
   signOut = async () => {
-    // Auth.signOut()
-    //     .then(() => {
-    //        this.props.screenProps.onStateChange('signedOut', null);
-    //     })
-    //     .catch(err => console.log(err));
     AsyncStorage.clear();
     Auth.signOut()
-    this.props.navigation.navigate('WelcomeScreen');
+    this.props.navigation.navigate('Auth');
   };
 
   render() {
