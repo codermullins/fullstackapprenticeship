@@ -19,9 +19,8 @@ import {
 import Event from "../components/Event"
 import Loader from "../components/Loader";
 import { Header, Left, Body, Right, Button, Title } from "native-base"
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { UtilStyles } from '../style/styles';
-import { Ionicons } from "@expo/vector-icons"
+import { Ionicons, Entypo } from "@expo/vector-icons"
 import orderBy from "lodash.orderby";
 import { API, Auth } from "aws-amplify"
 
@@ -62,13 +61,7 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchProfile(id)
 
- 
-
-    //   const xp = await this.calculateExperience()
-
-    //   this.setState({ xp: xp})
-
-      await this.fetchApprentices();
+      await this.fetchApprentices(id);
 
       await this.stopLoading();
 
@@ -97,9 +90,8 @@ export default class HomeScreen extends React.Component {
     this.setState({ profile: obj})
   }
 
-  async fetchApprentices() {
-      const response = await API.get('fsa', `/users/`);
-    //   await console.log('Apprentices: ', response)
+  async fetchApprentices(id) {
+      const response = await API.get('fsa', `/mentor/${id}`);
       await this.setState({ apprentices: response })
   }
 
@@ -126,23 +118,18 @@ export default class HomeScreen extends React.Component {
                     })}>
                     <RkCard>
             <View rkCardHeader={true}>
-              <View style={{ flexDirection: 'row' }}>
-                {/* <Image source={require('../assets/michael.jpg')} style={styles.avatar} /> */}
-                <View style={{}}>
                   <RkText rkType='header'>{apprentice.fName} {apprentice.lName}</RkText>
-                  {/* <RkText rkType='subtitle'>6 minutes ago</RkText> */}
-                </View>
-              </View>
+                  <RkText rkType='subtitle'>{apprentice.technicalRank}</RkText>
             </View>
-            <View rkCardFooter={true} style={styles.footer}>
-              <RkButton rkType='clear link accent'>
-                {/* <Icon name="heart" /> */}
-                <RkText rkType='accent'>Rank: {apprentice.technicalRank}</RkText>
-              </RkButton>
-              <RkButton rkType='clear link'>
-                {/* <Icon name="comment-o" /> */}
-                <RkText rkType='hint'>{apprentice.city}, {apprentice.country}</RkText>
-              </RkButton>
+            <View rkCardFooter={true}>
+            <Left>
+
+              <RkText rkType='header'><Entypo name="github" size={24} /> {apprentice.github}</RkText>
+            </Left>
+            <Right>
+
+              <RkText>{apprentice.city}, {apprentice.country}</RkText>
+            </Right>
             </View>
           </RkCard> 
                     </TouchableOpacity>
@@ -209,7 +196,7 @@ export default class HomeScreen extends React.Component {
             <RkCard rkType='heroImage shadowed'>
             <View>
             <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen')}>
-              <Image rkCardImg={true} source={require('../assets/events.png')} />
+              <Image rkCardImg={true} source={require('../assets/fsa.png')} />
               </TouchableOpacity>
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <View style={{ marginBottom: 20 }}>
@@ -256,7 +243,7 @@ let styles = StyleSheet.create({
     fontSize: 19.7,
   },
   footer: {
-    marginHorizontal: 16,
+    marginHorizontal: 20,
   },
   avatar: {
     width: 42,

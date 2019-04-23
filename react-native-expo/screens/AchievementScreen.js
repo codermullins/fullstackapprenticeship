@@ -34,7 +34,6 @@ export default class AchievementScreen extends Component {
       }
           try {
             const result = await API.put('fsa', `/experience/${id}`, {body})
-            // await console.log('New Object? : ', result)
             await update(schema.experience.type, result)
 
           } catch (e) {

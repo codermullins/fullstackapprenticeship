@@ -92,15 +92,8 @@ class ProfileScreen extends Component {
                   <Text>{this.state.profile.github}</Text>
                 </Button>
               </Left>
-              {/* <Body>
-              <Button transparent textStyle={{color: '#87838B'}}>
-                  <Entypo name="map" size={24} />
-                  <Text>{this.state.profile.region}</Text>
-                </Button>
-              </Body> */}
               <Right>
               <Button transparent textStyle={{color: '#87838B'}}>
-                  {/* <Entypo name="archive" size={24} /> */}
                   <Text>{this.state.profile.city}, {this.state.profile.country}</Text>
                 </Button>
               </Right>
@@ -115,11 +108,7 @@ class ProfileScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    // alignItems: 'left',
-    // alignContent: 'left',
-    // justifyContent: 'left',
-    // paddingTop: '20', 
+    flexDirection: 'row', 
     paddingBottom: 20
   },
   header: {

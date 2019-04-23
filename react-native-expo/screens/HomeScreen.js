@@ -98,7 +98,7 @@ export default class HomeScreen extends React.Component {
     const profile = await API.get('fsa', `/users/${id}`)
     console.log('Length: ', profile.length)
     if (profile.length === 0) {
-      this.props.navigation.navigate('CreateProfile', { function: this.updateProfile })
+      this.props.navigation.navigate('CreateProfile', { function: this.updateProfile, experience: this.updateExperience })
     } else {
       await this.setState({ profile: profile[0] })
     } 
@@ -207,16 +207,6 @@ export default class HomeScreen extends React.Component {
             </View>            
           </RkCard>
 
-          {/* <RkCard>
-                <View style={{ marginBottom: 20 }}>
-                  <RkText rkType='header xxlarge' >Sandbox</RkText>
-                </View>
-                <View style={styles.footerButtons}>
-                  <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
-                  <RkButton rkType='clear ' >EXPLORE</RkButton>
-                </View>
-          </RkCard>   */}
-
           <Loader loading={this.state.loading} />
 
 
@@ -225,7 +215,6 @@ export default class HomeScreen extends React.Component {
 
           {this.renderEvents(this.state.events)}
 
-          {this.state.profile !== undefined ? (
             <View>
             {/* <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text> */}
             <RkCard rkType='shadowed'>
@@ -239,20 +228,6 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
           </View>
-          ) : (
-            <View>
-            <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingTop: 26, paddingBottom: 20}}>Create Profile</Text>
-
-            <RkCard rkType='shadowed'>
-
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateProfile', {
-              function: this.updateProfile
-            })}>
-              <Image rkCardImg={true} source={require('../assets/create.png')} />
-              </TouchableOpacity>
-          </RkCard> 
-          </View>
-          )}
 
           <Text>{'\n'}</Text>
           <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Learn & Earn Experience</Text>
