@@ -23,54 +23,33 @@ export default class CreatEventScreen extends Component {
     }
 
     async componentDidMount() {
-        const keys = this.props.navigation.getParam('keys', 'none')
-        await console.log(keys)
+        console.log(this.props.navigation)
     }
-
-    generateNotification(key) {
-        let notification = {
-            to: key,
-            // data: key.dataJsonObject,
-            title: this.state.name,
-            body: this.state.description,
-            ttl: 0,
-            priority: 'high',
-            // android: {
-            //     channelId: key.channelId
-            // },
-        }
-        return notification;
-    }
-
-    
-
-
-
-    async submit(obj) {
-        
-        let uri = 'https://exp.host/--/api/v2/push/send'
-
-        try {
-            let response = await fetch(uri, {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(obj)
-            })
-          await console.log('Response: ', response)
- 
-        } catch(e) {
-          console.log(e)
-        }
-      }
      
       handlePress = async () => {
+        let uri = 'https://exp.host/--/api/v2/push/send'
+
+        generateNotification = (key) => {
+            let notification = {
+                to: key,
+                title: this.state.name,
+                body: this.state.description,
+                ttl: 0,
+                priority: 'high',
+            }
+            return notification;
+        }
           const keys = this.props.navigation.getParam('keys', 'none');
           let students = [];
 
-          keys.forEach(function(key) {
-              let student = this.generateNotification(key)
-              students.pop(student);
-          })
+          for (i = 0; i < keys.length; i++) {
+            if (keys[i].length < 10) {
+                continue;
+              } else {
+                let student = generateNotification(keys[i])
+                students.push(student);
+              }
+          }
           
           const body = {
               id: uuidv4(),
@@ -86,8 +65,13 @@ export default class CreatEventScreen extends Component {
             try {
                 const response = await API.post('events', '/events', {body})
                 await console.log('Lambda Response: ', response);
-                const notifications = await this.submit(students);
-                await console.log(notifications)
+                let notifications = await fetch(uri, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(students)
+                })
+                await console.log('Response: ', notifications)
+                await console.log('Students array: ', students)
             } catch (e) {
                 console.log('ERROR: ', e)
             }
@@ -99,7 +83,7 @@ export default class CreatEventScreen extends Component {
                 end: "",
                 id: ""
             })
-            this.props.navigation.navigate('Instructor')
+            this.props.navigation.goBack()
         }
 
         showStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: true });
