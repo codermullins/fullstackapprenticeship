@@ -93,8 +93,13 @@ export default class HomeScreen extends React.Component {
   async fetchApprentices(id) {
       const response = await API.get('fsa', `/mentor/${id}`);
       await this.setState({ apprentices: response })
-  }
-
+      let apprenticeKeys = []
+      response.forEach(function(apprentice) {
+        apprenticeKeys.push(apprentice.expo)
+      })
+      this.setState({ apprenticeKeys: apprenticeKeys })
+    }
+      
   async calculateExperience() {
     let productXP = this.state.product.xpEarned;
     let apprenticeshipXP = this.state.apprenticeship.xpEarned;
@@ -195,7 +200,7 @@ export default class HomeScreen extends React.Component {
             <View>
             <RkCard rkType='heroImage shadowed'>
             <View>
-            <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen')}>
+            <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen', {keys: this.state.apprenticeKeys})}>
               <Image rkCardImg={true} source={require('../assets/fsa.png')} />
               </TouchableOpacity>
               <View rkCardImgOverlay={true} style={styles.overlay}>
