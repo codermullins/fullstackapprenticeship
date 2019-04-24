@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { API } from "aws-amplify";
 import { Container, Content, Form, Item, Input, Label, Button, Picker } from 'native-base';
 import Loader from "../components/Loader";
+import { Notifications } from "expo"
 import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
 import CountryPicker from "react-native-country-picker-modal"
 
@@ -24,7 +25,7 @@ export default class EditProfileScreen extends Component {
             mbriggs: "",
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false,
-            xp: `${this.props.navigation.state.params.profile.xp}`,
+            // xp: `${this.props.navigation.state.params.profile.xp}`,
             loading: false,
             cca2: 'US',
             mentors: [],
@@ -36,6 +37,9 @@ export default class EditProfileScreen extends Component {
     async componentDidMount() {
         const mentors = await API.get('fsa', '/mentors')
         this.setState({ mentors: mentors })
+        const notificationToken = await Notifications.getExpoPushTokenAsync();
+        console.log('Notification Token: ', notificationToken)
+        this.setState({ expoToken: notificationToken })
     }
 
     renderMentors(mentors) {
@@ -57,7 +61,6 @@ export default class EditProfileScreen extends Component {
         editProfile = async () => {
             this.setState({ loading: true })
             const id = await AsyncStorage.getItem('id')
-            await console.log('Id: ', id)
             const body = {
                 fName: this.state.fName,
                 lName: this.state.lName,
