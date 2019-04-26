@@ -35,6 +35,8 @@ import PaymentScreen from "../screens/PaymentScreen";
 import ChapterScreen from "../screens/ChapterScreen";
 import InstructorScreen from "../screens/InstructorScreen";
 import StudentProfileScreen from "../screens/StudentProfileScreen";
+import CreateResourceScreen from "../screens/CreateResourceScreen";
+import ReviewResourcesScreen from "../screens/ReviewResourcesScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -57,7 +59,8 @@ const FeedNavigator = createStackNavigator({
     PaymentScreen: { screen: PaymentScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
-    ChapterScreen: { screen: ChapterScreen}
+    ChapterScreen: { screen: ChapterScreen},
+    ReviewResourcesScreen: { screen: ReviewResourcesScreen }
   });
 
 const InstructorFeedNavigator = createStackNavigator({
@@ -66,43 +69,13 @@ const InstructorFeedNavigator = createStackNavigator({
     StudentProfileScreen: { screen: StudentProfileScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
-})
-
-const CreateResource = createStackNavigator({
-  CreateResourceScreen: {
-    screen: CreateResourceScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Create Resource',
-      headerLeft: (
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <View style={{ paddingHorizontal: 10 }}>
-              <Ionicons name='md-menu' size={32} />
-          </View>
-        </TouchableOpacity>
-      ),
-    }),
-  },
-})
-
-const ReviewResources = createStackNavigator({
-  ReviewResourcesScreen: {
-    screen: ReviewResourcesScreen,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Review Resources',
-      headerLeft: (
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <View style={{ paddingHorizontal: 10 }}>
-            <Ionicons name='md-menu' size={32} />  
-          </View>
-        </TouchableOpacity>
-      )
-    })
-  }
+    ReviewResourcesScreen: { screen : ReviewResourcesScreen }
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
     Apprenticeship: FeedNavigator,
     'Instructor (Preview)': InstructorFeedNavigator,
+    'Create Resource': { screen: CreateResourceScreen },
     'Logout': { screen: SettingsScreen },
 });
 

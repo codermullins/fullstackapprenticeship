@@ -234,6 +234,17 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
 
+          <RkCard>
+          <View>
+            <TouchableOpacity onPress={() => navigation.navigate('ReviewResourcesScreen')}>
+            <RkText>View Resources</RkText>
+            </TouchableOpacity>
+            <View>
+              
+            </View>
+          </View>
+          </RkCard>
+
           <Text>{'\n'}</Text>
           <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>My Students</Text>
           <Text>{'\n'}</Text> 

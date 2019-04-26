@@ -24,21 +24,12 @@ class TopNavbar extends React.Component {
         const {
             classes,
             routeHome,
-<<<<<<< HEAD
-            // routeknowledge,
-            routeSignup,
-            // routeLogin,
-            userToken,
-            handleSignOut,
-            // fancyLogin
-=======
             routeTyping,
             routeSignup,
             routePayment,
             userToken,
             handleSignOut,
             suggest
->>>>>>> 76e2af199c06acfa8534688d0b388348ef0b61e2
         } = this.props;
         return (
             <AppBar position="static">

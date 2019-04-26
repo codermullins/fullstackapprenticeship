@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReviewResourceFormScreen from './ReviewResourceFormScreen';
 import { Container, Content, Item, Label, Text, Card, Button, Form, Input } from 'native-base';
 
-class ReviewResourcesScreen extends Component {
+export default class ReviewResourcesScreen extends Component {
   constructor() {
     super();
 
@@ -49,9 +49,6 @@ class ReviewResourcesScreen extends Component {
       <ReviewResourceFormScreen resource={this.state.resourceInProcess} />
   }
 }
-
-
-export default ReviewResourcesScreen;
 
 const fakeListOfNewResources = [
   {
