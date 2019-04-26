@@ -25,6 +25,9 @@ import dataScienceSchema from "./dataScienceSchema";
 import startupSchema from "./startupSchema";
 import securitySchema from "./securitySchema";
 import seattleSchema from "./seattleSchema";
+import tacomaSchema from "./tacomaSchema";
+import everettSchema from "./everettSchema";
+import nySchema from "./nySchema";
 import communitySchema from "./communitySchema";
 import nomadSchema from "./nomadSchema";
 import jobBoardSchema from "./jobBoardSchema";
@@ -35,9 +38,11 @@ import learningSchema from "./learningSchema";
 import paymentsSchema from "./paymentsSchema";
 import testingSchema from "./testingSchema";
 import uxSchema from "./uxSchema";
-import apprenticeshipSchema from "./apprenticeshipSchema";
 import gettingStartedSchema from "./gettingStartedSchema";
-
+import apprenticeExperienceSchema from "./apprenticeExperienceSchema";
+import productExperienceSchema from "./productExperienceSchema"
+import apprenticeshipSchema from "./apprenticeshipSchema"
+import blueprintSchema from "./blueprintSchema"
 
 // Then we give our schema to the builder and provide the result to Sanity
 
@@ -49,6 +54,7 @@ export default createSchema({
   types: schemaTypes.concat([
     // The following are document types which will appear
     // in the studio.
+    blueprintSchema,
     webSchema,
     backendSchema,
     awsSchema,
@@ -63,6 +69,9 @@ export default createSchema({
     startupSchema,
     securitySchema,
     seattleSchema,
+    nySchema,
+    everettSchema,
+    tacomaSchema,
     communitySchema,
     nativeSchema,
     nomadSchema,
@@ -74,8 +83,10 @@ export default createSchema({
     learningSchema,
     testingSchema,
     uxSchema,
-    apprenticeshipSchema,
     gettingStartedSchema,
+    apprenticeshipSchema,
+    apprenticeExperienceSchema,
+    productExperienceSchema,
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
     blockContent,

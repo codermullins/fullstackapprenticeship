@@ -1,0 +1,42 @@
+{
+    "project_info": {
+      "project_number": "287152764608",
+      "firebase_url": "https://fsa-notifications.firebaseio.com",
+      "project_id": "fsa-notifications",
+      "storage_bucket": "fsa-notifications.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:287152764608:android:6ddca8f608448f16",
+          "android_client_info": {
+            "package_name": "community.fsa.mobile"
+          }
+        },
+        "oauth_client": [
+          {
+            "client_id": "287152764608-ptmfv8ivlq87igjem63o346u9d7grfg0.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyCaAQsfdooVZJxbDiccI4gT7hp1sTB1TwI"
+          }
+        ],
+        "services": {
+          "analytics_service": {
+            "status": 1
+          },
+          "appinvite_service": {
+            "status": 1,
+            "other_platform_oauth_client": []
+          },
+          "ads_service": {
+            "status": 2
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

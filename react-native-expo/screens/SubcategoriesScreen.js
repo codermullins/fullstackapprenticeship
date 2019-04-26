@@ -37,16 +37,12 @@ class SubcategoriesScreen extends Component {
         return(
           <List>
           {this.state.schema.map((list, i) => (
-            <ListItem key={i}>
-              <Left>
-                  <Text style={{fontSize: 24}}>{list.name}{'\n'}<Text style={{fontStyle: "italic"}}>{list.description}</Text></Text>
-              </Left>
-
-              <Right >
-                <NavButton schema={list.type} navigation={this.props.navigation} route="Content" onPress={() => this.props.navigation.navigate('Content')} />
-              </Right>
+            <ListItem key={i} onPress={() => this.props.navigation.navigate('Content', {
+                schema: list.type
+            })}>
+                  <Text style={{fontSize: 24}}>{list.name}{'\n'}<Text style={{fontStyle: "italic"}}>{list.description}</Text></Text>        
             </ListItem>
-          )
+            )
           )}
           </List>
         )

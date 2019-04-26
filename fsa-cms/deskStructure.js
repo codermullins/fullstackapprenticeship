@@ -17,6 +17,15 @@ export default () =>
                         .title("Tools")
                         .items([
                             S.listItem()
+                                .title("The Blueprint")
+                                .child(
+                                    S.documentList()
+                                        .title('The Blueprint')
+                                        .menuItems(S.documentTypeList('blueprintSchema').getMenuItems())
+                                        .filter('_type == $type && !defined(parents)')
+                                        .params({ type: 'blueprintSchema' })
+                                ),
+                            S.listItem()
                                 .title("Getting Started")
                                 .child(
                                     S.documentList()
@@ -186,6 +195,15 @@ export default () =>
                                         .filter('_type == $type && !defined(parents)')
                                         .params({ type: 'eastsideSchema' })
                                 ),
+                            S.listItem()
+                                .title("New York City")
+                                .child(
+                                    S.documentList()
+                                        .title('New York City')
+                                        .menuItems(S.documentTypeList('nySchema').getMenuItems())
+                                        .filter('_type == $type && !defined(parents)')
+                                        .params({ type: 'nySchema'})
+                            ),
                                 S.listItem()
                                 .title("Tacoma")
                                 .child(
@@ -204,6 +222,68 @@ export default () =>
                                         .filter('_type == $type && !defined(parents)')
                                         .params({ type: 'everettSchema' })
                                 ),
+                        ])
+                ),
+                S.listItem()
+                .title("Experience")
+                .child(
+                    S.list()
+                        .title("Our Systems")
+                        .items([
+                            S.listItem()
+                                .title("Apprenticeship")
+                                .child(
+                                    S.documentList()
+                                        .title('Apprentice')
+                                        .menuItems(S.documentTypeList('apprenticeExperienceSchema').getMenuItems())
+                                        .filter('_type == $type && !defined(parents)')
+                                        .params({ type: 'apprenticeExperienceSchema' })
+                                ),
+                                S.listItem()
+                                .title("Product")
+                                .child(
+                                    S.documentList()
+                                        .title('Product')
+                                        .menuItems(S.documentTypeList('productExperienceSchema').getMenuItems())
+                                        .filter('_type == $type && !defined(parents)')
+                                        .params({ type: 'productExperienceSchema' })
+                                ),
+                            // S.listItem()
+                            //     .title("Developer")
+                            //     .child(
+                            //         S.documentList()
+                            //             .title('Developer')
+                            //             .menuItems(S.documentTypeList('developerExperienceSchema').getMenuItems())
+                            //             .filter('_type == $type && !defined(parents)')
+                            //             .params({ type: 'developerExperienceSchema' })
+                            //     ),
+                            // S.listItem()
+                            //     .title("Engineer")
+                            //     .child(
+                            //         S.documentList()
+                            //             .title('Engineer')
+                            //             .menuItems(S.documentTypeList('engineerExperienceSchema').getMenuItems())
+                            //             .filter('_type == $type && !defined(parents)')
+                            //             .params({ type: 'engineerExperienceSchema'})
+                            // ),
+                            //     S.listItem()
+                            //     .title("Movement")
+                            //     .child(
+                            //         S.documentList()
+                            //             .title('Movement')
+                            //             .menuItems(S.documentTypeList('movementExperienceSchema').getMenuItems())
+                            //             .filter('_type == $type && !defined(parents)')
+                            //             .params({ type: 'movementExperienceSchema' })
+                            //     ),
+                            //     S.listItem()
+                            //     .title("Leadership")
+                            //     .child(
+                            //         S.documentList()
+                            //             .title('Leadership')
+                            //             .menuItems(S.documentTypeList('leadershipExperienceSchema').getMenuItems())
+                            //             .filter('_type == $type && !defined(parents)')
+                            //             .params({ type: 'leadershipExperienceSchema' })
+                            //     ),
                         ])
                 ),
                 S.listItem()

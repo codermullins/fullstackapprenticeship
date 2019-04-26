@@ -13,160 +13,59 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import HomeScreen from '../screens/HomeScreen';
 import ChatScreen from '../screens/ChatScreen';
-import KnowledgeScreen from '../screens/KnowledgeScreen';
+import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from '../screens/SettingsScreen';
 import CreateEventScreen from "../screens/CreateEventScreen"
 import ProfileScreen from '../screens/ProfileScreen';
+import EditProfileScreen from "../screens/EditProfileScreen";
+import CreateProfileScreen from "../screens/CreateProfileScreen";
 import PreviewScreen from "../screens/PreviewScreen";
 import SandboxScreen from '../screens/SandboxScreen';
 import SubcategoriesScreen from '../screens/SubcategoriesScreen';
 import ContentScreen from "../screens/ContentScreen";
 import BlueprintScreen from "../screens/BlueprintScreen";
 import MessagesListScreen from '../screens/MessagesListScreen';
-import CreateResourceScreen from '../screens/CreateResourceScreen';
-import ReviewResourcesScreen from '../screens/ReviewResourcesScreen';
+import WebPaymentScreen from "../screens/WebPaymentScreen";
+import ExperienceScreen from "../screens/ExperienceScreen";
+import AchievementScreen from "../screens/AchievementScreen";
+import CreatePaymentRequestScreen from "../screens/CreatePaymentRequestScreen"
+import Students from "../components/StudentList";
+import PaymentScreen from "../screens/PaymentScreen";
+import ChapterScreen from "../screens/ChapterScreen";
+import InstructorScreen from "../screens/InstructorScreen";
+import StudentProfileScreen from "../screens/StudentProfileScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
     Welcome: { screen: WelcomeScreen },
     SignIn: { screen: SignInScreen },
     SignUp: { screen: SignUpScreen },
+
 });
 
-const KnowledgeStackNavigator = createStackNavigator({
-  Knowledge: { screen: KnowledgeScreen },
-  Subcategories: { screen: SubcategoriesScreen },
-  Content: { screen: ContentScreen },
-});
+const FeedNavigator = createStackNavigator({
+    HomeScreen: { screen: HomeScreen },
+    BlueprintScreen: { screen: BlueprintScreen },
+    WebPaymentScreen: { screen: WebPaymentScreen },
+    Subcategories: { screen: SubcategoriesScreen },
+    Content: { screen: ContentScreen },
+    SandboxScreen: { screen: SandboxScreen },
+    Profile: { screen: ProfileScreen },
+    EditProfile: { screen: EditProfileScreen },
+    CreateProfile: { screen: CreateProfileScreen },
+    PaymentScreen: { screen: PaymentScreen },
+    ExperienceScreen: { screen: ExperienceScreen },
+    AchievementScreen: { screen: AchievementScreen },
+    ChapterScreen: { screen: ChapterScreen}
+  });
 
-const ChatStackNavigator = createStackNavigator({
-  MessagesList: { 
-    screen: MessagesListScreen, 
-    navigationOptions: ({ navigation }) => ({
-      title: 'Messages',
-      headerLeft: (
-          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <View style={{ paddingHorizontal: 10 }}>
-                  <Ionicons name="md-menu" size={32} />
-              </View>
-          </TouchableOpacity>
-      ),
-    }),
-  },
-  Chat: { screen: ChatScreen }
-});
-
-const AppTabNavigator = createBottomTabNavigator(
-    {
-      // Sandbox: {
-      //   screen: SandboxScreen,
-      //   navigationOptions: {
-      //     tabBarLable: 'Sandbox',
-      //     tabBarIcon: ({ tintColor }) => (
-      //       <Ionicons name="ios-home" size={28} color={tintColor} />
-      //     ),
-      //   },
-      // },
-      Home: {
-        screen: HomeScreen,
-        navigationOptions: {
-          tabBarLable: 'Home',
-          tabBarIcon: ({ tintColor }) => (
-            <Ionicons name="ios-home" size={28} color={tintColor} />
-          ),
-        },
-      },
-      Blueprint: {
-        screen: BlueprintScreen,
-        tabBarLable: 'Blueprint',
-        navigationOptions: {
-          tabBarIcon: ({ tintColor }) => (
-            <Ionicons name="md-book" size={28} color={tintColor} />
-          ),
-        },
-      },
-      // Chat: {
-      //   screen: ChatScreen,
-      //   navigationOptions: {
-      //     tabBarIcon: ({ tintColor }) => (
-      //       <Entypo name="chat" size={28} color={tintColor} />
-      //     ),
-      //   },
-      // },
-      Knowledge: {
-        screen: KnowledgeStackNavigator,
-        tabBarLable: 'Knowledge',
-        navigationOptions: {
-          tabBarIcon: ({ tintColor }) => (
-            <MaterialIcons name="book" size={28} color={tintColor} />
-          ),
-        },
-      },
-      // Profile: {
-      //   screen: ProfileScreen,
-      //   navigationOptions: {
-      //     tabBarIcon: ({ tintColor }) => (
-      //       <Entypo name="user" size={28} color={tintColor} />
-      //     ),
-      //   },
-      // },
-    },
-    {
-      tabBarOptions: {
-        activeTintColor: '#6200EE',
-        inactiveTintColor: '#151515',
-      },
-    },
-  );
-
-const AppStackNavigator = createStackNavigator({
-    AppTabNavigator: {
-        screen: AppTabNavigator,
-        navigationOptions: ({ navigation }) => ({
-            title: '#thehub',
-            headerLeft: (
-                <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                    <View style={{ paddingHorizontal: 10 }}>
-                        <Ionicons name="md-menu" size={32} />
-                    </View>
-                </TouchableOpacity>
-            ),
-        }),
-    },
-});
-
-const EventNavigator = createStackNavigator({
-  CreateEventScreen: {
-    screen: CreateEventScreen,
-    navigationOptions: ({ navigation }) => ({
-        title: 'Preview: Create Event',
-        headerLeft: (
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Ionicons name="md-menu" size={32} />
-                </View>
-            </TouchableOpacity>
-        ),
-    }),
-},
-})
-
-const PreviewNavigator = createStackNavigator({
-  PreviewScreen: {
-    screen: PreviewScreen,
-    navigationOptions: ({ navigation }) => ({
-        title: 'Preview: Dashboard',
-        headerLeft: (
-            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-                <View style={{ paddingHorizontal: 10 }}>
-                    <Ionicons name="md-menu" size={32} />
-                </View>
-            </TouchableOpacity>
-        ),
-    }),
-},
+const InstructorFeedNavigator = createStackNavigator({
+    InstructorScreen: { screen: InstructorScreen },
+    CreateEventScreen: { screen: CreateEventScreen },
+    StudentProfileScreen: { screen: StudentProfileScreen },
+    ExperienceScreen: { screen: ExperienceScreen },
+    AchievementScreen: { screen: AchievementScreen },
 })
 
 const CreateResource = createStackNavigator({
@@ -202,20 +101,15 @@ const ReviewResources = createStackNavigator({
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
-    Home: AppStackNavigator,
-    'Create Event': EventNavigator,
-    'Create Resource': CreateResource,
-    'Review Resources': ReviewResources,
-    Settings: { screen: SettingsScreen },
-    'Preview: Messages': ChatStackNavigator,
-    'Preview: Dashboard': PreviewNavigator
+    Apprenticeship: FeedNavigator,
+    'Instructor (Preview)': InstructorFeedNavigator,
+    'Logout': { screen: SettingsScreen },
 });
 
 const AppNavigator = createSwitchNavigator({
-    // AuthLoading: AuthLoadingScreen,
-    // Auth: AuthStackNavigator,
+    AuthLoading: AuthLoadingScreen,
+    Auth: AuthStackNavigator,
     App: AppDrawerNavigator,
-    Knowledge: KnowledgeStackNavigator,
 });
 
 export default createAppContainer(AppNavigator);

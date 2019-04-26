@@ -6,6 +6,7 @@ import {
   } from '../directories';
 import { Button, Input, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core';
 import { API } from 'aws-amplify';
+import sanity from "../lib/sanity"
 
 export default class ProcessResourceForm extends React.Component {
   constructor(props) {
@@ -66,9 +67,22 @@ export default class ProcessResourceForm extends React.Component {
       approved: true      
     }
 
+    const mutation = {
+        _type: this.state.schema,
+        title: this.state.name,
+        overview: this.state.description,
+        url: this.state.url,
+        priority: this.state.rank
+    }
+
     try {
       const response = await API.put('resources', '/resources', {body})
       console.log('approved response', response)
+      console.log(JSON.stringify(mutation))
+      sanity.create(mutation).then(response => {
+        console.log('Document created: ', response)
+      })
+      // await this.sanityPost(JSON.stringify((mutation)))
     } catch(e) {
       console.log("ERROR not approved", e)
     }
@@ -84,7 +98,7 @@ export default class ProcessResourceForm extends React.Component {
       schema: this.state.schema,
       name: this.state.name,
       description: this.state.description,
-      author: this.state.url,
+      // author: this.state.url,
       url: this.state.url,
       rank: this.state.rank,
       approved: false      
@@ -107,6 +121,8 @@ export default class ProcessResourceForm extends React.Component {
   changeSchema = e => {
     this.setState({ schema: e.target.value })
   }
+
+  
 
   render() {
     let schemas = this.state.schemas.map((item, i) => 
@@ -175,7 +191,7 @@ export default class ProcessResourceForm extends React.Component {
         </FormControl>
         <br />
 
-        <FormControl className="formElement">
+        {/* <FormControl className="formElement">
           <InputLabel>Resource Author</InputLabel>
           <Input
               type="text"
@@ -184,7 +200,7 @@ export default class ProcessResourceForm extends React.Component {
               onChange={this.handleChange}
               required
           />
-        </FormControl>
+        </FormControl> */}
         <br />
 
         <FormControl className="formElement">
