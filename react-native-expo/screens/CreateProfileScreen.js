@@ -246,7 +246,7 @@ export default class CreateProfileScreen extends Component {
                         </Item> 
                         <Text>{'\n'}</Text>
 
-                        <View style={{flexDirection: 'row', justifyContent: 'left', paddingLeft: 15}}>
+                        <View style={{flexDirection: 'row', paddingLeft: 15}}>
                         <Text>Tap flag to Select Country: </Text>
                         <CountryPicker
                             onChange={(value)=> this.setState({country: value.name, cca2: value.cca2})}

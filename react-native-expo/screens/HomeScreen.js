@@ -175,7 +175,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            {/* <Title>#fsa206</Title> */}
+            <Title>#refreshlife</Title>
           </Body>
           <Right>
             <View></View>
