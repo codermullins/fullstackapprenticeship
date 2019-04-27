@@ -16,7 +16,8 @@ const styles = {
   },
   title: {
     flexGrow: 1,
-    fontSize: 24
+    fontSize: 24,
+    marginBottom: "0 !important"
   },
   pos: {
     marginBottom: 12
@@ -25,6 +26,15 @@ const styles = {
     testAlign: "center",
     display: "flex",
     justifyContent: "space-between"
+  },
+  textContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    textAlign: 'center',
+  },
+  icon: {
+    fontSize: 35
   }
 };
 
@@ -38,21 +48,24 @@ const DirectoryCard = props => {
         <Card className={styles.card}>
           <CardContent>
             <div style={styles.titleContainer}>
-              <Typography
-                className={styles.title}
-                color="textSecondary"
-                gutterBottom
-              >
-                {val.name}
-              </Typography>
-              <Icon>{icons[val.name]}</Icon>
+              <div style={styles.textContainer}>
+                <Typography
+                  className={styles.title}
+                  color="textSecondary"
+                >              
+                  {val.name}
+                </Typography>
+              </div>
+              <Icon style={styles.icon}>{icons[val.name]}</Icon>
             </div>
           </CardContent>
+
           <CardActions>
             <Button component={Link} to={`/tool/${val.type}`} size="small">
-              View Content
+              View1 Content
             </Button>
           </CardActions>
+
         </Card>
       </Grid>
     );
