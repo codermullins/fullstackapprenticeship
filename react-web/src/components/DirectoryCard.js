@@ -59,13 +59,13 @@ const DirectoryCard = props => {
               <Icon style={styles.icon}>{icons[val.name]}</Icon>
             </div>
           </CardContent>
-
+          {/* 
           <CardActions>
             <Button component={Link} to={`/tool/${val.type}`} size="small">
               View1 Content
             </Button>
           </CardActions>
-
+          */}
         </Card>
       </Grid>
     );
