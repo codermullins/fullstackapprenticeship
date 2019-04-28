@@ -17,6 +17,11 @@ export default {
             type: 'string'
         },
         {
+            name: 'schema',
+            title: 'Schema',
+            type: 'string'
+        },
+        {
             name: 'overview',
             title: 'Overview',
             type: 'blockContent'
