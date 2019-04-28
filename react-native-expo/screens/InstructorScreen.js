@@ -19,9 +19,8 @@ import {
 import Event from "../components/Event"
 import Loader from "../components/Loader";
 import { Header, Left, Body, Right, Button, Title } from "native-base"
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { UtilStyles } from '../style/styles';
-import { Ionicons } from "@expo/vector-icons"
+import { Ionicons, Entypo } from "@expo/vector-icons"
 import orderBy from "lodash.orderby";
 import { API, Auth } from "aws-amplify"
 
@@ -31,17 +30,16 @@ export default class HomeScreen extends React.Component {
 
     this.state = {
       events: [],
-      profile: null,
+      profile: { instructor: false},
       product: { xpEarned: 0, achievements: 0 },
       apprenticeship: { xpEarned: 0, achievements: 0 },
       xp: null,
       loading: true,
-      apprentices: []
+      apprentices: [],
+      instructor: false
 
     }
-    this.updateExperience = this.updateExperience.bind(this);
-    this.fetchEvents = this.fetchEvents.bind(this);
-    this.updateProfile = this.updateProfile.bind(this);
+    this.updateProfile = this.updateProfile.bind(this)
   }
   static navigationOptions = {
     header: null,
@@ -61,21 +59,9 @@ export default class HomeScreen extends React.Component {
       const values = [['accessToken', token], ['username', username], ['id', id]]
       await AsyncStorage.multiSet(values)
 
-    //   await this.fetchEvents();
       await this.fetchProfile(id)
-      // await console.log('Profile: ', this.state.profile)
 
-    //   await this.fetchProduct(this.state.profile.productId);
-      // await console.log('Product: ', this.state.product)
-
-    //   await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
-      // await console.log('Apprenticeship: ', this.state.apprenticeship)
-
-    //   const xp = await this.calculateExperience()
-
-    //   this.setState({ xp: xp})
-
-      await this.fetchApprentices();
+      await this.fetchApprentices(id);
 
       await this.stopLoading();
 
@@ -90,33 +76,30 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  async fetchApprentices() {
-      const response = await API.get('fsa', `/users/`);
-      await console.log('Apprentices: ', response)
-      await this.setState({ apprentices: response })
-  }
-  
-  async fetchEvents() {
-    const response = await API.get('events', `/events/bdaad57c-2183-468a-a114-493c19327762`)
-    const orderedArray = orderBy(response, function(item) {return item.start})
-    this.setState({ events: orderedArray })
-  }
-  
   async fetchProfile(id) {
     const profile = await API.get('fsa', `/users/${id}`)
-    await this.setState({ profile: profile[0] })
+    console.log('Profile: ', profile[0])
+    if (profile[0].instructor === false) {
+      console.log('Not an instructor')
+    } else {
+      await this.setState({ profile: profile[0], instructor: true })
+    } 
   }
 
-  async fetchProduct(id) {
-    const product = await API.get('fsa', `/experience/${id}`)
-    await this.setState({ product: product[0] })
+  updateProfile(obj) {
+    this.setState({ profile: obj})
   }
 
-  async fetchApprenticeship(id) {
-    const apprenticeship = await API.get('fsa', `/experience/${id}`)
-    await this.setState({ apprenticeship: apprenticeship[0] })
-  }
-
+  async fetchApprentices(id) {
+      const response = await API.get('fsa', `/mentor/${id}`);
+      await this.setState({ apprentices: response })
+      let apprenticeKeys = []
+      response.forEach(function(apprentice) {
+        apprenticeKeys.push(apprentice.expo)
+      })
+      this.setState({ apprenticeKeys: apprenticeKeys })
+    }
+      
   async calculateExperience() {
     let productXP = this.state.product.xpEarned;
     let apprenticeshipXP = this.state.apprenticeship.xpEarned;
@@ -128,71 +111,39 @@ export default class HomeScreen extends React.Component {
     this.setState({ loading: false })
   }
 
-//   getAvatar = async (github) => {
-//     const user = await fetch(`https://api.github.com/users/${github}`, {
-//       headers: {
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//     console.log('User: ', user)
-//     const avatar = JSON.parse(user._bodyText);
-//     console.log('Avatar: ', avatar)
-//     const url = avatar.avatar_url;
-//     await console.log('URL: ', url)
-//     this.setState({ url: url })
-//     return url;
-//   }
-
   renderApprentices = (apprentices) => {
       return(
           <View>
               {apprentices.map((apprentice, index) => {
-                
-                // const url = this.getAvatar(apprentice.github)  
-                // console.log('URL: ', url)  
                 return (
                   <RkCard rkType='shadowed' key={index}>
-                  <View>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ApprenticeProfile', {
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('StudentProfileScreen', {
                       profile: apprentice
                      
                     })}>
-                    {/* <Image rkCardImg={true} source={{uri: url }} style={{height: 200, width: '50%'}}/> */}
-                    <Text>{apprentice.fName} {apprentice.lName}</Text> 
+                    <RkCard>
+            <View rkCardHeader={true}>
+                  <RkText rkType='header'>{apprentice.fName} {apprentice.lName}</RkText>
+                  <RkText rkType='subtitle'>{apprentice.technicalRank}</RkText>
+            </View>
+            <View rkCardFooter={true}>
+            <Left>
+
+              <RkText rkType='header'><Entypo name="github" size={24} /> {apprentice.github}</RkText>
+            </Left>
+            <Right>
+
+              <RkText>{apprentice.city}, {apprentice.country}</RkText>
+            </Right>
+            </View>
+          </RkCard> 
                     </TouchableOpacity>
-                  </View>
                 </RkCard> 
               )})
             }
           </View>
       )
   }
-
-
-
-//   renderEvents = (events) => {
-//     return(
-//       <View>
-//         {!events ? null :
-//           <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingBottom: 14}}>Upcoming Events</Text> 
-//         }
-//       {events.map((event, i) => (
-//         new Date().getTime() < new Date(event.start).getTime() ? (
-//           <Event
-//                 key={i} 
-//                 name={event.name}
-//                 description={event.description}
-//                 date={event.date}
-//                 start={event.start}
-//                 end={event.end}
-//                 link={event.link}
-//                 // avatar={require('../assets/Apprentice.png')}
-//                 />
-//         ) : null
-//         ))}
-//         </View>
-//       )
-//     }
 
     updateExperience(name, obj) {
       if (name === 'Product') {
@@ -202,9 +153,6 @@ export default class HomeScreen extends React.Component {
       }
     }
 
-    updateProfile(obj) {
-      this.setState({ profile: obj})
-    }
 
 
   render() {
@@ -222,7 +170,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            {/* <Title>#fsa206</Title> */}
+            <Title>Instructor</Title>
           </Body>
           <Right>
             <View></View>
@@ -231,87 +179,29 @@ export default class HomeScreen extends React.Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
-          {/* <RkCard>
-            <View rkCardHeader={true}>
-              <View style={{ flexDirection: 'row' }}>
-                <Image source={require('../assets/michael.jpg')} style={styles.avatar} />
-                <View style={{}}>
-                  <RkText rkType='header'>Michael Litchev</RkText>
-                  <RkText rkType='subtitle'>Seattle & Bellevue Instructor</RkText>
-                </View>
-              </View>
-              <RkButton rkType='clear'>
-              <Icon name="group" style={iconButton} />
-               <Text>{'\n'}</Text>
-              <Text>Switch Instructor</Text> 
-
-                 <Icon style={styles.dot} name="circle" />
-                <Icon style={styles.dot} name="circle" />
-                <Icon style={styles.dot} name="circle" /> 
-
-              </RkButton> 
-            </View>            
-          </RkCard> */}
-
-          {/* <RkCard>
-                <View style={{ marginBottom: 20 }}>
-                  <RkText rkType='header xxlarge' >Sandbox</RkText>
-                </View>
-                <View style={styles.footerButtons}>
-                  <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
-                  <RkButton rkType='clear ' >EXPLORE</RkButton>
-                </View>
-          </RkCard>   */}
-
-          { this.renderApprentices(this.state.apprentices)}
-
-          <Loader loading={this.state.loading} />
-
-
-          <Text>{'\n'}</Text>
           
-
-          {/* {this.renderEvents(this.state.events)} */}
-
-          {/* We want to modify the below components to have the instructor profile information */}
-
-          {/* {this.state.profile !== undefined ? (
+          { this.state.profile.instructor === false ? (
+            <RkCard rkType='heroImage shadowed'>
             <View>
-            <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text>
-            <RkCard rkType='shadowed'>
-            <View>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
-                xp: this.state.xp,
-                profile: this.state.profile
-              })}>
-              <Image rkCardImg={true} source={require('../assets/profiles.jpg')} />
-              </TouchableOpacity>
-            </View>
-          </RkCard> 
-          </View>
-          ) : (
-            <View>
-            <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingTop: 26, paddingBottom: 20}}>Create Profile</Text>
-
-            <RkCard rkType='shadowed'>
-
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateProfile', {
+            <TouchableOpacity onPress={() => navigation.navigate('InstructorRegistrationScreen', {
               function: this.updateProfile
             })}>
-              <Image rkCardImg={true} source={require('../assets/profiles.jpg')} />
+              <Image rkCardImg={true} source={require('../assets/mentors.png')} />
               </TouchableOpacity>
+              <View rkCardImgOverlay={true} style={styles.overlay}>
+                <View style={{ marginBottom: 20 }}>
+                  <RkText rkType='header xxlarge' style={{ color: 'white' }}>Become an Instructor</RkText>
+                  <RkText rkType='subtitle' style={{ color: 'white' }}>Apply to become a senior member of the FSA, and mentor the next generation of full-stack developers.</RkText>
+                </View>
+              </View>
+            </View>
           </RkCard> 
-          </View>
-          )} */}
-
-          <Text>{'\n'}</Text>
-          <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Create Event</Text>
-          <Text>{'\n'}</Text> 
-
-          <RkCard rkType='heroImage shadowed'>
+          ) : (
             <View>
-            <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen')}>
-              <Image rkCardImg={true} source={require('../assets/events.jpg')} />
+            <RkCard rkType='heroImage shadowed'>
+            <View>
+            <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen', {keys: this.state.apprenticeKeys})}>
+              <Image rkCardImg={true} source={require('../assets/fsa.png')} />
               </TouchableOpacity>
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <View style={{ marginBottom: 20 }}>
@@ -322,88 +212,25 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
 
-          {/* <RkCard>
-            <View rkCardHeader={true}>
-              <View>
-                <RkText rkType='header'>Start Your Apprenticeship</RkText>
-                <RkText rkType='subtitle'>Status: {this.state.apprenticeship.xpEarned.toString()} / 5000 EXP</RkText>
-              </View>
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema',
-                experience: this.state.apprenticeship,
-                function: this.updateExperience
-              })}>
-            <Image rkCardImg={true} source={require('../assets/exp.png')} />
-            </TouchableOpacity>
-            <View rkCardContent={true}>
-              <RkText rkType='cardText'>
-                Work through these 15 tasks to achieve certified status as an FSA Developer.
-              </RkText>
-            </View>
-            <View rkCardFooter={true}>
-              <RkButton rkType='clear link'>
-                <Icon name="check" style={likeStyle} />
-                <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema',
-                experience: this.state.apprenticeship,
-                function: this.updateExperience
-              })}>{this.state.apprenticeship.achievements.toString()}/15 Achievements</RkText>
-              </RkButton>
-              <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema',
-                experience: this.state.apprenticeship,
-                function: this.updateExperience
-              })}>
-                <Icon name="send-o" style={iconButton} />
-                <RkText rkType='hint'>View Progress</RkText>
-              </RkButton>
-            </View>
-          </RkCard> 
-
           <Text>{'\n'}</Text>
 
-          <RkCard>
-            <View rkCardHeader={true}>
-              <View>
-                <RkText rkType='header'>Portfolio Product</RkText>
-                <RkText rkType='subtitle'>Status: {this.state.product.xpEarned.toString()} / 2000 EXP</RkText>
-              </View>
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema',
-                experience: this.state.product,
-                function: this.updateExperience
+          <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>My Students</Text>
+          <Text>{'\n'}</Text> 
 
-              })}>
-            <Image rkCardImg={true} source={require('../assets/product.png')} />
-              </TouchableOpacity>
-            <View rkCardContent={true}>
-              <RkText rkType='cardText'>
-                In 15 steps, you will go from a blank canvas to a scalable, performant & useful product in a production environment.
-              </RkText>
-            </View>
-            <View rkCardFooter={true}>
-              <RkButton rkType='clear link'>
-                <Icon name="check" style={likeStyle} />
-                <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema',
-                experience: this.state.product,
-                function: this.updateExperience
-              })}>{this.state.product.achievements.toString()}/15 Achievements</RkText>
-              </RkButton>
-              <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema',
-                experience: this.state.product,
-                function: this.updateExperience
-              })}>
-                <Icon name="send-o" style={iconButton} />
-                <RkText rkType='hint'>View Progress</RkText>
-              </RkButton>
-            </View>
-          </RkCard> 
+          { this.renderApprentices(this.state.apprentices)}
+          </View>
 
-          <Text>{'\n'}</Text> */}
+          )
+          
+        
+        }
+          
+
+          
+          <Loader loading={this.state.loading} />
+
+          <Text>{'\n'}</Text>
+          
 
         </ScrollView>
       </View>
@@ -421,7 +248,7 @@ let styles = StyleSheet.create({
     fontSize: 19.7,
   },
   footer: {
-    marginHorizontal: 16,
+    marginHorizontal: 20,
   },
   avatar: {
     width: 42,

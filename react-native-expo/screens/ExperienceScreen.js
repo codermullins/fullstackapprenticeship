@@ -18,7 +18,6 @@ class ExperienceScreen extends Component {
     async componentDidMount() {
         const schema = this.props.navigation.getParam('schema', 'None')
         const experience = this.props.navigation.getParam('experience', 'none')
-        console.log('Props Experience: ', experience)
         this.setState({ experience: experience })
         await this.sanityQuery(schema)
       }
@@ -32,6 +31,8 @@ class ExperienceScreen extends Component {
     renderExperience(experience) {
         const orderedLinks = orderBy(this.state.links, function(item) { return item.priority})
         const update = this.props.navigation.getParam('function', 'none')
+        const origin = this.props.navigation.getParam('origin', 'none')
+
         return(
           <List>
           {orderedLinks.map((list, i) => {
@@ -47,7 +48,8 @@ class ExperienceScreen extends Component {
             <ListItem key={i} onPress={() => this.props.navigation.navigate('AchievementScreen', {
               schema: obj,
               function: update,
-              text: `${list.amount}XP`
+              text: `${list.amount}XP`,
+              origin: origin
             })}>
               <Left>
                 {complete ? (

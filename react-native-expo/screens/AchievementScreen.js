@@ -22,6 +22,7 @@ export default class AchievementScreen extends Component {
     handlePress = async (achievement) => {
       const schema = this.props.navigation.getParam('schema', 'None')
       const update = this.props.navigation.getParam('function', 'none')
+      const origin = this.props.navigation.getParam('origin', 'none')
 
       let key = schema.list.priority;
       let id = schema.experience.id;
@@ -33,14 +34,16 @@ export default class AchievementScreen extends Component {
       }
           try {
             const result = await API.put('fsa', `/experience/${id}`, {body})
-            // await console.log('New Object? : ', result)
             await update(schema.experience.type, result)
 
           } catch (e) {
               console.log('ERROR: ', e)
           }
-          
-          this.props.navigation.navigate('HomeScreen')
+          if (origin === 'Instructor') {
+          this.props.navigation.navigate('InstructorScreen')
+          } else {
+            this.props.navigation.navigate('HomeScreen')
+          }
       }
 
   render() {

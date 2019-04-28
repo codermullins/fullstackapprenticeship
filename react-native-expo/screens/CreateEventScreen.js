@@ -21,8 +21,35 @@ export default class CreatEventScreen extends Component {
 
         }
     }
+
+    async componentDidMount() {
+        console.log(this.props.navigation)
+    }
      
       handlePress = async () => {
+        let uri = 'https://exp.host/--/api/v2/push/send'
+
+        generateNotification = (key) => {
+            let notification = {
+                to: key,
+                title: this.state.name,
+                body: this.state.description,
+                ttl: 0,
+                priority: 'high',
+            }
+            return notification;
+        }
+          const keys = this.props.navigation.getParam('keys', 'none');
+          let students = [];
+
+          for (i = 0; i < keys.length; i++) {
+            if (keys[i].length < 10) {
+                continue;
+              } else {
+                let student = generateNotification(keys[i])
+                students.push(student);
+              }
+          }
           
           const body = {
               id: uuidv4(),
@@ -37,7 +64,14 @@ export default class CreatEventScreen extends Component {
             }
             try {
                 const response = await API.post('events', '/events', {body})
-                console.log('Lambda Response: ', response)
+                await console.log('Lambda Response: ', response);
+                let notifications = await fetch(uri, {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(students)
+                })
+                await console.log('Response: ', notifications)
+                await console.log('Students array: ', students)
             } catch (e) {
                 console.log('ERROR: ', e)
             }
@@ -49,7 +83,7 @@ export default class CreatEventScreen extends Component {
                 end: "",
                 id: ""
             })
-            this.props.navigation.navigate('Instructor')
+            this.props.navigation.goBack()
         }
 
         showStartDateTimePicker = () => this.setState({ startDateTimePickerVisible: true });

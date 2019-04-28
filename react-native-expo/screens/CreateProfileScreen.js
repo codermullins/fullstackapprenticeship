@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Notifications } from "expo";
-import { API, Auth } from "aws-amplify";
-import { Container, Content, Form, Item, Input, Label, Button, Header } from 'native-base';
+import { API } from "aws-amplify";
+import { Container, Content, Form, Item, Input, Label, Button, Header, Picker } from 'native-base';
 import uuidv4 from "uuid";
-import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import Loader from "../components/Loader";
+import CountryPicker from "react-native-country-picker-modal"
+
 
 
 export default class CreateProfileScreen extends Component {
@@ -24,8 +26,11 @@ export default class CreateProfileScreen extends Component {
             mbriggs: "",
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false,
-            expoToken: "",
-            loading: false
+            expoToken: "iPhone",
+            loading: false,
+            mentor: "bdaad57c-2183-468a-a114-493c19327762",
+            cca2: "US",
+            mentors: []
 
         }
     }
@@ -33,18 +38,18 @@ export default class CreateProfileScreen extends Component {
     async componentDidMount() {
         const notificationToken = await Notifications.getExpoPushTokenAsync();
         console.log('Notification Token: ', notificationToken)
-        this.setState({ expoToken: notificationToken})
+        this.setState({ expoToken: notificationToken })
     }
 
     async createUser(user) {
         const body = user;
         const response = await API.post('fsa', '/users', {body})
         await console.log('User Creation Response: ', response)
+        return response;
     }
 
     async createApprenticeship(apprenticeship) {
         const body = apprenticeship;
-        await console.log(JSON.stringify(body))
         const response = await API.post('fsa', '/experience', {body})
         await console.log('Apprenticeship creation response: ', response);
     }
@@ -68,13 +73,14 @@ export default class CreateProfileScreen extends Component {
         const apprenticeshipId = uuidv4();
         const masteryId = uuidv4();
         const beginId = uuidv4();
-        const fetchProfile = this.props.navigation.getParam('function', 'none')
+        const update = this.props.navigation.getParam('function', 'none')
+        const updateExperience = this.props.navigation.getParam('experience', 'none')
 
         const user = {
             id: id,
             fName: this.state.fName,
             lName: this.state.lName,
-            mentor: 'bdaad57c-2183-468a-a114-493c19327762',
+            mentor: this.state.mentor,
             xp: 0,
             city: this.state.city,
             country: this.state.country,
@@ -180,52 +186,14 @@ export default class CreateProfileScreen extends Component {
             _15_approved: false,
         }
 
-        const begin = {
-            id: beginId,
-            xp: 1000,
-            xpEarned: 0,
-            achievements: 0,
-            memberId: id,  
-            type: 'Starting',
-            approved: false,
-            title: 'Getting Started on your Full-Stack Journey',
-            description: "These 10 tasks are the pre-requisites to start learning the tools of our trade. They include things such as setting up your GitHub profile, joining our Slack channel, brainstorming your Portfolio Product idea, and more. Each task is worth 100 XP, with 1000 total bringing you 20 percent of the way to your goal of 5000.",
-            github: "Incomplete",
-            _01: false,
-            _01_approved: false,
-            _02: false,
-            _02_approved: false,
-            _03: false,
-            _03_approved: false,
-            _04: false,
-            _04_approved: false,
-            _05: false,
-            _05_approved: false,
-            _06: false,
-            _06_approved: false,
-            _07: false,
-            _07_approved: false,
-            _08: false,
-            _08_approved: false,
-            _09: false,
-            _09_approved: false,
-            _10: false,
-            _10_approved: false,
-        }
-
             try {
-                const user = await this.createUser(user);
+                const result = await this.createUser(user);
                 await this.createApprenticeship(apprenticeship);
                 await this.createProduct(product);
-                // await this.createGettingStarted(begin);
-                await fetchProfile(user);
-
-
-
+                await update(result);
+                await updateExperience('Apprenticeship', apprenticeship)
+                await updateExperience('Product', product)
                 this.setState({ loading: false })
-
-
-
             } catch (e) {
                 console.log('ERROR: ', e)
             }
@@ -276,15 +244,27 @@ export default class CreateProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-                        <Item floatingLabel>
-                        <Label>Country</Label>
-                            <Input 
-                            returnKeyType="search"
-                            value={this.state.country}
-                            onChangeText={(country) => this.setState({country})}
-                            autoCapitalize="none"
+                        <Text>{'\n'}</Text>
+
+                        <View style={{flexDirection: 'row', paddingLeft: 15}}>
+                        <Text>Tap flag to Select Country: </Text>
+                        <CountryPicker
+                            onChange={(value)=> this.setState({country: value.name, cca2: value.cca2})}
+                            cca2={this.state.cca2}
+                            translation='eng'
                             />
-                        </Item> 
+                        </View>
+                        <Text style={{paddingLeft: 15}}>{this.state.country}</Text>
+                        {/* <Picker
+                            mode="dropdown"
+                            header="Mentor"
+                            selectedValue={this.state.mentor}
+                            onValueChange={this.onMentorChange.bind(this)}
+                            placeholder="Select Mentor"
+                            >
+                            <Picker.Item value="bdaad57c-2183-468a-a114-493c19327762" label="Select your desired mentor" />
+                            {this.renderMentors(this.state.mentors)}
+                        </Picker> */}
                         <Item floatingLabel>
                         <Label>GitHub Username</Label>
                             <Input 
