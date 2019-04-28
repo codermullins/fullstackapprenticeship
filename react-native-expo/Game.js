@@ -21,6 +21,8 @@ export default class Game extends React.Component {
   componentWillMount() {
     this.setupAudio();
 
+    // fetch all the leaders
+
   }
 
   setupAudio = async () => {
@@ -357,6 +359,23 @@ renderScore = () => (
   </Text>
 );
 
+renderLeaderboard = () => (
+  // Map through leaderboards
+  <Text
+      style={{
+          textAlign: "center",
+          fontSize: 64,
+          position: "absolute",
+          left: 0,
+          right: 0,
+          color: "white",
+          top: 64,
+          backgroundColor: "transparent"
+      }}>
+  {this.state.score}
+  </Text>
+);
+
   render() {
     //@(Evan Bacon) This is a dope SpriteView based on SpriteKit that surfaces touches, render, and setup!
     return (
@@ -368,7 +387,9 @@ renderScore = () => (
           update={this.updateGame}
           onSetup={this.onSetup}
         />
-        {this.renderScore()}
+        {!this.gameOver ? 
+        this.renderScore() : this.renderLeaderboard()
+        }
       </View>
     );
   }
