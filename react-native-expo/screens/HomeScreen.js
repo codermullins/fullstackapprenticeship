@@ -215,8 +215,42 @@ export default class HomeScreen extends React.Component {
 
           {this.renderEvents(this.state.events)}
 
+         <RkCard>
+            <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Flappy Bird</RkText>
+                <RkText rkType='subtitle'>Earn your spot on our weekly leaderboard.</RkText>
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('FlappyBirdScreen')}>
+
+            <Image rkCardImg={true} source={require('../assets/flappy.jpg')} />
+            </TouchableOpacity>
+            {/* <View rkCardContent={true}>
+              <RkText rkType='cardText'>
+                Far far away, behind the word mountains, far from the
+                countries Vokalia and Consonantia, there live the blind texts.
+              </RkText>
+            </View> */}
+            {/* <View rkCardFooter={true} style={styles.footer}>
+              <RkButton rkType='clear link accent'>
+                <Icon name="heart" style={likeStyle} />
+                <RkText rkType='accent'>18</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="comment-o" style={iconButton} />
+                <RkText rkType='hint'>2</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>6</RkText>
+              </RkButton>
+            </View> */}
+          </RkCard>
+          <Text>{'\n'}</Text>
+
+
             <View>
-            {/* <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text> */}
             <RkCard rkType='shadowed'>
             <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
