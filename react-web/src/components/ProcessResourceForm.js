@@ -24,7 +24,7 @@ export default class ProcessResourceForm extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.updateSchemas();
   }
 
@@ -82,7 +82,6 @@ export default class ProcessResourceForm extends React.Component {
       sanity.create(mutation).then(response => {
         console.log('Document created: ', response)
       })
-      // await this.sanityPost(JSON.stringify((mutation)))
     } catch(e) {
       console.log("ERROR not approved", e)
     }
