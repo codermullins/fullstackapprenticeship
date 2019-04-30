@@ -12,7 +12,7 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
-import { thunkSignOut } from "../thunks/auth";
+// import { thunkSignOut } from "../thunks/auth";
 
 const styles = {
     grow: {
@@ -24,9 +24,7 @@ class TopNavbar extends React.Component {
         const {
             classes,
             routeHome,
-            routeTyping,
             routeSignup,
-            routePayment,
             userToken,
             handleSignOut,
             suggest
@@ -98,8 +96,7 @@ const mapDispatchToProps = dispatch => {
             routeHome: () => push("/"),
             routeSignup: () => push("/authsignup"),
             routePayment: () => push("/payments"),
-            routeTyping: () => push("/typing/1"),
-            handleSignOut: () => thunkSignOut(),
+            handleSignOut: () => push('/'),
             suggest: () => push("/resource/new")
         },
         dispatch
