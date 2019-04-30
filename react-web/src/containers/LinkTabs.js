@@ -101,8 +101,10 @@ class LinkTabs extends Component {
                         )}
                     />
                 )}
+               <Add />
+
                 {/* { authState === 'signedIn' ? <Add /> : null } */}
-\            </div>
+           </div>
         );
     }
 }

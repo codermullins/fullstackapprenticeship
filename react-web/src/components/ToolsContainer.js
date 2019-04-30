@@ -76,7 +76,7 @@ export default class ToolsContainer extends Component {
                 <Grid container className={styles.root} spacing={16}>
                     <ToolCard links={linksToDisplay} />
                 </Grid>
-                {/* <Add /> */}
+                <Add />
             </TabContainer>
         );
 

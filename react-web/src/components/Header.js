@@ -4,14 +4,14 @@ export default class Header extends Component {
   render() {
 
     const introStyle = {
-    backgroundColor: '#f7df1e',
-    height: '150px',
-    padding: '10px',
-    color: 'black',
-    paddingTop: '60px',
-    paddingBottom: '10px',
-    textAlign: 'center'
-
+      backgroundColor: '#f7df1e',
+      height: '150px',
+      padding: '10px',
+      color: 'black',
+      paddingTop: '60px',
+      paddingBottom: '10px',
+      textAlign: 'center'
+      
   };
 
     return(
