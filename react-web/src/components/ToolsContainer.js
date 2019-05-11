@@ -14,6 +14,8 @@ import store from '../store/configureStore';
 import {changeTab} from "../actions/tab"
 import { Redirect } from 'react-router'
 
+import _ from 'lodash';
+
 
 const styles = {
     root: {
@@ -61,7 +63,9 @@ export default class ToolsContainer extends Component {
 
     async componentDidMount() {
         const query = `*[_type == '${this.props.match.params.schema}']{type, _type, text, title, priority, url, _id}`
-        const links = await sanity.fetch(query);
+        const links = await sanity.fetch(query).then(result => {
+          return _.orderBy(result,['priority']['title'],['desc'])
+        });
         this.setState({ links })
     }
 
