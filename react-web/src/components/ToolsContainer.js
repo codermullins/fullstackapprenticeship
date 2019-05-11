@@ -86,7 +86,7 @@ export default class ToolsContainer extends Component {
         this.state.filteredLinks.length < 1 ? linksToDisplay = this.state.links : linksToDisplay = this.state.filteredLinks;
         const schema = window.location.pathname.split('/')[2];
         const activeTab = this.state.activeTab;
-        // const description = fullStackApprenticeship.find(o => o.type === schema);
+        const description = fullStackApprenticeship.find(o => o.type === schema);
 
         if( this.state.redirect ) 
           return <Redirect to='/'/>;
@@ -102,8 +102,8 @@ export default class ToolsContainer extends Component {
                 </Tabs>
               </AppBar>
             <TabContainer>
-                <SearchComponent handleSearch={this.handleSearch} />
-                {/* <h3>{description.description}</h3> */}
+                {/* <SearchComponent handleSearch={this.handleSearch} /> */}
+                { typeof description !== 'undefined' && typeof description.description !== 'undefined' && <h3>{description.description}</h3> } 
                 <Grid container className={styles.root} spacing={16}>
                     <ToolCard links={linksToDisplay} />
                 </Grid>
