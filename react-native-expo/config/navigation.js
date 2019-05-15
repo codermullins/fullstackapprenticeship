@@ -60,7 +60,6 @@ const FeedNavigator = createStackNavigator({
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
     ChapterScreen: { screen: ChapterScreen},
-    ReviewResourcesScreen: { screen: ReviewResourcesScreen }
   });
 
 const InstructorFeedNavigator = createStackNavigator({
@@ -69,7 +68,7 @@ const InstructorFeedNavigator = createStackNavigator({
     StudentProfileScreen: { screen: StudentProfileScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
-    ReviewResourcesScreen: { screen : ReviewResourcesScreen }
+    ReviewResourcesScreen: { screen: ReviewResourcesScreen }
 })
 
 const AppDrawerNavigator = createDrawerNavigator({

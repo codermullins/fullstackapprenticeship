@@ -11,7 +11,7 @@ class ReviewResourceFormScreen extends Component {
     super(props);
 
     this.state = {
-      resourceName: this.props.resource.name,
+      name: this.props.resource.name,
       directory: this.props.resource.directory,
       schemas: [],
       schema: this.props.resource.schema,
@@ -41,6 +41,84 @@ class ReviewResourceFormScreen extends Component {
       default:
         break;
     }
+  }
+
+  changeDirectory = async e => {
+    await this.setState({
+      directory: e.target.value
+    })
+    await this.updateSchemas();
+  }
+
+  handleFormApproval = async event => {
+    event.preventDefault();
+
+    const body = {
+      resourceId: this.props.formInfo.resourceId,
+      timestamp: this.props.formInfo.timestamp,
+      directory: this.state.directory,
+      schema: this.state.schema,
+      name: this.state.name,
+      description: this.state.description,
+      author: this.state.url,
+      url: this.state.url,
+      rank: this.state.rank,
+      approved: true      
+    }
+
+      const mutation = {
+        _type: this.state.schema,
+        title: this.state.name,
+        overview: this.state.description,
+        url: this.state.url,
+        priority: this.state.rank
+    }
+
+    try {
+      const response = await API.put('resources', '/resources', {body})
+      console.log('approved response', response)
+      console.log(JSON.stringify(mutation))
+      sanity.create(mutation).then(response => {
+        console.log('Document created: ', response)
+      })
+      // await this.sanityPost(JSON.stringify((mutation)))
+    } catch(e) {
+      console.log("ERROR not approved", e)
+    }
+  }
+
+  handleFormDenial = async event => {
+    event.preventDefault();
+
+    const body = {
+      resourceId: this.props.formInfo.resourceId,
+      timestamp: this.props.formInfo.timestamp,
+      directory: this.state.directory,
+      schema: this.state.schema,
+      name: this.state.name,
+      description: this.state.description,
+      // author: this.state.url,
+      url: this.state.url,
+      rank: this.state.rank,
+      approved: false      
+    }
+
+    try {
+      const response = await API.put('resources', '/resources', {body})
+      console.log('denied response', response)
+    } catch(e) {
+      console.log("ERROR not denied", e)
+    }
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    })
+  }
+
+  changeSchema = e => {
+    this.setState({ schema: e.target.value })
   }
 
   render() {
@@ -120,6 +198,13 @@ class ReviewResourceFormScreen extends Component {
               />
             </Item>
 
+
+            <Button onClick={this.handleFormApproval}>
+              Approve Resource
+            </Button>
+            <Button onClick={this.handleFormDenial}>
+              Deny Resource
+            </Button>
           </Form>
         </Content>
       </Container>

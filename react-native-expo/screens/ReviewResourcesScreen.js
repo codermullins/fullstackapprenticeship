@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { View, Platform, TouchableOpacity } from 'react-native';
 import ReviewResourceFormScreen from './ReviewResourceFormScreen';
-import { Container, Content, Item, Label, Text, Card, Button, Form, Input } from 'native-base';
+import { Container, Content, Item, Label, Text, Card, Button, Form, 
+  Input, Header, Left, Right, Body, Picker } from 'native-base';
+import { Ionicons } from "@expo/vector-icons"
+import { API } from 'aws-amplify';
+
 
 export default class ReviewResourcesScreen extends Component {
   constructor() {
@@ -9,20 +14,41 @@ export default class ReviewResourcesScreen extends Component {
     this.state = {
       links: [],
       processing: false,
-      resourceInProcess: null
+      resourceInProcess: null,
+      searchingFor: 'fsa'
     }
   }
 
+  // static navigationOptions = {
+  //   header: null,
+  // };
 
-  componentDidMount() {
-    this.setState({ links: this.state.links.concat(fakeListOfNewResources)})
+  async componentDidMount() {
+    const response = await API.get('resources', `/resources/${this.state.searchingFor}`)
+    let notReviewed = response.filter(resource => resource.approved === undefined)
+    this.setState({ links: notReviewed })
+    // this.setState({ links: this.state.links.concat(fakeListOfNewResources)})
   }
 
-  handleReviewResource(item) {
+  handleReviewResource(item, index) {
     this.setState({
       processing: true,
       resourceInProcess: item
     })
+  }
+
+  changeDirectorySearch = async value => {
+    await this.setState({
+      searchingFor: value
+    })
+   const response = await API.get('resources', `/resources/${this.state.searchingFor}`);
+   let notReviewed = response.filter(resource => resource.approved === undefined)
+
+   this.setState({ links: notReviewed })
+  }
+  
+  revert = () => {
+    this.setState({ processing: false })
   }
 
   render() {
@@ -40,11 +66,22 @@ export default class ReviewResourcesScreen extends Component {
       )
     })
     return !this.state.processing ?
-      <Container>
-        <Content>
-          {toProcess}
-        </Content>
-      </Container>
+    <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
+
+        <Container>
+          <Picker 
+            selectedValue={this.state.searchingFor}
+            onValueChange={(value) => this.changeDirectorySearch(value)}
+          >
+            <Picker.item label="FSA" value="fsa" />
+            <Picker.item label='City Guide' value='cityGuide' />
+            <Picker.item label='Finding Work' value='findingWork' />
+          </Picker>
+          <Content>
+            {toProcess}
+          </Content>
+        </Container>
+      </View>
       :
       <ReviewResourceFormScreen resource={this.state.resourceInProcess} />
   }

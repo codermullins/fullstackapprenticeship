@@ -237,7 +237,7 @@ export default class HomeScreen extends React.Component {
           <RkCard>
           <View>
             <TouchableOpacity onPress={() => navigation.navigate('ReviewResourcesScreen')}>
-            <RkText>View Resources</RkText>
+            <RkText rkType="header xxlarge">View Resources</RkText>
             </TouchableOpacity>
             <View>
               
