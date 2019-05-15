@@ -65,7 +65,7 @@ export default class HomeScreen extends React.Component {
       // await console.log('Profile: ', this.state.profile)
 
       await this.fetchProduct(this.state.profile.productId);
-      
+
       // await console.log('Product: ', this.state.product)
 
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
@@ -98,7 +98,7 @@ export default class HomeScreen extends React.Component {
     const profile = await API.get('fsa', `/users/${id}`)
     console.log('Length: ', profile.length)
     if (profile.length === 0) {
-      this.props.navigation.navigate('CreateProfile', { function: this.updateProfile })
+      this.props.navigation.navigate('CreateProfile', { function: this.updateProfile, experience: this.updateExperience })
     } else {
       await this.setState({ profile: profile[0] })
     } 
@@ -130,9 +130,6 @@ export default class HomeScreen extends React.Component {
   renderEvents = (events) => {
     return(
       <View>
-        {!events ? null :
-          <Text style={{textAlign: 'center', paddingLeft: 14, fontSize: 30, paddingBottom: 14}}>Upcoming Events</Text> 
-        }
       {events.map((event, i) => (
         new Date().getTime() < new Date(event.start).getTime() ? (
           <Event
@@ -143,7 +140,6 @@ export default class HomeScreen extends React.Component {
                 start={event.start}
                 end={event.end}
                 link={event.link}
-                // avatar={require('../assets/Apprentice.png')}
                 />
         ) : null
         ))}
@@ -179,7 +175,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            {/* <Title>#fsa206</Title> */}
+            <Title>#refreshlife</Title>
           </Body>
           <Right>
             <View></View>
@@ -188,16 +184,17 @@ export default class HomeScreen extends React.Component {
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}>
-          {/* <RkCard>
+
+          <RkCard>
             <View rkCardHeader={true}>
               <View style={{ flexDirection: 'row' }}>
                 <Image source={require('../assets/michael.jpg')} style={styles.avatar} />
                 <View style={{}}>
-                  <RkText rkType='header'>Michael Litchev</RkText>
-                  <RkText rkType='subtitle'>Seattle & Bellevue Instructor</RkText>
+                  <RkText rkType='header'>My Apprenticeship Trainer</RkText>
+                  <RkText rkType='subtitle'>Michael Litchev</RkText>
                 </View>
               </View>
-              <RkButton rkType='clear'>
+              {/* <RkButton rkType='clear'>
               <Icon name="group" style={iconButton} />
                <Text>{'\n'}</Text>
               <Text>Switch Instructor</Text> 
@@ -206,19 +203,9 @@ export default class HomeScreen extends React.Component {
                 <Icon style={styles.dot} name="circle" />
                 <Icon style={styles.dot} name="circle" /> 
 
-              </RkButton> 
+              </RkButton>  */}
             </View>            
-          </RkCard> */}
-
-          {/* <RkCard>
-                <View style={{ marginBottom: 20 }}>
-                  <RkText rkType='header xxlarge' >Sandbox</RkText>
-                </View>
-                <View style={styles.footerButtons}>
-                  <RkButton style={{ marginRight: 16 }} onPress={() => {this.props.navigation.navigate('SandboxScreen')}}>Click Here</RkButton>
-                  <RkButton rkType='clear ' >EXPLORE</RkButton>
-                </View>
-          </RkCard>   */}
+          </RkCard>
 
           <Loader loading={this.state.loading} />
 
@@ -228,34 +215,53 @@ export default class HomeScreen extends React.Component {
 
           {this.renderEvents(this.state.events)}
 
-          {this.state.profile !== undefined ? (
+         <RkCard>
+            <View rkCardHeader={true}>
+              <View>
+                <RkText rkType='header'>Flappy Bird</RkText>
+                <RkText rkType='subtitle'>Earn your spot on our weekly leaderboard.</RkText>
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('FlappyBirdScreen')}>
+
+            <Image rkCardImg={true} source={require('../assets/flappy.jpg')} />
+            </TouchableOpacity>
+            {/* <View rkCardContent={true}>
+              <RkText rkType='cardText'>
+                Far far away, behind the word mountains, far from the
+                countries Vokalia and Consonantia, there live the blind texts.
+              </RkText>
+            </View> */}
+            {/* <View rkCardFooter={true} style={styles.footer}>
+              <RkButton rkType='clear link accent'>
+                <Icon name="heart" style={likeStyle} />
+                <RkText rkType='accent'>18</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="comment-o" style={iconButton} />
+                <RkText rkType='hint'>2</RkText>
+              </RkButton>
+              <RkButton rkType='clear link'>
+                <Icon name="send-o" style={iconButton} />
+                <RkText rkType='hint'>6</RkText>
+              </RkButton>
+            </View> */}
+          </RkCard>
+          <Text>{'\n'}</Text>
+
+
             <View>
-            <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingBottom: 15 }}>My Profile</Text>
             <RkCard rkType='shadowed'>
             <View>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile', {
                 xp: this.state.xp,
                 profile: this.state.profile
               })}>
-              <Image rkCardImg={true} source={require('../assets/profiles.jpg')} />
+              <Image rkCardImg={true} source={require('../assets/profile.png')} />
               </TouchableOpacity>
             </View>
           </RkCard> 
           </View>
-          ) : (
-            <View>
-            <Text style={{textAlign: 'left', paddingLeft: 14, fontSize: 30, paddingTop: 26, paddingBottom: 20}}>Create Profile</Text>
-
-            <RkCard rkType='shadowed'>
-
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('CreateProfile', {
-              function: this.updateProfile
-            })}>
-              <Image rkCardImg={true} source={require('../assets/profiles.jpg')} />
-              </TouchableOpacity>
-          </RkCard> 
-          </View>
-          )}
 
           <Text>{'\n'}</Text>
           <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Learn & Earn Experience</Text>
@@ -440,76 +446,6 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
 
-          <Text>{'\n'}</Text>
-
-          
-          <Text style={{textAlign: 'center', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>Premium Training</Text>
-
-
-          <RkCard>
-          <View rkCardHeader={true}>
-              <View>
-                <RkText rkType='header'>Full-Stack JumpStart</RkText>
-                <RkText rkType='subtitle'>Learn the habits, workflows & mindset of a development team.</RkText>
-              </View>
-            </View>
-            <View rkCardContent={true}>
-              <RkText rkType='compactCardText'>
-              A month-long program to help you build the habits that will make you a successful student, who can successfully transition into development.{'\n'}{'\n'}
-              Week 1 is focused on collecting context for the journey ahead, setting goals, planning your portfolio product & setting up your development environment. {'\n'}{'\n'}
-              Weeks 2, 3 & 4 are about setting habits. Scientifically speaking, it takes 21 days to set a habit. By building the habit of submitting at least one pull-request a day, 6 days a week, you will build the foundation for success. {'\n'}{'\n'}
-              </RkText>
-            </View>
-            <View rkCardFooter={true} style={styles.footer}>
-              <RkButton rkType='clear link accent'>
-                <Icon name="dollar" style={likeStyle} />
-                <RkText rkType='accent'>450.00</RkText>
-              </RkButton>
-              <RkButton rkType='clear link'>
-                <Icon name="clock-o" style={iconButton} />
-                <RkText rkType='hint'>1 Month</RkText>
-              </RkButton>
-              <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
-                amount: '450'
-              })}>
-                <Icon name="send-o" style={iconButton} />
-                <RkText rkType='hint'>Pay Here</RkText>
-              </RkButton>
-            </View>
-          </RkCard>
-          <Text>{'\n'}</Text>
-
-          <RkCard>
-          <View rkCardHeader={true}>
-              <View>
-                <RkText rkType='header'>Weekly Sprint Training</RkText>
-                <RkText rkType='subtitle'>Professional accountability & pair programming</RkText>
-              </View>
-            </View>
-            <View rkCardContent={true}>
-              <RkText rkType='compactCardText'>
-              Saturday/Sunday - Weekly Sprint Planning Meeting to organize & estimate the work to be done throughout the duration of the sprint.{'\n'}{'\n'}
-              Monday thru Friday - Daily Stand-up Meetings (am or pm) during the week to check-in on what you've done, are stuck on, and what you are working on that day. Accountability, structure, discipline. {'\n'}{'\n'}
-              Friday - Weekly Sprint Retrospective Meeting to review the finished work, compare the time it took compared to our original estimates, & learn how we can more effectively operate as a team. {'\n'}{'\n'}
-              </RkText>
-            </View>
-            <View rkCardFooter={true} style={styles.footer}>
-              <RkButton rkType='clear link accent'>
-                <Icon name="dollar" style={likeStyle} />
-                <RkText rkType='accent'>100.00</RkText>
-              </RkButton>
-              <RkButton rkType='clear link'>
-                <Icon name="clock-o" style={iconButton} />
-                <RkText rkType='hint'>1 Week</RkText>
-              </RkButton>
-              <RkButton rkType='clear link' onPress={() => navigation.navigate('PaymentScreen', {
-                amount: '100'
-              })}>
-                <Icon name="send-o" style={iconButton} />
-                <RkText rkType='hint'>Pay Here</RkText>
-              </RkButton>
-            </View>
-          </RkCard>
           <Text>{'\n'}</Text>
 
         </ScrollView>

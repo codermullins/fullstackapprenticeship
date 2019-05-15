@@ -84,6 +84,24 @@ functions:
          path: users/{id}
          method: delete
          cors: true
+  getAllStudents:
+    handler: users.getAllStudents
+    environment:
+      DB: ${ssm:mongo}
+    events:
+     - http:
+         path: mentor/{id}
+         method: get
+         cors: true
+  getAllInstructors:
+    handler: users.getAllInstructors
+    environment:
+      DB: ${ssm:mongo}
+    events:
+     - http:
+         path: mentors
+         method: get
+         cors: true
   createExperience:
     handler: experience.createExperience
     environment:

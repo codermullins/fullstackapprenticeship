@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { createStore } from "redux";
+import { Provider, connect } from "react-redux";
 import Amplify, { Auth, API } from "aws-amplify";
 import { Platform } from "react-native";
 import { Font, AppLoading, Notifications, Permissions } from "expo";
@@ -31,10 +33,35 @@ Amplify.configure({
                 name: "payments",
                 endpoint: config.amplify.URL,
                 region: config.amplify.REGION
+            },
+            {
+                name: 'leaders',
+                endpoint: config.amplify.URL,
+                region: config.amplify.REGION
             }
         ]
     }
   });
+
+const INITIAL_STATE = {
+    user: {},
+    id: "uuid"
+}
+
+const reducer = (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case 'UPDATE_STATE':
+            return { ...state, ...action.state };
+    }
+};
+
+const store = createStore(reducer, {});
+
+const mapStateToProps = state => {
+    return { ...state };
+};
+
+
 
 class App extends Component {
     constructor(props) {
@@ -100,13 +127,16 @@ class App extends Component {
           
     }
 
+    
     render() {
         return (
-            this.state.fontLoaded ? 
-            <Root>
-                <AppNavigator screenProps={{...this.props}}/>
-            </Root> 
-            : null
+            // <Provider store={store}>
+                this.state.fontLoaded ? 
+                <Root>
+                    <AppNavigator screenProps={{...this.props}}/>
+                </Root> 
+                : null
+            // </Provider>
         );
     }
 }

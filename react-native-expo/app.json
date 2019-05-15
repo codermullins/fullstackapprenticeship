@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Full Stack Apprenticeship Mobile",
+    "name": "Full Stack Apprenticeship",
     "description": "The home for the Full-Stack Apprenticeship (FSA), designed to help you refresh your life with a new career, a fresh mindset, and a new community to grow with. The apprenticeship provides the structure and accountability of a coding bootcamp, without charging you an arm and a leg. Our platform gasifies the process of learning and building full-stack applications, making for a social and fun experience. Also includes is a 60 page ebook describing the process of becoming a self-taught full-stack developer, along with a curated Knowledge Base that details the FSA Technical Standard and its accompanying tools, skillset and frameworks. The Technical Standard is designed for new developers to learn a stack that will set them up for financial and technical success, focusing on React Web + Native, Node.js, serverless deployments & AWS for infrastructure provisioning.",
     "slug": "fullstackapprenticeship",
     "privacy": "public",
@@ -16,8 +16,8 @@
     "icon": "./assets/fsa.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "backgroundColor": "#7851a9"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

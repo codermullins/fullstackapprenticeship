@@ -26,15 +26,6 @@ export default () =>
                                         .params({ type: 'blueprintSchema' })
                                 ),
                             S.listItem()
-                                .title("Getting Started")
-                                .child(
-                                    S.documentList()
-                                        .title('Getting Started')
-                                        .menuItems(S.documentTypeList('gettingStartedSchema').getMenuItems())
-                                        .filter('_type == $type && !defined(parents)')
-                                        .params({ type: 'gettingStartedSchema' })
-                                ),
-                            S.listItem()
                                 .title("React Native")
                                 .child(
                                     S.documentList()

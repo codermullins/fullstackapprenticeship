@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Notifications } from "expo";
-import { API, Auth } from "aws-amplify";
-import { Container, Content, Form, Item, Input, Label, Button, Header } from 'native-base';
+import { API } from "aws-amplify";
+import { Container, Content, Form, Item, Input, Label, Button, Header, Picker } from 'native-base';
 import uuidv4 from "uuid";
-import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import Loader from "../components/Loader";
+import CountryPicker from "react-native-country-picker-modal"
+
 
 
 export default class CreateProfileScreen extends Component {
@@ -25,7 +27,10 @@ export default class CreateProfileScreen extends Component {
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false,
             expoToken: "iPhone",
-            loading: false
+            loading: false,
+            mentor: "bdaad57c-2183-468a-a114-493c19327762",
+            cca2: "US",
+            mentors: []
 
         }
     }
@@ -33,7 +38,7 @@ export default class CreateProfileScreen extends Component {
     async componentDidMount() {
         const notificationToken = await Notifications.getExpoPushTokenAsync();
         console.log('Notification Token: ', notificationToken)
-        this.setState({ expoToken: notificationToken})
+        this.setState({ expoToken: notificationToken })
     }
 
     async createUser(user) {
@@ -69,12 +74,13 @@ export default class CreateProfileScreen extends Component {
         const masteryId = uuidv4();
         const beginId = uuidv4();
         const update = this.props.navigation.getParam('function', 'none')
+        const updateExperience = this.props.navigation.getParam('experience', 'none')
 
         const user = {
             id: id,
             fName: this.state.fName,
             lName: this.state.lName,
-            mentor: 'bdaad57c-2183-468a-a114-493c19327762',
+            mentor: this.state.mentor,
             xp: 0,
             city: this.state.city,
             country: this.state.country,
@@ -185,6 +191,8 @@ export default class CreateProfileScreen extends Component {
                 await this.createApprenticeship(apprenticeship);
                 await this.createProduct(product);
                 await update(result);
+                await updateExperience('Apprenticeship', apprenticeship)
+                await updateExperience('Product', product)
                 this.setState({ loading: false })
             } catch (e) {
                 console.log('ERROR: ', e)
@@ -236,15 +244,27 @@ export default class CreateProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-                        <Item floatingLabel>
-                        <Label>Country</Label>
-                            <Input 
-                            returnKeyType="search"
-                            value={this.state.country}
-                            onChangeText={(country) => this.setState({country})}
-                            autoCapitalize="none"
+                        <Text>{'\n'}</Text>
+
+                        <View style={{flexDirection: 'row', paddingLeft: 15}}>
+                        <Text>Tap flag to Select Country: </Text>
+                        <CountryPicker
+                            onChange={(value)=> this.setState({country: value.name, cca2: value.cca2})}
+                            cca2={this.state.cca2}
+                            translation='eng'
                             />
-                        </Item> 
+                        </View>
+                        <Text style={{paddingLeft: 15}}>{this.state.country}</Text>
+                        {/* <Picker
+                            mode="dropdown"
+                            header="Mentor"
+                            selectedValue={this.state.mentor}
+                            onValueChange={this.onMentorChange.bind(this)}
+                            placeholder="Select Mentor"
+                            >
+                            <Picker.Item value="bdaad57c-2183-468a-a114-493c19327762" label="Select your desired mentor" />
+                            {this.renderMentors(this.state.mentors)}
+                        </Picker> */}
                         <Item floatingLabel>
                         <Label>GitHub Username</Label>
                             <Input 

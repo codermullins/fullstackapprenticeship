@@ -6,6 +6,11 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Add from '../components/NewResourceButton';
 import FolderContainers from "../components/FolderContainers";
+
+import {TAB_FSA, TAB_CITY_GUIDE, TAB_GETTING_PAID} from "../common/constants"
+import store from '../store/configureStore';
+import {changeTab} from "../actions/tab"
+
 import {
     fullStackApprenticeship,
     cityByCity,
@@ -25,20 +30,24 @@ const mapStateToProps = state => ({
 })
 
 class LinkTabs extends Component {
+
     constructor(props) {
         super(props);
+        
+        this.handleTabChange = this.handleTabChange.bind(this);
 
         this.state = {
-            value: 0,
-            fsaFolders: [],
-            cityFolders: [],
-            workFolders: [],
-            // authState : ''
+          activeTab: store.getState().tab.activeTab,
+          fsaFolders: [],
+          cityFolders: [],
+          workFolders: [],
+          // authState : ''
         };
     }
 
-    handleChange = (event, value) => {
-        this.setState({ value });
+    handleTabChange = (event, activeTab) => {
+      store.dispatch(changeTab(activeTab))
+      this.setState({ activeTab });
     };
 
     reduceFolder = folder =>
@@ -53,19 +62,18 @@ class LinkTabs extends Component {
 
     render() {
         const { classes, authState } = this.props;
-        const { value } = this.state;
-        console.log('state', authState)
+        const activeTab = this.state.activeTab;
         return (
             <div className={classes.root}>
                 <AppBar position="static">
-                    <Tabs value={value} onChange={this.handleChange}>
+                    <Tabs value={activeTab} onChange={this.handleTabChange}>
                         <Tab label="FS-Apprenticeship" />
                         <Tab label="City Guide" />
                         <Tab label="Getting Paid" />
                     </Tabs>
                 </AppBar>
                 {/* <AuthSignup changeAuthState={this.props.changeAuthState} /> */}
-                {value === 0 && (
+                {activeTab === TAB_FSA && (
                     <FolderContainers
                         folders={fullStackApprenticeship.reduce(
                             (acc, next) =>
@@ -77,7 +85,7 @@ class LinkTabs extends Component {
                         )}
                     />
                 )}
-                {value === 1 && (
+                {activeTab === TAB_CITY_GUIDE && (
                     <FolderContainers
                         folders={cityByCity.reduce(
                             (acc, next) =>
@@ -89,7 +97,7 @@ class LinkTabs extends Component {
                         )}
                     />
                 )}
-                {value === 2 && (
+                {activeTab === TAB_GETTING_PAID && (
                     <FolderContainers
                         folders={findingWork.reduce(
                             (acc, next) =>
@@ -101,8 +109,10 @@ class LinkTabs extends Component {
                         )}
                     />
                 )}
+               <Add />
+
                 {/* { authState === 'signedIn' ? <Add /> : null } */}
-\            </div>
+           </div>
         );
     }
 }

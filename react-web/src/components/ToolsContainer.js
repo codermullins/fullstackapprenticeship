@@ -7,6 +7,14 @@ import SearchComponent from './SearchComponent';
 import Add from '../components/NewResourceButton';
 import { fullStackApprenticeship } from "../directories.js"
 
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import store from '../store/configureStore';
+import {changeTab} from "../actions/tab"
+import { Redirect } from 'react-router'
+
+
 const styles = {
     root: {
         flexGrow: 1,
@@ -41,10 +49,14 @@ export default class ToolsContainer extends Component {
     constructor() {
         super()
         this.state = {
-            links: [],
-            filteredLinks : [], 
-            schema: {}
+          activeTab: store.getState().tab.activeTab,
+          redirect: false,
+          links: [],
+          filteredLinks : [], 
+          schema: {}
         }
+
+        this.handleTabChange = this.handleTabChange.bind(this);
     }
 
     async componentDidMount() {
@@ -52,6 +64,11 @@ export default class ToolsContainer extends Component {
         const links = await sanity.fetch(query);
         this.setState({ links })
     }
+
+    handleTabChange = (event, activeTab) => {
+      store.dispatch(changeTab(activeTab))
+      this.setState({redirect: true});
+    };
 
     handleSearch =  event => {
             const searchedLinks = this.state.links.filter(item => {
@@ -68,16 +85,31 @@ export default class ToolsContainer extends Component {
         let linksToDisplay;
         this.state.filteredLinks.length < 1 ? linksToDisplay = this.state.links : linksToDisplay = this.state.filteredLinks;
         const schema = window.location.pathname.split('/')[2];
+        const activeTab = this.state.activeTab;
         // const description = fullStackApprenticeship.find(o => o.type === schema);
+
+        if( this.state.redirect ) 
+          return <Redirect to='/'/>;
+        
+
         return (
+          <React.Fragment>
+            <AppBar position="static">
+                <Tabs value={activeTab} onChange={this.handleTabChange}>
+                    <Tab label="FS-Apprenticeship" />
+                    <Tab label="City Guide" />
+                    <Tab label="Getting Paid" />
+                </Tabs>
+              </AppBar>
             <TabContainer>
                 <SearchComponent handleSearch={this.handleSearch} />
                 {/* <h3>{description.description}</h3> */}
                 <Grid container className={styles.root} spacing={16}>
                     <ToolCard links={linksToDisplay} />
                 </Grid>
-                {/* <Add /> */}
+                <Add />
             </TabContainer>
+          </React.Fragment>
         );
 
     }

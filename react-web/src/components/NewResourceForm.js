@@ -35,6 +35,7 @@ class NewResourceForm extends React.Component {
     await this.setState({
       directory: e.target.value
     })
+    
     await this.updateSchemas();
   }
 
@@ -105,7 +106,7 @@ class NewResourceForm extends React.Component {
 
   render() {
     let schemas = this.state.schemas.map((item, i) => 
-      <MenuItem key={i} value={item.name}>{item.name}</MenuItem>)
+      <MenuItem key={i} value={item.type}>{item.name}</MenuItem>)
     return (
       <form className='newResourceForm'>
         <FormControl className="formElement">

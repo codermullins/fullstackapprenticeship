@@ -5,14 +5,19 @@ import userReducer from "../reducers/user";
 import authFormReducer from "../reducers/authForm";
 import authReducer from "../reducers/auth";
 import AuthStateReducer from "../reducers/authState";
-import thunk from "redux-thunk";
 
-const initialState = {};
+import {TAB_FSA} from "../common/constants"
+import tabReducer from "../reducers/tab";
+
+
+// We will use Redux-Sagas in the future, not Thunks
+
+const initialState = {}; //activeTab: TAB_FSA
 
 export const history = createHistory();
 
 const enhancers = [];
-const middleware = [thunk, routerMiddleware(history)];
+const middleware = [routerMiddleware(history)];
 
 if (process.env.NODE_ENV === "development") {
     const devToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION__;
@@ -32,7 +37,8 @@ const rootReducer = combineReducers({
     user: userReducer,
     auth: authReducer,
     authForm: authFormReducer,
-    authState: AuthStateReducer
+    authState: AuthStateReducer,
+    tab: tabReducer
 });
 
 const store = createStore(rootReducer, initialState, composedEnhancers);
