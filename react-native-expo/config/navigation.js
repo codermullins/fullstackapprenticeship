@@ -32,14 +32,11 @@ import PaymentScreen from "../screens/PaymentScreen";
 import ChapterScreen from "../screens/ChapterScreen";
 import InstructorScreen from "../screens/InstructorScreen";
 import StudentProfileScreen from "../screens/StudentProfileScreen";
-<<<<<<< HEAD
 import CreateResourceScreen from "../screens/CreateResourceScreen";
 import ReviewResourcesScreen from "../screens/ReviewResourcesScreen";
-=======
 import PaymentOptionsScreen from "../screens/PaymentOptionsScreen";
 import InstructorRegistrationScreen from "../screens/InstructorRegistrationScreen";
 import FlappyBirdScreen from "../screens/FlappyBirdScreen";
->>>>>>> a61d6836d09b3e19917b70d09a055ecc6bdb39e9
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -65,10 +62,7 @@ const FeedNavigator = createStackNavigator({
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
     ChapterScreen: { screen: ChapterScreen},
-<<<<<<< HEAD
-=======
     FlappyBirdScreen: { screen: FlappyBirdScreen }
->>>>>>> a61d6836d09b3e19917b70d09a055ecc6bdb39e9
   });
 
 const InstructorFeedNavigator = createStackNavigator({
@@ -84,11 +78,8 @@ const InstructorFeedNavigator = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
     Apprenticeship: FeedNavigator,
     'Instructor (Preview)': InstructorFeedNavigator,
-<<<<<<< HEAD
     'Create Resource': { screen: CreateResourceScreen },
-=======
     'Premium Training': PaymentsNavigator,
->>>>>>> a61d6836d09b3e19917b70d09a055ecc6bdb39e9
     'Logout': { screen: SettingsScreen },
 });
 
