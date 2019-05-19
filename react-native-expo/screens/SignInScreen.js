@@ -38,6 +38,7 @@ class SignInScreen extends Component {
               <Input 
               placeholder=""
               returnKeyType="search"
+              secureTextEntry
               value={this.state.password}
               onChangeText={(password) => this.setState({ password})}
               autoCapitalize="none"

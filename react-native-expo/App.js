@@ -6,7 +6,7 @@ import { Platform } from "react-native";
 import { Font, AppLoading, Notifications, Permissions } from "expo";
 import { Root } from "native-base";
 import AppNavigator from './config/navigation';
-import config from "./config/config";
+import config from './config/config';
 
 
 Amplify.configure({
