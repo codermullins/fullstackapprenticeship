@@ -27,50 +27,37 @@ class TopNavbar extends React.Component {
             routeSignup,
             userToken,
             handleSignOut,
-            suggest
+            suggest,
+            handleLogout
         } = this.props;
         return (
             <AppBar position="static">
                 <Toolbar>
                     <Typography component="h6" color="inherit">
                         <Button color="inherit" onClick={() => routeHome()}>
-                            #fsahub
+                            #fsapprenticeship
                         </Button>
                     </Typography>
                     <div className={classes.grow} />
-                    {userToken
+                    {this.props.isAuthenticated
                         ? [
-                            //   <Button
-                            //       key={0}
-                            //       onClick={() => routeTyping()}
-                            //       color="inherit"
-                            //   >
-                            //       Knowledge Base
-                            //   </Button>,
+                            <Button
+                                  key={3}
+                                  color="inherit"
+                                  onClick={() => suggest()}
+                              >
+                                  {/* <AccountCircleIcon /> */}
+                                  + Resource
+                              </Button>,
                               <Button
                                   key={1}
                                   color="inherit"
-                                  onClick={() => handleSignOut()}
+                                  onClick={handleLogout}
                               >
                                   Logout
                               </Button>
                           ]
                         : [
-                            //    <Button
-                            //        key={1}
-                            //        color="inherit"
-                            //        onClick={() => routeSignup()}
-                            //    >
-                            //        Register/Login
-                            //    </Button>,
-                            //   <Button
-                            //       key={2}
-                            //       color="inherit"
-                            //       onClick={() => routePayment()}
-                            //   >
-                            //       Payments
-                            //   </Button>,
-                            //   IconButton for the account circle
                               <Button
                                   key={3}
                                   color="inherit"
