@@ -3,7 +3,7 @@ import sanity from '../lib/sanity'
 import ToolCard from './ToolCard'
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import SearchComponent from './SearchComponent';
+// import SearchComponent from './SearchComponent';
 import Add from '../components/NewResourceButton';
 import { fullStackApprenticeship } from "../directories.js"
 

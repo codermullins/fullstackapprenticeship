@@ -24,9 +24,9 @@ class TopNavbar extends React.Component {
         const {
             classes,
             routeHome,
-            routeSignup,
-            userToken,
-            handleSignOut,
+            // routeSignup,
+            // userToken,
+            // handleSignOut,
             suggest,
             handleLogout
         } = this.props;

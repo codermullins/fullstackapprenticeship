@@ -4,9 +4,9 @@ import { ConnectedRouter } from "connected-react-router";
 import { history } from "./store/configureStore";
 
 import AppliedRoute from "./components/AppliedRoute";
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
+// import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import Home from "./containers/Home";
-import LinkTabs from "./containers/LinkTabs";
+// import LinkTabs from "./containers/LinkTabs";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import LinkComponent from "./components/LinkComponent";

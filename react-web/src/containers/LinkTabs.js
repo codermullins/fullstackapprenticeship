@@ -40,7 +40,6 @@ class LinkTabs extends Component {
       fsaFolders: [],
       cityFolders: [],
       workFolders: []
-      // authState : ''
     };
   }
 
@@ -59,12 +58,8 @@ class LinkTabs extends Component {
       []
     );
 
-  // changeAuthState = nextAuthState => {
-  //     this.setState({ authState: nextAuthState })
-  // }
-
   render() {
-    const { classes, authState } = this.props;
+    const { classes } = this.props;
     const activeTab = this.state.activeTab;
     return (
       <div className={classes.root}>
@@ -75,7 +70,6 @@ class LinkTabs extends Component {
             <Tab label="Getting Paid" />
           </Tabs>
         </AppBar>
-        {/* <AuthSignup changeAuthState={this.props.changeAuthState} /> */}
         {activeTab === TAB_FSA && (
           <FolderContainers
             folders={fullStackApprenticeship.reduce(
@@ -113,8 +107,6 @@ class LinkTabs extends Component {
           />
         )}
         <Add />
-
-        {/* { authState === 'signedIn' ? <Add /> : null } */}
       </div>
     );
   }
