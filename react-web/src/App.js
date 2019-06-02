@@ -5,15 +5,47 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { connect } from "react-redux";
 // import { withRouter } from 'react-router-dom';
 import Routes from "./Routes";
-import awsmobile from "./aws-exports";
 // import { thunkCurrentAuthenticatedUser } from "./thunks/auth";
 import Footer from "./components/Footer";
 import TopNavbar from "./components/TopNavbar";
+import config from "./config/config";
 
 import "./App.css";
 require("typeface-quicksand");
 
-Amplify.configure(awsmobile);
+Amplify.configure({
+  Auth: {
+    mandatorySignIn: false,
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.USER_POOL_ID,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    userPoolWebClientId: config.cognito.APP_CLIENT_ID
+  },
+  API: {
+    endpoints: [
+      {
+        name: "fsa",
+        endpoint: config.sls.URL,
+        region: config.sls.REGION
+      },
+      {
+        name: "events",
+        endpoint: config.amplify.URL,
+        region: config.amplify.REGION
+      },
+      {
+        name: "payments",
+        endpoint: config.amplify.URL,
+        region: config.amplify.REGION
+      },
+      {
+        name: "leaders",
+        endpoint: config.amplify.URL,
+        region: config.amplify.REGION
+      }
+    ]
+  }
+});
 
 const theme = createMuiTheme({
   typography: {
@@ -73,7 +105,11 @@ class App extends React.Component {
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline>
-          <TopNavbar handleLogout={this.handleLogout} isAuthenticated={this.state.isAuthenticated} history={this.props.history} />
+          <TopNavbar
+            handleLogout={this.handleLogout}
+            isAuthenticated={this.state.isAuthenticated}
+            history={this.props.history}
+          />
           <Routes childProps={childProps} />
           <Footer />
         </CssBaseline>
@@ -81,7 +117,7 @@ class App extends React.Component {
     );
   }
 
-//   handleLogout = () => {};
+  //   handleLogout = () => {};
 }
 
 const mapStateToProps = state => ({
