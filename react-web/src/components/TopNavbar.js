@@ -24,6 +24,7 @@ class TopNavbar extends React.Component {
         const {
             classes,
             routeHome,
+            routeProfile,
             // routeSignup,
             // userToken,
             // handleSignOut,
@@ -48,6 +49,13 @@ class TopNavbar extends React.Component {
                               >
                                   {/* <AccountCircleIcon /> */}
                                   + Resource
+                              </Button>,
+                              <Button
+                                  key={2}
+                                  color="inherit"
+                                  onClick={routeProfile}
+                              >
+                                  profile
                               </Button>,
                               <Button
                                   key={1}
@@ -83,6 +91,7 @@ const mapDispatchToProps = dispatch => {
             routeHome: () => push("/"),
             routeSignup: () => push("/authsignup"),
             routePayment: () => push("/payments"),
+            routeProfile: () => push("/profile"),
             handleSignOut: () => push('/'),
             suggest: () => push("/resource/new")
         },
