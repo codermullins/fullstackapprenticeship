@@ -1,12 +1,6 @@
 import React from "react";
 import { API, Auth } from "aws-amplify";
-import {
-  Button,
-  HelpBlock,
-  FormGroup,
-  FormControl,
-  ControlLabel
-} from "react-bootstrap";
+import { Button, Thumbnail, Grid, Row, Col } from "react-bootstrap";
 // import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import LinkTabs from "./LinkTabs";
@@ -53,7 +47,10 @@ class Home extends React.PureComponent {
     super(props);
     this.state = {
       id: "",
-      profile: {}
+      profile: {},
+      xp: null,
+      avatar: "none",
+      url: null
     };
   }
   async componentDidMount() {
@@ -63,6 +60,8 @@ class Home extends React.PureComponent {
       console.log(user);
       this.setState({ id: user.attributes.sub });
       await this.fetchProfile(this.state.id);
+      const url = await this.getAvatar(this.state.profile.github);
+      console.log("URL: " + url);
     } catch (e) {
       if (e !== "No current user") {
         alert(e);
@@ -74,58 +73,67 @@ class Home extends React.PureComponent {
     const profile = await API.get("fsa", `/users/${id}`);
     console.log("id: " + id);
     console.log("profile: ", profile);
-    this.setState({ profile: profile });
+    this.setState({ profile: profile[0] });
+  }
+
+  async getAvatar(github) {
+    github = "danluong";
+    fetch(`https://api.github.com/users/${github}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Prints result from `response.json()` in getRequest
+        console.log(data.avatar_url);
+        this.setState({ url: data.avatar_url });
+      })
+      .catch(error => console.error(error));
   }
 
   renderProfile() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h2>Create Your Profile</h2>
+      <Grid>
+        <Row className="show-grid">
+          <Col xs={12} md={8} />
+          {this.state.url !== null ? (
+            <Thumbnail href="#" alt="171x180" src={this.state.url} />
+          ) : null}
+          <h2>City: {this.state.profile.city}</h2>
+          <h2>Country: {this.state.profile.country}</h2>
+          <h2>
+            Name: {this.state.profile.fName} {this.state.profile.lName}
+          </h2>
+          <h2>XP: {this.state.profile.xp}</h2>
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+        </Row>
 
-        <FormGroup controlId="email" bsSize="large">
-          <ControlLabel>Email</ControlLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={this.state.email}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup controlId="phone" bsSize="large">
-          <ControlLabel>Phone</ControlLabel>
-          <FormControl
-            autoFocus
-            // type="phone_number"
-            value={this.state.phone}
-            onChange={this.handleChange}
-          />
-        </FormGroup>
-        <FormGroup controlId="password" bsSize="large">
-          <ControlLabel>Password</ControlLabel>
-          <FormControl
-            value={this.state.password}
-            onChange={this.handleChange}
-            type="password"
-          />
-        </FormGroup>
-        <FormGroup controlId="confirmPassword" bsSize="large">
-          <ControlLabel>Confirm Password</ControlLabel>
-          <FormControl
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-            type="password"
-          />
-        </FormGroup>
-        <Button
-          block
-          bsSize="large"
-          // disabled={!this.validateForm()}
-          type="submit"
-          // isLoading={this.state.isLoading}
-          text="Signup"
-          // loadingText="Signing up…"
-        />
-      </form>
+        <Row className="show-grid">
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+          <Col xsHidden md={4}>
+            <code>{"<Col xsHidden md={4} />"}</code>
+          </Col>
+        </Row>
+
+        <Row className="show-grid">
+          <Col xs={6} xsOffset={6}>
+            <code>{"<Col xs={6} xsOffset={6} />"}</code>
+          </Col>
+        </Row>
+
+        <Row className="show-grid">
+          <Col md={6} mdPush={6}>
+            <code>{"<Col md={6} mdPush={6} />"}</code>
+          </Col>
+          <Col md={6} mdPull={6}>
+            <code>{"<Col md={6} mdPull={6} />"}</code>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 
@@ -137,7 +145,7 @@ class Home extends React.PureComponent {
         <div className={classes.background}>
           {this.props.isAuthenticated ? (
             this.renderProfile()
-            ) : (
+          ) : (
             <Login userHasAuthenticated={this.props.userHasAuthenticated} />
           )}
         </div>
