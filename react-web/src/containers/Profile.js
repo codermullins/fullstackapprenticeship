@@ -9,7 +9,7 @@ import { API, Auth } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
 import "./Profile.css";
 
- export default class Profile extends Component {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
 
@@ -34,7 +34,7 @@ import "./Profile.css";
       // cca2: 'US',
       // mentors: [],
       mentor: "Mentor"
-    }
+    };
   }
 
   async componentDidMount() {
@@ -69,33 +69,49 @@ import "./Profile.css";
   //   return this.state.confirmationCode.length > 0;
   // }
 
-   handleChange = event => {
+  handleChange = event => {
     this.setState({
       [event.target.id]: event.target.value
     });
   };
 
-   handleSubmit = async event => {
+  handleSubmit = async event => {
     event.preventDefault();
 
-    this.setState({ loading: true })
-    const body = {
+    this.setState({ loading: true });
+    const user = {
+      id: this.state.id,
       fName: this.state.fName,
       lName: this.state.lName,
+      mentor: this.state.mentor,
+      xp: 0,
       city: this.state.city,
       country: this.state.country,
-      tRank: "Developer",
+      communityRank: "Outsider",
+      technicalRank: "Apprentice",
+      experience: "Incomplete",
+      linkedIn: "Incomplete",
+      instructor: "Incomplete",
+      stripe: "Incomplete",
+      paypal: "Incomplete",
       github: this.state.github,
-      expo: this.state.expo,
-      mentor: this.state.mentor
-      }
+      instructor: false,
+      // productId: productId,
+      // apprenticeshipId: apprenticeshipId,
+      // beginId: beginId,
+      // masteryId: masteryId,
+      expo: this.state.expoToken,
+      createdAt: new Date()
+    };
     try {
-      const putResult = await API.put('fsa', `/users/${this.state.id}`, {body})
-      console.log(putResult)
-      this.setState({ loading: false })
+      const result = await this.createUser(user);
+
+      console.log(result);
+      this.setState({ loading: false });
     } catch (e) {
-        console.log('ERROR: ', e)
+      console.log("ERROR: ", e);
     }
+
     //  this.setState({ isLoading: true });
 
     //  const attributes = {
@@ -119,7 +135,14 @@ import "./Profile.css";
     //  this.setState({ isLoading: false });
   };
 
-   handleConfirmationSubmit = async event => {
+  async createUser(user) {
+    const body = user;
+    const response = await API.post("fsa", "/users", { body });
+    await console.log("User Creation Response: ", response);
+    return response;
+  }
+
+  handleConfirmationSubmit = async event => {
     event.preventDefault();
     //  this.setState({ isLoading: true });
 
@@ -135,7 +158,7 @@ import "./Profile.css";
     // }
   };
 
-   renderForm() {
+  renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
         <h2>Your Profile</h2>
@@ -216,11 +239,7 @@ import "./Profile.css";
     );
   }
 
-   render() {
-    return (
-      <div className="Profile">
-        {this.renderForm()}
-      </div>
-    );
+  render() {
+    return <div className="Profile">{this.renderForm()}</div>;
   }
 }
