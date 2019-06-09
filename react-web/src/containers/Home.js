@@ -1,6 +1,10 @@
 import React from "react";
 import { API, Auth } from "aws-amplify";
+<<<<<<< HEAD
 import { Button, Thumbnail, Grid, ProgressBar, Row, Col } from "react-bootstrap";
+=======
+import { Button, Thumbnail, Grid, Row, Col } from "react-bootstrap";
+>>>>>>> 47640fd674ea1196d4bb5f08870bb6b854fd724f
 // import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import LinkTabs from "./LinkTabs";
@@ -49,7 +53,11 @@ class Home extends React.PureComponent {
       id: "",
       profile: {},
       xp: null,
+<<<<<<< HEAD
       avatar: null,
+=======
+      avatar: "none",
+>>>>>>> 47640fd674ea1196d4bb5f08870bb6b854fd724f
       url: null
     };
   }
@@ -61,6 +69,10 @@ class Home extends React.PureComponent {
       this.setState({ id: user.attributes.sub });
       await this.fetchProfile(this.state.id);
       const url = await this.getAvatar(this.state.profile.github);
+<<<<<<< HEAD
+=======
+      console.log("URL: " + url);
+>>>>>>> 47640fd674ea1196d4bb5f08870bb6b854fd724f
     } catch (e) {
       if (e !== "No current user") {
         alert(e);
@@ -82,7 +94,11 @@ class Home extends React.PureComponent {
       .then(data => {
         console.log(data); // Prints result from `response.json()` in getRequest
         console.log(data.avatar_url);
+<<<<<<< HEAD
         this.setState({ avatar: data.avatar_url, url: data.url });
+=======
+        this.setState({ url: data.avatar_url });
+>>>>>>> 47640fd674ea1196d4bb5f08870bb6b854fd724f
       })
       .catch(error => console.error(error));
   }
@@ -90,6 +106,7 @@ class Home extends React.PureComponent {
   renderProfile() {
     return (
       <Grid>
+<<<<<<< HEAD
 
         <Row className="show-grid">
           <Col xs={6} md={4}>
@@ -112,6 +129,48 @@ class Home extends React.PureComponent {
           </Col>
           <Col xsHidden md={4}>
             <p>I'm a self-taught developer who specializes in React Web & Native development, using Node.js, serverless computing & Amazon Web Services to deliver value to my clients & employers.</p>
+=======
+        <Row className="show-grid">
+          <Col xs={12} md={8} />
+          {this.state.url !== null ? (
+            <Thumbnail href="#" alt="171x180" src={this.state.url} />
+          ) : null}
+          <h2>City: {this.state.profile.city}</h2>
+          <h2>Country: {this.state.profile.country}</h2>
+          <h2>
+            Name: {this.state.profile.fName} {this.state.profile.lName}
+          </h2>
+          <h2>XP: {this.state.profile.xp}</h2>
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+        </Row>
+
+        <Row className="show-grid">
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+          <Col xs={6} md={4}>
+            <code>{"<Col xs={6} md={4} />"}</code>
+          </Col>
+          <Col xsHidden md={4}>
+            <code>{"<Col xsHidden md={4} />"}</code>
+          </Col>
+        </Row>
+
+        <Row className="show-grid">
+          <Col xs={6} xsOffset={6}>
+            <code>{"<Col xs={6} xsOffset={6} />"}</code>
+          </Col>
+        </Row>
+
+        <Row className="show-grid">
+          <Col md={6} mdPush={6}>
+            <code>{"<Col md={6} mdPush={6} />"}</code>
+          </Col>
+          <Col md={6} mdPull={6}>
+            <code>{"<Col md={6} mdPull={6} />"}</code>
+>>>>>>> 47640fd674ea1196d4bb5f08870bb6b854fd724f
           </Col>
         </Row>
       </Grid>
