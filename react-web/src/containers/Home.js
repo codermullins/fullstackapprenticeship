@@ -1,10 +1,6 @@
 import React from "react";
 import { API, Auth } from "aws-amplify";
-<<<<<<< HEAD
 import { Button, Thumbnail, Grid, ProgressBar, Row, Col } from "react-bootstrap";
-=======
-import { Button, Thumbnail, Grid, Row, Col } from "react-bootstrap";
->>>>>>> 47640fd674ea1196d4bb5f08870bb6b854fd724f
 // import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import LinkTabs from "./LinkTabs";
@@ -94,7 +90,6 @@ class Home extends React.PureComponent {
   renderProfile() {
     return (
       <Grid>
-
         <Row className="show-grid">
           <Col xs={6} md={4}>
             {this.state.avatar !== null ? (
