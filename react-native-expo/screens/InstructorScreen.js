@@ -47,6 +47,7 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession()  
+    console.log('Instructor screen session: ', session)
 
     
     Platform.OS === 'android' ? Permissions.askAsync(Permissions.NOTIFICATIONS) : console.log('No iOS')

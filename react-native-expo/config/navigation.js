@@ -36,7 +36,6 @@ import CreateResourceScreen from "../screens/CreateResourceScreen";
 import ReviewResourcesScreen from "../screens/ReviewResourcesScreen";
 import PaymentOptionsScreen from "../screens/PaymentOptionsScreen";
 import InstructorRegistrationScreen from "../screens/InstructorRegistrationScreen";
-import FlappyBirdScreen from "../screens/FlappyBirdScreen";
 
 
 const AuthStackNavigator = createStackNavigator({
@@ -62,7 +61,6 @@ const FeedNavigator = createStackNavigator({
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
     ChapterScreen: { screen: ChapterScreen},
-    FlappyBirdScreen: { screen: FlappyBirdScreen }
   });
 
 const InstructorFeedNavigator = createStackNavigator({

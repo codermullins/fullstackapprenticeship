@@ -30,7 +30,7 @@ class StudentProfileScreen extends Component {
 
   async componentDidMount() {
     const profile = this.props.navigation.getParam('profile', 'Null')
-    console.log(profile)
+    // console.log(profile)
     await this.setState({ profile: profile })
     await this.fetchProduct(profile.productId)
     await this.fetchApprenticeship(profile.apprenticeshipId)
@@ -39,13 +39,13 @@ class StudentProfileScreen extends Component {
 
   async fetchProduct(id) {
     const product = await API.get('fsa', `/experience/${id}`)
-    console.log('Product: ', product)
+    // console.log('Product: ', product)
     await this.setState({ product: product[0] })
   }
 
   async fetchApprenticeship(id) {
     const apprenticeship = await API.get('fsa', `/experience/${id}`)
-    console.log('Apprenticeship: ', apprenticeship)
+    // console.log('Apprenticeship: ', apprenticeship)
     await this.setState({ apprenticeship: apprenticeship[0] })
   }
 

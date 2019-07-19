@@ -121,9 +121,12 @@ class App extends Component {
             Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
           });
           this.setState({ fontLoaded: true })
+          let androidToken;
+          let iPhoneToken;
 
           // Need to update default notification alert settings
-          Platform.OS === 'android' ? await Notifications.getExpoPushTokenAsync() : console.log('No iOS Notifications')
+          Platform.OS === 'android' ? androidToken = await Notifications.getExpoPushTokenAsync() : console.log('No iOS Notifications')
+       
           
     }
 

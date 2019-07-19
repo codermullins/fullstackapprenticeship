@@ -46,6 +46,7 @@ export default class PaymentOptionsScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession();  
+    console.log('Payment options: ', session)
      
     try {
       const username = await session.accessToken.payload.username;
