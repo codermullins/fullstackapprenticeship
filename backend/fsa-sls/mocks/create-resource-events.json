@@ -1,8 +1,0 @@
-{
-    "body":  "{\"resourceName\":\"cool trick\",\"directory\":\"fsa\",\"schemaType\":\"seattle\",\"resourceUrl\":\"coolsite.com\",\"resourceAuthor\":\"John Doe\"}",
-    "requestContext": {
-        "identity": {
-            "cognitoIdentityId": "USER-SUB-1234"
-        }
-    }
-}
