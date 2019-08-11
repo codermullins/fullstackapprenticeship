@@ -13,6 +13,7 @@ import Profile from "./containers/Profile";
 import LinkComponent from "./components/LinkComponent";
 import ToolsContainer from "./components/ToolsContainer";
 import NewResource from "./containers/NewResource";
+import Sandbox from "./containers/Sandbox";
 import ProcessResource from "./containers/ProcessResource";
 
 export default ({ childProps }) => (
@@ -27,6 +28,7 @@ export default ({ childProps }) => (
             <AppliedRoute path="/tool/:schema" component={ToolsContainer} props={childProps} />
             <AppliedRoute path='/review' exact component={ProcessResource} props={childProps} />
             <AppliedRoute path='/resource/new' exact component={NewResource} props={childProps} />
+            <AppliedRoute path="/sandbox" component={Sandbox} props={childProps} />
         </Switch>
     </ConnectedRouter>
 );
