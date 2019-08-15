@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "Full Stack Apprenticeship",
-    "description": "The home for the Full-Stack Apprenticeship (FSA), designed to help you refresh your life with a new career, a fresh mindset, and a new community to grow with. The apprenticeship provides the structure and accountability of a coding bootcamp, without charging you an arm and a leg. Our platform gasifies the process of learning and building full-stack applications, making for a social and fun experience. Also includes is a 60 page ebook describing the process of becoming a self-taught full-stack developer, along with a curated Knowledge Base that details the FSA Technical Standard and its accompanying tools, skillset and frameworks. The Technical Standard is designed for new developers to learn a stack that will set them up for financial and technical success, focusing on React Web + Native, Node.js, serverless deployments & AWS for infrastructure provisioning.",
-    "slug": "fullstackapprenticeship",
+    "description": "Pareto offers you the structure, accountability and resources to learn the 20% of developer knowledge needed for 80% of the results you are looking for as you change careers.",
+    "slug": "paretoapprenticeship",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": [
@@ -10,7 +10,7 @@
       "android"
     ],
     "version": "0.1.0",
-    "githubUrl": "https://github.com/fsapprenticeship/fsa-hub",
+    "githubUrl": "https://github.com/pareto-learning/fullstackapprenticeship",
     "primaryColor": "#7851a9",
     "orientation": "portrait",
     "icon": "./assets/fsa.png",
