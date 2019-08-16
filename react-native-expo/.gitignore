@@ -7,6 +7,3 @@ npm-debug.*
 *.mobileprovision
 .idea
 .DS_Store
-
-config.js
-
