@@ -139,4 +139,11 @@ class App extends Component {
     }
 }
 
-export default withAuthenticator(App);
+const signUpConfig = {
+    signUpFields: [
+        { label: 'Email', key: 'username', displayOrder: 1}
+    ],
+    hiddenDefaults: ['username', 'email', 'phone_number']
+}
+
+export default withAuthenticator(App, { signUpConfig });

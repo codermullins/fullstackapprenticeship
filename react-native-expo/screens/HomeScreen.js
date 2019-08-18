@@ -49,11 +49,6 @@ export default class HomeScreen extends React.Component {
       : console.log("No iOS");
 
     try {
-      if (session.accessToken.payload === undefined) {
-        AsyncStorage.clear();
-        Auth.signOut()
-        this.props.navigation.navigate('Auth');
-      }
       const username = await session.accessToken.payload.username;
       const token = await session.accessToken.jwtToken;
       const id = await session.accessToken.payload.sub;
@@ -107,7 +102,8 @@ export default class HomeScreen extends React.Component {
       this.props.navigation.navigate("CreateProfile", {
         function: this.updateProfile,
         experience: this.updateExperience
-      });
+      })
+      this.setState({ loading: false })
     } else {
       await this.setState({ profile: profile[0] });
     }
@@ -462,36 +458,6 @@ export default class HomeScreen extends React.Component {
             />
           </Tab>
         </Tabs>
-
-         
-          <Text>{"\n"}</Text>
-
-          <View>
-            <RkCard rkType="shadowed">
-              <View>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("Profile", {
-                      xp: this.state.xp,
-                      profile: this.state.profile
-                    })
-                  }
-                >
-                  <Image
-                    rkCardImg={true}
-                    source={require("../assets/profile.png")}
-                  />
-                </TouchableOpacity>
-              </View>
-            </RkCard>
-          </View>
-
-          
-
-       
-          
-
-          <Text>{"\n"}</Text>
         </ScrollView>
       </View>
     );
