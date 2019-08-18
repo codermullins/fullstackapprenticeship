@@ -76,8 +76,8 @@ const InstructorFeedNavigator = createStackNavigator({
 const AppDrawerNavigator = createDrawerNavigator({
     Apprenticeship: FeedNavigator,
     'Instructor (Preview)': InstructorFeedNavigator,
-    'Create Resource': { screen: CreateResourceScreen },
-    'Premium Training': PaymentsNavigator,
+    // 'Create Resource': { screen: CreateResourceScreen },
+    // 'Premium Training': PaymentsNavigator,
     'Logout': { screen: SettingsScreen },
 });
 

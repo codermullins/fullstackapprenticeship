@@ -51,7 +51,7 @@ export default class EditProfileScreen extends Component {
         return mentorList;
     }
 
-    onMentorChange(value) {
+    onMentorChange = (value) => {
         this.setState({
             mentor: value
         });
@@ -135,15 +135,14 @@ export default class EditProfileScreen extends Component {
                         <Text style={{paddingLeft: 15}}>{this.state.country}</Text>
 
                         <Text>{'\n'}</Text>
-
+                        <Text style={{paddingLeft: 15}}>Your Mentor</Text>
                         <Picker
                             mode="dropdown"
                             header="Mentor"
                             selectedValue={this.state.mentor}
-                            onValueChange={this.onMentorChange.bind(this)}
-                            placeholder="Select Mentor"
+                            onValueChange={this.onMentorChange}
+                            placeholder="Select Here"
                             >
-                            <Picker.Item value="Select" label="Select your desired mentor" />
                             {this.renderMentors(this.state.mentors)}
                         </Picker>
 

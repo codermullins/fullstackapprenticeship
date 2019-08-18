@@ -394,3 +394,22 @@ renderLeaderboard = () => (
     );
   }
 }
+
+ {/* <RkCard>
+            <View rkCardHeader={true}>
+              <View>
+                <RkText rkType="header">Flappy Bird</RkText>
+                <RkText rkType="subtitle">
+                  Earn your spot on our weekly leaderboard.
+                </RkText>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("FlappyBirdScreen")}
+            >
+              <Image
+                rkCardImg={true}
+                source={require("../assets/flappy.jpg")}
+              />
+            </TouchableOpacity>
+          </RkCard> */}
