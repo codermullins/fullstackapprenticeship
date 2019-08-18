@@ -101,7 +101,7 @@ export default class HomeScreen extends React.Component {
   }
 
   async fetchProfile(id) {
-    const profile = await API.get("fsa", `/users/${id}`);
+    const profile = await API.get("pareto", `/users/${id}`);
     console.log("Length: ", profile.length);
     if (profile.length === 0) {
       this.props.navigation.navigate("CreateProfile", {
@@ -114,12 +114,12 @@ export default class HomeScreen extends React.Component {
   }
 
   async fetchProduct(id) {
-    const product = await API.get("fsa", `/experience/${id}`);
+    const product = await API.get("pareto", `/experience/${id}`);
     await this.setState({ product: product[0] });
   }
 
   async fetchApprenticeship(id) {
-    const apprenticeship = await API.get("fsa", `/experience/${id}`);
+    const apprenticeship = await API.get("pareto", `/experience/${id}`);
     await this.setState({ apprenticeship: apprenticeship[0] });
   }
 

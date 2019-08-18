@@ -27,7 +27,7 @@ export default class InstructorRegistrationScreen extends Component {
                 instructor: true
                 }
               try {
-                  const profile = await API.put('fsa', `/users/${id}`, {body})
+                  const profile = await API.put('pareto', `/users/${id}`, {body})
                   console.log(profile)
                   await updateProfile(profile)
                 //   console.log(update)

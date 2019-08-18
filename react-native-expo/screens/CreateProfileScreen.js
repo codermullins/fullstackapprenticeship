@@ -43,26 +43,26 @@ export default class CreateProfileScreen extends Component {
 
     async createUser(user) {
         const body = user;
-        const response = await API.post('fsa', '/users', {body})
+        const response = await API.post('pareto', '/users', {body})
         await console.log('User Creation Response: ', response)
         return response;
     }
 
     async createApprenticeship(apprenticeship) {
         const body = apprenticeship;
-        const response = await API.post('fsa', '/experience', {body})
+        const response = await API.post('pareto', '/experience', {body})
         await console.log('Apprenticeship creation response: ', response);
     }
 
     async createProduct(product) {
         const body = product;
-        const response = await API.post('fsa', '/experience', {body});
+        const response = await API.post('pareto', '/experience', {body});
         await console.log('Product creation response: ', response)
     }
 
     async createGettingStarted(begin) {
         const body = begin;
-        const response = await API.post('fsa', '/experience', {body});
+        const response = await API.post('pareto', '/experience', {body});
         await console.log('Getting Started Creation success: ', response)
     }
      

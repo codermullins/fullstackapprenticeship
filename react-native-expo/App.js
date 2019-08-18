@@ -80,6 +80,16 @@ class App extends Component {
 
     }
 
+    signOut() {
+        Auth.signOut()
+          .then(() => {
+            props.onStateChange('signedOut', null);
+          })
+          .catch(err => {
+            console.log('err: ', err)
+          })
+      }
+
     setupNotifications() {
         if (Platform.OS === 'android') {
             Expo.Notifications.createChannelAndroidAsync('events', {

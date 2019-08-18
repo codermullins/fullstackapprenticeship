@@ -35,7 +35,7 @@ export default class EditProfileScreen extends Component {
     }
 
     async componentDidMount() {
-        const mentors = await API.get('fsa', '/mentors')
+        const mentors = await API.get('pareto', '/mentors')
         this.setState({ mentors: mentors })
         const notificationToken = await Notifications.getExpoPushTokenAsync();
         this.setState({ expo: notificationToken })
@@ -71,7 +71,7 @@ export default class EditProfileScreen extends Component {
                 mentor: this.state.mentor
                 }
               try {
-                  await API.put('fsa', `/users/${id}`, {body})
+                  await API.put('pareto', `/users/${id}`, {body})
                   this.setState({ loading: false })
               } catch (e) {
                   console.log('ERROR: ', e)

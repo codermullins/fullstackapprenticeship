@@ -38,13 +38,13 @@ class StudentProfileScreen extends Component {
   }
 
   async fetchProduct(id) {
-    const product = await API.get('fsa', `/experience/${id}`)
+    const product = await API.get('pareto', `/experience/${id}`)
     // console.log('Product: ', product)
     await this.setState({ product: product[0] })
   }
 
   async fetchApprenticeship(id) {
-    const apprenticeship = await API.get('fsa', `/experience/${id}`)
+    const apprenticeship = await API.get('pareto', `/experience/${id}`)
     // console.log('Apprenticeship: ', apprenticeship)
     await this.setState({ apprenticeship: apprenticeship[0] })
   }

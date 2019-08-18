@@ -33,7 +33,7 @@ export default class AchievementScreen extends Component {
         achievements: schema.experience.achievements + 1
       }
           try {
-            const result = await API.put('fsa', `/experience/${id}`, {body})
+            const result = await API.put('pareto', `/experience/${id}`, {body})
             await update(schema.experience.type, result)
 
           } catch (e) {

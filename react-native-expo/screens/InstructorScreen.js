@@ -78,7 +78,7 @@ export default class HomeScreen extends React.Component {
   }
 
   async fetchProfile(id) {
-    const profile = await API.get('fsa', `/users/${id}`)
+    const profile = await API.get('pareto', `/users/${id}`)
     console.log('Profile: ', profile[0])
     if (profile[0].instructor === false) {
       console.log('Not an instructor')
@@ -92,7 +92,7 @@ export default class HomeScreen extends React.Component {
   }
 
   async fetchApprentices(id) {
-      const response = await API.get('fsa', `/mentor/${id}`);
+      const response = await API.get('pareto', `/mentor/${id}`);
       await this.setState({ apprentices: response })
       let apprenticeKeys = []
       response.forEach(function(apprentice) {

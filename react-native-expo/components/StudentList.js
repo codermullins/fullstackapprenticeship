@@ -27,7 +27,7 @@ export default class Students extends React.Component {
   }
 
   async componentDidMount() {
-      const students = await API.get('fsa', '/users')
+      const students = await API.get('pareto', '/users')
       this.setState({ students: students.data })
   }
 
