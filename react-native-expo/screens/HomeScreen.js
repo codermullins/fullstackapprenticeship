@@ -10,15 +10,16 @@ import {
   AsyncStorage
 } from "react-native";
 import { Notifications, Permissions } from "expo";
-import { RkButton, RkText, RkCard, RkTheme } from "react-native-ui-kitten";
+import { RkButton, RkText, RkCard, RkTheme, RkStyleSheet } from "react-native-ui-kitten";
 import Event from "../components/Event";
 import Loader from "../components/Loader";
-import { Header, Left, Body, Right, Button, Title } from "native-base";
+import { Header, Left, Body, Right, Button, Title, Segment, Container, Tabs, Tab } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { UtilStyles } from "../style/styles";
 import { Ionicons } from "@expo/vector-icons";
 import orderBy from "lodash.orderby";
 import { API, Auth } from "aws-amplify";
+import ProfileScreen from "./ProfileScreen";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -189,7 +190,7 @@ export default class HomeScreen extends React.Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            <Title>#refreshlife</Title>
+            <Title>{'<Pareto />'}</Title>
           </Body>
           <Right>
             <View />
@@ -199,7 +200,7 @@ export default class HomeScreen extends React.Component {
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}
         >
-          <RkCard>
+          {/* <RkCard>
             <View rkCardHeader={true}>
               <View style={{ flexDirection: "row" }}>
                 <Image
@@ -207,72 +208,20 @@ export default class HomeScreen extends React.Component {
                   style={styles.avatar}
                 />
                 <View style={{}}>
-                  <RkText rkType="header">My Apprenticeship Trainer</RkText>
+                  <RkText rkType="header">My Mentor</RkText>
                   <RkText rkType="subtitle">Michael Litchev</RkText>
                 </View>
               </View>
             </View>
-          </RkCard>
+          </RkCard> */}
 
           <Loader loading={this.state.loading} />
 
-          <Text>{"\n"}</Text>
 
           {this.renderEvents(this.state.events)}
 
-          {/* <RkCard>
-            <View rkCardHeader={true}>
-              <View>
-                <RkText rkType="header">Flappy Bird</RkText>
-                <RkText rkType="subtitle">
-                  Earn your spot on our weekly leaderboard.
-                </RkText>
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate("FlappyBirdScreen")}
-            >
-              <Image
-                rkCardImg={true}
-                source={require("../assets/flappy.jpg")}
-              />
-            </TouchableOpacity>
-          </RkCard> */}
-          <Text>{"\n"}</Text>
-
-          <View>
-            <RkCard rkType="shadowed">
-              <View>
-                <TouchableOpacity
-                  onPress={() =>
-                    this.props.navigation.navigate("Profile", {
-                      xp: this.state.xp,
-                      profile: this.state.profile
-                    })
-                  }
-                >
-                  <Image
-                    rkCardImg={true}
-                    source={require("../assets/profile.png")}
-                  />
-                </TouchableOpacity>
-              </View>
-            </RkCard>
-          </View>
-
-          <Text>{"\n"}</Text>
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 30,
-              paddingTop: 10,
-              paddingLeft: 14
-            }}
-          >
-            Learn & Earn Experience
-          </Text>
-          <Text>{"\n"}</Text>
-
+        <Tabs>
+          <Tab heading="Experience">
           <RkCard>
             <View rkCardHeader={true}>
               <View>
@@ -401,20 +350,8 @@ export default class HomeScreen extends React.Component {
               </RkButton>
             </View>
           </RkCard>
-
-          <Text>{"\n"}</Text>
-
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 30,
-              paddingTop: 10,
-              paddingLeft: 14
-            }}
-          >
-            Educational Resources
-          </Text>
-          <Text>{"\n"}</Text>
+          </Tab>
+          <Tab heading="Learning">
           <RkCard rkType="shadowed">
             <View>
               <TouchableOpacity
@@ -516,6 +453,43 @@ export default class HomeScreen extends React.Component {
               <View style={styles.footerButtons} />
             </View>
           </RkCard>
+          </Tab>
+          <Tab heading="Profile">
+            <ProfileScreen 
+              xp={this.state.xp}
+              navigation={this.props.navigation}
+              profile={this.state.profile}
+            />
+          </Tab>
+        </Tabs>
+
+         
+          <Text>{"\n"}</Text>
+
+          <View>
+            <RkCard rkType="shadowed">
+              <View>
+                <TouchableOpacity
+                  onPress={() =>
+                    this.props.navigation.navigate("Profile", {
+                      xp: this.state.xp,
+                      profile: this.state.profile
+                    })
+                  }
+                >
+                  <Image
+                    rkCardImg={true}
+                    source={require("../assets/profile.png")}
+                  />
+                </TouchableOpacity>
+              </View>
+            </RkCard>
+          </View>
+
+          
+
+       
+          
 
           <Text>{"\n"}</Text>
         </ScrollView>

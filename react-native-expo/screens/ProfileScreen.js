@@ -17,12 +17,10 @@ class ProfileScreen extends Component {
   }
 
   async componentDidMount() {
-    const id = await AsyncStorage.getItem('id')
-    const xp = this.props.navigation.getParam('xp', 0)
-    const profile = this.props.navigation.getParam('profile', 'Null')
+    const xp = this.props.xp;
+    const profile = this.props.profile;
     const url = await this.getAvatar(profile.github)
     await this.setState({ profile: profile, xp: xp, url: url })
-
   }
 
   async getAvatar(github) {
