@@ -38,11 +38,11 @@ import PaymentOptionsScreen from "../screens/PaymentOptionsScreen";
 import InstructorRegistrationScreen from "../screens/InstructorRegistrationScreen";
 
 
-const AuthStackNavigator = createStackNavigator({
-    Welcome: { screen: WelcomeScreen },
-    SignIn: { screen: SignInScreen },
-    SignUp: { screen: SignUpScreen },
-});
+// const AuthStackNavigator = createStackNavigator({
+//     Welcome: { screen: WelcomeScreen },
+//     SignIn: { screen: SignInScreen },
+//     SignUp: { screen: SignUpScreen },
+// });
 
 const PaymentsNavigator = createStackNavigator({
     PaymentOptionsScreen: { screen: PaymentOptionsScreen },
@@ -60,8 +60,8 @@ const FeedNavigator = createStackNavigator({
     CreateProfile: { screen: CreateProfileScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
-    ChapterScreen: { screen: ChapterScreen},
-  });
+    ChapterScreen: { screen: ChapterScreen },
+});
 
 const InstructorFeedNavigator = createStackNavigator({
     InstructorScreen: { screen: InstructorScreen },
@@ -82,8 +82,8 @@ const AppDrawerNavigator = createDrawerNavigator({
 });
 
 const AppNavigator = createSwitchNavigator({
-    AuthLoading: AuthLoadingScreen,
-    Auth: AuthStackNavigator,
+    // AuthLoading: AuthLoadingScreen,
+    // Auth: AuthStackNavigator,
     App: AppDrawerNavigator,
 });
 

@@ -2,46 +2,31 @@ import React, { Component } from 'react';
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 import Amplify, { Auth, API } from "aws-amplify";
+import { withAuthenticator } from 'aws-amplify-react-native';
 import { Platform } from "react-native";
 import { Font, AppLoading, Notifications, Permissions } from "expo";
 import { Root } from "native-base";
 import AppNavigator from './config/navigation';
 import config from './config/config';
+import awsmobile from './aws-exports';
 
 
-Amplify.configure({
-    Auth: {
-        mandatorySignIn: false,
-        region: config.cognito.REGION,
-        userPoolId: config.cognito.USER_POOL_ID,
-        identityPoolId: config.cognito.IDENTITY_POOL_ID,
-        userPoolWebClientId: config.cognito.APP_CLIENT_ID
-    },
-    API: {
-        endpoints: [
-            {
-                name: "fsa",
-                endpoint: config.sls.URL,
-                region: config.sls.REGION
-            },
-            {
-                name: "events",
-                endpoint: config.amplify.URL,
-                region: config.amplify.REGION
-            },
-            {
-                name: "payments",
-                endpoint: config.amplify.URL,
-                region: config.amplify.REGION
-            },
-            {
-                name: 'leaders',
-                endpoint: config.amplify.URL,
-                region: config.amplify.REGION
-            }
-        ]
-    }
-  });
+Amplify.configure(awsmobile);
+
+API.configure({
+    endpoints: [
+        {
+            name: 'pareto',
+            endpoint: config.mongo.URL,
+            region: config.mongo.REGION
+        },
+        {
+            name: 'events',
+            endpoint: 'https://7fhgyy03p7.execute-api.us-east-1.amazonaws.com/prod',
+            region: 'us-east-1'
+        }
+    ]
+})
 
 const INITIAL_STATE = {
     user: {},
@@ -77,31 +62,31 @@ class App extends Component {
             title: 'New Event',
             body: 'Event Posted',
             android: {
-              channelId: 'events',
+                channelId: 'events',
             },
-          });
-          
+        });
+
     }
 
     expoApiObjectExample() {
         const batch = [{
             "to": "ExponentPushToken[xxxxxx]",
-            "title":"test",
-            "priority":"high",
+            "title": "test",
+            "priority": "high",
             "body": "test",
-            "sound":"default", // android 7.0 , 6, 5 , 4
+            "sound": "default", // android 7.0 , 6, 5 , 4
             "channelId": "chat-messages", // android 8.0 later
-           }]
-           
+        }]
+
     }
 
     setupNotifications() {
         if (Platform.OS === 'android') {
             Expo.Notifications.createChannelAndroidAsync('events', {
-              name: 'Events',
-              sound: true,
-              vibrate: [0, 250, 250, 250],
-              priority: 'max'
+                name: 'Events',
+                sound: true,
+                vibrate: [0, 250, 250, 250],
+                priority: 'max'
             });
             // Expo.Notifications.createChannelAndroidAsync('exp', {
             //     name: 'Experience',
@@ -111,37 +96,37 @@ class App extends Component {
             //     name: 'Payments',
             //     sound: true,
             //   });
-          }
-          
+        }
+
     }
 
     async componentDidMount() {
         await Expo.Font.loadAsync({
             Roboto: require("native-base/Fonts/Roboto.ttf"),
             Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-          });
-          this.setState({ fontLoaded: true })
-          let androidToken;
-          let iPhoneToken;
+        });
+        this.setState({ fontLoaded: true })
+        let androidToken;
+        let iPhoneToken;
 
-          // Need to update default notification alert settings
-          Platform.OS === 'android' ? androidToken = await Notifications.getExpoPushTokenAsync() : console.log('No iOS Notifications')
-       
-          
+        // Need to update default notification alert settings
+        Platform.OS === 'android' ? androidToken = await Notifications.getExpoPushTokenAsync() : console.log('No iOS Notifications')
+
+
     }
 
-    
+
     render() {
         return (
             // <Provider store={store}>
-                this.state.fontLoaded ? 
+            this.state.fontLoaded ?
                 <Root>
-                    <AppNavigator screenProps={{...this.props}}/>
-                </Root> 
+                    <AppNavigator screenProps={{ ...this.props }} />
+                </Root>
                 : null
             // </Provider>
         );
     }
 }
 
-export default App;
+export default withAuthenticator(App);
