@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { StyleSheet, View } from 'react-native';
 import {Container, Content, List, ListItem, Text, Left, Right, Body} from 'native-base';
-import NavButton from "../components/NavButton";
 import sanity from "../sanity"
 import orderBy from "lodash.orderby"
 

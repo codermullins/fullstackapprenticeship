@@ -21,7 +21,7 @@ import orderBy from "lodash.orderby";
 import { API } from "aws-amplify"
 
 
-export default class HomeScreen extends React.Component {
+export default class Sandbox extends React.Component {
   constructor(props) {
     super(props);
 

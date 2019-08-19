@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { quotes } from '../quotes.js';
+import { quotes } from '../utils/quotes.js';
 
 import {
     StyleSheet,

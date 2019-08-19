@@ -4,7 +4,7 @@ import {
   fullStackApprenticeship,
   cityByCity,
   findingWork
-} from '../components/directories';
+} from '../utils/directories';
 
 class ReviewResourceFormScreen extends Component {
   constructor(props) {

@@ -7,7 +7,7 @@ import {
   fullStackApprenticeship,
   cityByCity,
   findingWork
-} from '../components/directories';
+} from '../utils/directories';
 import { Ionicons } from "@expo/vector-icons";
 import { API } from 'aws-amplify';
 import uuidv4 from "uuid";

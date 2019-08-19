@@ -1,54 +1,26 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import { Ionicons, Entypo, MaterialIcons } from '@expo/vector-icons';
 import {
     createSwitchNavigator,
     createStackNavigator,
     createAppContainer,
     createDrawerNavigator,
-    createBottomTabNavigator,
+    // createBottomTabNavigator,
 } from 'react-navigation';
 
-import AuthLoadingScreen from '../screens/AuthLoadingScreen';
-import WelcomeScreen from '../screens/WelcomeScreen';
-import SignInScreen from '../screens/SignInScreen';
-import SignUpScreen from '../screens/SignUpScreen';
-import ChatScreen from '../screens/ChatScreen';
 import HomeScreen from "../screens/HomeScreen";
 import SettingsScreen from '../screens/SettingsScreen';
-import CreateEventScreen from "../screens/CreateEventScreen"
-import ProfileScreen from '../screens/ProfileScreen';
-import EditProfileScreen from "../screens/EditProfileScreen";
-import CreateProfileScreen from "../screens/CreateProfileScreen";
-import SubcategoriesScreen from '../screens/SubcategoriesScreen';
-import ContentScreen from "../screens/ContentScreen";
-import BlueprintScreen from "../screens/BlueprintScreen";
-import MessagesListScreen from '../screens/MessagesListScreen';
-import ExperienceScreen from "../screens/ExperienceScreen";
-import AchievementScreen from "../screens/AchievementScreen";
-import CreatePaymentRequestScreen from "../screens/CreatePaymentRequestScreen"
-import Students from "../components/StudentList";
-import PaymentScreen from "../screens/PaymentScreen";
-import ChapterScreen from "../screens/ChapterScreen";
-import InstructorScreen from "../screens/InstructorScreen";
-import StudentProfileScreen from "../screens/StudentProfileScreen";
-import CreateResourceScreen from "../screens/CreateResourceScreen";
-import ReviewResourcesScreen from "../screens/ReviewResourcesScreen";
-import PaymentOptionsScreen from "../screens/PaymentOptionsScreen";
-import InstructorRegistrationScreen from "../screens/InstructorRegistrationScreen";
-
-
-// const AuthStackNavigator = createStackNavigator({
-//     Welcome: { screen: WelcomeScreen },
-//     SignIn: { screen: SignInScreen },
-//     SignUp: { screen: SignUpScreen },
-// });
-
-const PaymentsNavigator = createStackNavigator({
-    PaymentOptionsScreen: { screen: PaymentOptionsScreen },
-    PaymentScreen: { screen: PaymentScreen },
-
-})
+import CreateEventScreen from "../mentor/CreateEventScreen"
+import ProfileScreen from '../profile/ProfileScreen';
+import EditProfileScreen from "../profile/EditProfileScreen";
+import CreateProfileScreen from "../profile/CreateProfileScreen";
+import SubcategoriesScreen from '../education/SubcategoriesScreen';
+import ContentScreen from "../education/ContentScreen";
+import BlueprintScreen from "../education/BlueprintScreen";
+import ExperienceScreen from "../experience/ExperienceScreen";
+import AchievementScreen from "../experience/AchievementScreen";
+import ChapterScreen from "../education/ChapterScreen";
+import InstructorScreen from "../mentor/InstructorScreen";
+import StudentProfileScreen from "../mentor/StudentProfileScreen";
+import InstructorRegistrationScreen from "../mentor/InstructorRegistrationScreen";
 
 const FeedNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
@@ -70,19 +42,15 @@ const InstructorFeedNavigator = createStackNavigator({
     StudentProfileScreen: { screen: StudentProfileScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
-    ReviewResourcesScreen: { screen: ReviewResourcesScreen }
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
     Apprenticeship: FeedNavigator,
     'Instructor (Preview)': InstructorFeedNavigator,
-    // 'Create Resource': { screen: CreateResourceScreen },
-    // 'Premium Training': PaymentsNavigator,
     'Logout': { screen: SettingsScreen },
 });
 
 const AppNavigator = createSwitchNavigator({
-    // AuthLoading: AuthLoadingScreen,
     // Auth: AuthStackNavigator,
     App: AppDrawerNavigator,
 });

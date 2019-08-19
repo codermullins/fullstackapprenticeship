@@ -262,7 +262,6 @@ export default class CreateProfileScreen extends Component {
                             onValueChange={this.onMentorChange.bind(this)}
                             placeholder="Select Mentor"
                             >
-                            <Picker.Item value="bdaad57c-2183-468a-a114-493c19327762" label="Select your desired mentor" />
                             {this.renderMentors(this.state.mentors)}
                         </Picker> */}
                         <Item floatingLabel>

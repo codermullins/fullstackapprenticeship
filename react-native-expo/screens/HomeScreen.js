@@ -19,7 +19,7 @@ import { UtilStyles } from "../style/styles";
 import { Ionicons } from "@expo/vector-icons";
 import orderBy from "lodash.orderby";
 import { API, Auth } from "aws-amplify";
-import ProfileScreen from "./ProfileScreen";
+import ProfileScreen from "../profile/ProfileScreen";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, View } from 'react-native';
 import {Container, Content, List, ListItem, Text, Left, Right, Body} from 'native-base';
-import NavButton from "../components/NavButton";
-import { fullStackApprenticeship, findingWork, cityByCity } from "../directories";
+import { fullStackApprenticeship, findingWork, cityByCity } from "../utils/directories";
 
 class SubcategoriesScreen extends Component {
     constructor(props) {

@@ -31,16 +31,12 @@ class ProfileScreen extends Component {
     })
     const avatar = JSON.parse(user._bodyText);
     const url = avatar.avatar_url;
-    await console.log('URL: ', url)
     this.setState({ url: url })
     return url;
-    
   }
 
   render() {
-
     const progressPercent = this.state.xp / 50;
-
     return (
       <Container>
         <Content>

@@ -212,15 +212,6 @@ export default class HomeScreen extends React.Component {
               </View>
             </View>
           </RkCard> 
-
-          {/* <RkCard>
-          <View>
-            <TouchableOpacity onPress={() => navigation.navigate('ReviewResourcesScreen')}>
-            <RkText rkType="header xxlarge">View Resources</RkText>
-            </TouchableOpacity>
-          </View>
-          </RkCard> */}
-
           <Text>{'\n'}</Text>
 
           <Text style={{textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14}}>My Students</Text>
@@ -228,19 +219,9 @@ export default class HomeScreen extends React.Component {
 
           { this.renderApprentices(this.state.apprentices)}
           </View>
-
           )
-          
-        
         }
-          
-
-          
           <Loader loading={this.state.loading} />
-
-          <Text>{'\n'}</Text>
-          
-
         </ScrollView>
       </View>
     );
