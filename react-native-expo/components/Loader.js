@@ -12,7 +12,7 @@ import PulseLoader from './PulseLoader';
 
 const randomIndex = Math.floor(Math.random() * Math.floor(quotes.length));
 
-const fsa = require('../assets/fsa.jpeg')
+const fsa = require('../assets/pareto.png')
 const Loader = props => {
     const {
         loading,
@@ -32,8 +32,8 @@ const Loader = props => {
                         <PulseLoader
                             avatar={fsa}
                             size={150}
-                            backgroundColor="#7851a9"
-                            borderColor="#7851a9"
+                            backgroundColor="#C0C0C0"
+                            borderColor="#C0C0C0"
                         />
                         <Text style={{ fontSize: 20, fontStyle: "italic", marginBottom: 250, marginRight: 10, marginLeft: 10 }}>{quotes[randomIndex].quote}
                             {'\n'}{'\n'}{quotes[randomIndex].author}

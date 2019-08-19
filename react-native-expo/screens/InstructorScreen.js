@@ -202,7 +202,7 @@ export default class HomeScreen extends React.Component {
             <RkCard rkType='heroImage shadowed'>
             <View>
             <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen', {keys: this.state.apprenticeKeys})}>
-              <Image rkCardImg={true} source={require('../assets/fsa.png')} />
+              <Image rkCardImg={true} source={require('../assets/calendar.png')} />
               </TouchableOpacity>
               <View rkCardImgOverlay={true} style={styles.overlay}>
                 <View style={{ marginBottom: 20 }}>
@@ -213,16 +213,13 @@ export default class HomeScreen extends React.Component {
             </View>
           </RkCard> 
 
-          <RkCard>
+          {/* <RkCard>
           <View>
             <TouchableOpacity onPress={() => navigation.navigate('ReviewResourcesScreen')}>
             <RkText rkType="header xxlarge">View Resources</RkText>
             </TouchableOpacity>
-            <View>
-              
-            </View>
           </View>
-          </RkCard>
+          </RkCard> */}
 
           <Text>{'\n'}</Text>
 
