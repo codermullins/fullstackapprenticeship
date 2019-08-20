@@ -44,6 +44,7 @@ class ExperienceScreen extends Component {
               update: update,
               complete: complete
             }
+            console.log('Achievement Object: ', obj)
             return (
             <ListItem key={i} onPress={() => this.props.navigation.navigate('AchievementScreen', {
               schema: obj,
@@ -52,7 +53,7 @@ class ExperienceScreen extends Component {
               origin: origin
             })}>
               <Left>
-                {complete ? (
+                {complete.completed ? (
                   <Text style={{fontSize: 24, paddingRight: 10, textDecorationLine: 'line-through'}}>{list.title}</Text>
 
                 ) : (

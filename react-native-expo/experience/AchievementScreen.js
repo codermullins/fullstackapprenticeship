@@ -28,7 +28,7 @@ export default class AchievementScreen extends Component {
       let id = schema.experience.id;
 
       const body = {
-        [key]: true,
+        [key.completed]: true,
         xpEarned: schema.experience.xpEarned + parseInt(schema.list.amount, 10),
         achievements: schema.experience.achievements + 1
       }
@@ -47,16 +47,10 @@ export default class AchievementScreen extends Component {
       }
 
   render() {
-    
       const schema = this.props.navigation.getParam('schema', 'None')
-      // console.log('Passed down props: ', schema)
-      const navigation = this.props.navigation.navigate;
-      // console.log('Navigation? : ', navigation)
+      console.log('Passed down props: ', schema)
       const overview = schema.list.overview;
-      const complete = schema.complete
-      // console.log('Complete: ', schema.complete)
-      
-      
+      const complete = schema.complete;   
     return(
         <ScrollView>
         <TouchableOpacity
@@ -77,7 +71,7 @@ export default class AchievementScreen extends Component {
             </View>
         </RkCard>
 
-        {complete === false ? (
+        {complete.completed === false ? (
           <Button full style={{backgroundColor: "#6200EE"}} onPress={this.handlePress}><Text>Mark Complete</Text></Button>
 
         ) : (<Button full disabled style={{backgroundColor: "gray"}}><Text>Achievement Unlocked</Text></Button>
