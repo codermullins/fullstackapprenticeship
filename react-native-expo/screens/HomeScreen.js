@@ -97,7 +97,6 @@ export default class HomeScreen extends React.Component {
 
   async fetchProfile(id) {
     const profile = await API.get("pareto", `/users/${id}`);
-    console.log("Length: ", profile.length);
     if (profile.length === 0) {
       this.props.navigation.navigate("CreateProfile", {
         function: this.updateProfile,
@@ -189,31 +188,14 @@ export default class HomeScreen extends React.Component {
             <Title>{'<Pareto />'}</Title>
           </Body>
           <Right>
-            <View />
+            <Text>v 0.92</Text>
           </Right>
         </Header>
         <ScrollView
           automaticallyAdjustContentInsets={true}
           style={[UtilStyles.container, styles.screen]}
         >
-          {/* <RkCard>
-            <View rkCardHeader={true}>
-              <View style={{ flexDirection: "row" }}>
-                <Image
-                  source={require("../assets/michael.jpg")}
-                  style={styles.avatar}
-                />
-                <View style={{}}>
-                  <RkText rkType="header">My Mentor</RkText>
-                  <RkText rkType="subtitle">Michael Litchev</RkText>
-                </View>
-              </View>
-            </View>
-          </RkCard> */}
-
           <Loader loading={this.state.loading} />
-
-
           {this.renderEvents(this.state.events)}
 
         <Tabs>
@@ -234,7 +216,8 @@ export default class HomeScreen extends React.Component {
                   schema: "apprenticeExperienceSchema",
                   experience: this.state.apprenticeship,
                   function: this.updateExperience,
-                  origin: "Apprentice"
+                  origin: "Apprentice",
+                  profile: this.state.profile
                 })
               }
             >
@@ -256,7 +239,8 @@ export default class HomeScreen extends React.Component {
                       schema: "apprenticeExperienceSchema",
                       experience: this.state.apprenticeship,
                       function: this.updateExperience,
-                      origin: "Apprentice"
+                      origin: "Apprentice",
+                      profile: this.state.profile
                     })
                   }
                 >
@@ -271,7 +255,8 @@ export default class HomeScreen extends React.Component {
                     schema: "apprenticeExperienceSchema",
                     experience: this.state.apprenticeship,
                     function: this.updateExperience,
-                    origin: "Apprentice"
+                    origin: "Apprentice",
+                    profile: this.state.profile
                   })
                 }
               >
@@ -298,7 +283,8 @@ export default class HomeScreen extends React.Component {
                   schema: "productExperienceSchema",
                   experience: this.state.product,
                   function: this.updateExperience,
-                  origin: "Apprentice"
+                  origin: "Apprentice",
+                  profile: this.state.profile
                 })
               }
             >
@@ -323,7 +309,8 @@ export default class HomeScreen extends React.Component {
                       schema: "productExperienceSchema",
                       experience: this.state.product,
                       function: this.updateExperience,
-                      origin: "Apprentice"
+                      origin: "Apprentice",
+                      profile: this.state.profile
                     })
                   }
                 >
@@ -337,7 +324,8 @@ export default class HomeScreen extends React.Component {
                     schema: "productExperienceSchema",
                     experience: this.state.product,
                     function: this.updateExperience,
-                    origin: "Apprentice"
+                    origin: "Apprentice",
+                    profile: this.state.profile
                   })
                 }
               >
@@ -455,6 +443,7 @@ export default class HomeScreen extends React.Component {
               xp={this.state.xp}
               navigation={this.props.navigation}
               profile={this.state.profile}
+              updateProfile={this.updateProfile}
             />
           </Tab>
         </Tabs>

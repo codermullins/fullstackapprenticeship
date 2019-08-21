@@ -32,33 +32,33 @@ class ExperienceScreen extends Component {
         const orderedLinks = orderBy(this.state.links, function(item) { return item.priority})
         const update = this.props.navigation.getParam('function', 'none')
         const origin = this.props.navigation.getParam('origin', 'none')
+        const profile = this.props.navigation.getParam('profile', 'none')
 
         return(
           <List>
           {orderedLinks.map((list, i) => {
             const achievementNumber = list.priority;
             const complete = experience[achievementNumber];
+            // console.log('Complete: ', complete)
             const obj = {
               list: list,
               experience: experience,
               update: update,
               complete: complete
             }
-            console.log('Achievement Object: ', obj)
             return (
             <ListItem key={i} onPress={() => this.props.navigation.navigate('AchievementScreen', {
               schema: obj,
               function: update,
               text: `${list.amount}XP`,
-              origin: origin
+              origin: origin,
+              profile: profile
             })}>
               <Left>
                 {complete.completed ? (
                   <Text style={{fontSize: 24, paddingRight: 10, textDecorationLine: 'line-through'}}>{list.title}</Text>
-
                 ) : (
                   <Text style={{fontSize: 24, paddingRight: 10}}>{list.title}</Text>
-
                 )}
               </Left>
               <Right>

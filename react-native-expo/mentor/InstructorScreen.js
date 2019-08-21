@@ -47,12 +47,8 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession()
-    console.log('Instructor screen session: ', session)
-
 
     Platform.OS === 'android' ? Permissions.askAsync(Permissions.NOTIFICATIONS) : console.log('No iOS')
-
-
     try {
       const username = await session.accessToken.payload.username;
       const token = await session.accessToken.jwtToken;
@@ -79,7 +75,7 @@ export default class HomeScreen extends React.Component {
 
   async fetchProfile(id) {
     const profile = await API.get('pareto', `/users/${id}`)
-    console.log('Profile: ', profile[0])
+    console.log('Instructor Profile: ', profile[0])
     if (profile[0].instructor === false) {
       console.log('Not an instructor')
     } else {
@@ -119,7 +115,8 @@ export default class HomeScreen extends React.Component {
           return (
             <RkCard rkType='shadowed' key={index}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('StudentProfileScreen', {
-                profile: apprentice
+                profile: apprentice,
+                instructor: this.state.profile
 
               })}>
                 <RkCard>
