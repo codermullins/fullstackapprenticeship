@@ -7,8 +7,6 @@ import { Text, View, AsyncStorage } from 'react-native';
 import Loader from "../components/Loader";
 import CountryPicker from "react-native-country-picker-modal"
 
-
-
 export default class CreateProfileScreen extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +26,7 @@ export default class CreateProfileScreen extends Component {
             endDateTimePickerVisible: false,
             expoToken: "iPhone",
             loading: false,
-            mentor: "bdaad57c-2183-468a-a114-493c19327762",
+            mentor: "Placeholder",
             cca2: "US",
             mentors: []
 
@@ -38,7 +36,7 @@ export default class CreateProfileScreen extends Component {
     async componentDidMount() {
         const notificationToken = await Notifications.getExpoPushTokenAsync();
         console.log('Notification Token: ', notificationToken)
-        this.setState({ expoToken: notificationToken })
+        
     }
 
     async createUser(user) {
@@ -187,9 +185,26 @@ export default class CreateProfileScreen extends Component {
             this.props.navigation.navigate('HomeScreen')
         }
 
+        onMentorChange = (value) => {
+            this.setState({
+                mentor: value
+            });
+          }
+
+          renderMentors(mentors) {
+            let mentorList = mentors.map((mentor, i) => {
+                return(
+                    <Picker.Item key={i} label={`${mentor.fName} ${mentor.lName}`} value={mentor.id} />
+                )
+            }
+            )
+            return mentorList;
+        }
+
         
 
     render() {
+        
         return(
             <Container>
                 <Content>
@@ -235,7 +250,11 @@ export default class CreateProfileScreen extends Component {
                             />
                         </View>
                         <Text style={{paddingLeft: 15}}>{this.state.country}</Text>
-                        {/* <Picker
+                        {/* <Text>
+                        {`\n`}
+                        </Text>
+                        <Text style={{paddingLeft: 15}}>Your Mentor</Text>
+                        <Picker
                             mode="dropdown"
                             header="Mentor"
                             selectedValue={this.state.mentor}
