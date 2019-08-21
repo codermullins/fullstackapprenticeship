@@ -7,8 +7,6 @@ import { Text, View, AsyncStorage } from 'react-native';
 import Loader from "../components/Loader";
 import CountryPicker from "react-native-country-picker-modal"
 
-
-
 export default class CreateProfileScreen extends Component {
     constructor(props) {
         super(props);
@@ -28,7 +26,7 @@ export default class CreateProfileScreen extends Component {
             endDateTimePickerVisible: false,
             expoToken: "iPhone",
             loading: false,
-            mentor: "bdaad57c-2183-468a-a114-493c19327762",
+            mentor: "Placeholder",
             cca2: "US",
             mentors: []
 
@@ -38,7 +36,7 @@ export default class CreateProfileScreen extends Component {
     async componentDidMount() {
         const notificationToken = await Notifications.getExpoPushTokenAsync();
         console.log('Notification Token: ', notificationToken)
-        this.setState({ expoToken: notificationToken })
+        
     }
 
     async createUser(user) {
@@ -76,6 +74,16 @@ export default class CreateProfileScreen extends Component {
         const update = this.props.navigation.getParam('function', 'none')
         const updateExperience = this.props.navigation.getParam('experience', 'none')
 
+        let achievement = {
+            completed: false,
+            approved: false,
+            github: "Please Add Link to GitHub",
+            strengths: [],
+            weaknesses: [],
+            review: "Please write review here",
+            grade: "Grade Here"
+        }
+
         const user = {
             id: id,
             fName: this.state.fName,
@@ -111,36 +119,21 @@ export default class CreateProfileScreen extends Component {
             approved: false,
             title: 'Apprenticeship',
             description: 'The process of becoming a developer.',
-            _01: false,
-            _01_approved: false,
-            _02: false,
-            _02_approved: false,
-            _03: false,
-            _03_approved: false,
-            _04: false,
-            _04_approved: false,
-            _05: false,
-            _05_approved: false,
-            _06: false,
-            _06_approved: false,
-            _07: false,
-            _07_approved: false,
-            _08: false,
-            _08_approved: false,
-            _09: false,
-            _09_approved: false,
-            _10: false,
-            _10_approved: false,
-            _11: false,
-            _11_approved: false,
-            _12: false,
-            _12_approved: false,
-            _13: false,
-            _13_approved: false,
-            _14: false,
-            _14_approved: false,
-            _15: false,
-            _15_approved: false,
+            _01: achievement,
+            _02: achievement,
+            _03: achievement,
+            _04: achievement,
+            _05: achievement,
+            _06: achievement,
+            _07: achievement,
+            _08: achievement,
+            _09: achievement,
+            _10: achievement,
+            _11: achievement,
+            _12: achievement,
+            _13: achievement,
+            _14: achievement,
+            _15: achievement,
         }
 
         const product = {
@@ -154,36 +147,21 @@ export default class CreateProfileScreen extends Component {
             title: 'Please give your product a name',
             description: "Please write a description of your project.",
             github: "Incomplete",
-            _01: false,
-            _01_approved: false,
-            _02: false,
-            _02_approved: false,
-            _03: false,
-            _03_approved: false,
-            _04: false,
-            _04_approved: false,
-            _05: false,
-            _05_approved: false,
-            _06: false,
-            _06_approved: false,
-            _07: false,
-            _07_approved: false,
-            _08: false,
-            _08_approved: false,
-            _09: false,
-            _09_approved: false,
-            _10: false,
-            _10_approved: false,
-            _11: false,
-            _11_approved: false,
-            _12: false,
-            _12_approved: false,
-            _13: false,
-            _13_approved: false,
-            _14: false,
-            _14_approved: false,
-            _15: false,
-            _15_approved: false,
+            _01: achievement,
+            _02: achievement,
+            _03: achievement,
+            _04: achievement,
+            _05: achievement,
+            _06: achievement,
+            _07: achievement,
+            _08: achievement,
+            _09: achievement,
+            _10: achievement,
+            _11: achievement,
+            _12: achievement,
+            _13: achievement,
+            _14: achievement,
+            _15: achievement,
         }
 
             try {
@@ -207,9 +185,26 @@ export default class CreateProfileScreen extends Component {
             this.props.navigation.navigate('HomeScreen')
         }
 
+        onMentorChange = (value) => {
+            this.setState({
+                mentor: value
+            });
+          }
+
+          renderMentors(mentors) {
+            let mentorList = mentors.map((mentor, i) => {
+                return(
+                    <Picker.Item key={i} label={`${mentor.fName} ${mentor.lName}`} value={mentor.id} />
+                )
+            }
+            )
+            return mentorList;
+        }
+
         
 
     render() {
+        
         return(
             <Container>
                 <Content>
@@ -255,7 +250,11 @@ export default class CreateProfileScreen extends Component {
                             />
                         </View>
                         <Text style={{paddingLeft: 15}}>{this.state.country}</Text>
-                        {/* <Picker
+                        {/* <Text>
+                        {`\n`}
+                        </Text>
+                        <Text style={{paddingLeft: 15}}>Your Mentor</Text>
+                        <Picker
                             mode="dropdown"
                             header="Mentor"
                             selectedValue={this.state.mentor}

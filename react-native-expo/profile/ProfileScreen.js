@@ -68,7 +68,7 @@ class ProfileScreen extends Component {
 
             <CardItem>
             <Left>
-                <Button transparent textStyle={{color: '#87838B'}} onPress={() => this.props.navigation.navigate('EditProfile', { type: 'EDIT', profile: this.state.profile})}>
+                <Button transparent textStyle={{color: '#87838B'}} onPress={() => this.props.navigation.navigate('EditProfile', { type: 'EDIT', profile: this.state.profile, editProfile: this.props.editProfile})}>
                   <Entypo name="new-message" size={24} />
                   <Text>Edit Profile</Text>
                 </Button>

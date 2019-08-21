@@ -17,6 +17,7 @@ class StudentProfileScreen extends Component {
     super(props);
     this.state = {
       profile: {},
+      instructor: {},
       xp: null,
       avatar: 'none',
       url: null,
@@ -30,8 +31,9 @@ class StudentProfileScreen extends Component {
 
   async componentDidMount() {
     const profile = this.props.navigation.getParam('profile', 'Null')
+    const instructor = this.props.navigation.getParam('instructor');
     // console.log(profile)
-    await this.setState({ profile: profile })
+    await this.setState({ profile: profile, instructor: instructor })
     await this.fetchProduct(profile.productId)
     await this.fetchApprenticeship(profile.apprenticeshipId)
 
@@ -68,30 +70,20 @@ class StudentProfileScreen extends Component {
             <RkCard>
               <View rkCardHeader={true}>
                 <View>
-                  <RkText rkType='header'>{this.state.profile.fName}'s  Apprenticeship</RkText>
-                  <RkText rkType='subtitle'>Status: {this.state.apprenticeship.xpEarned.toString()} / 5000 EXP</RkText>
+                  <RkText rkType='header'>{this.state.profile.fName} {this.state.profile.lName} - {this.state.profile.technicalRank}</RkText>
+                  <Text>{'\n'}</Text>
+                  <RkText rkType='subtitle'>Apprenticeship Status: {this.state.apprenticeship.xpEarned.toString()} / 5000 EXP</RkText>
                 </View>
               </View>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'apprenticeExperienceSchema',
-                experience: this.state.apprenticeship,
-                function: this.updateExperience,
-                origin: 'Instructor'
-              })}>
-                <Image rkCardImg={true} source={require('../assets/exp.png')} />
-              </TouchableOpacity>
-              <View rkCardContent={true}>
-                <RkText rkType='cardText'>
-                  Work through these 15 tasks to achieve certified status as an FSA Developer.
-              </RkText>
-              </View>
+     
               <View rkCardFooter={true}>
                 <RkButton rkType='clear link'>
                   <Icon name="check" style={likeStyle} />
                   <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                     schema: 'apprenticeExperienceSchema',
                     experience: this.state.apprenticeship,
-                    function: this.updateExperience
+                    function: this.updateExperience,
+                    profile: this.state.instructor
                   })}>
                     {this.state.apprenticeship.achievements.toString()}/15 Achievements
               </RkText>
@@ -99,7 +91,8 @@ class StudentProfileScreen extends Component {
                 <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                   schema: 'apprenticeExperienceSchema',
                   experience: this.state.apprenticeship,
-                  function: this.updateExperience
+                  function: this.updateExperience,
+                  profile: this.state.instructor
                 })}>
                   <Icon name="send-o" style={iconButton} />
                   <RkText rkType='hint'>View Progress</RkText>
@@ -107,27 +100,11 @@ class StudentProfileScreen extends Component {
               </View>
             </RkCard>
 
-            <Text>{'\n'}</Text>
-
             <RkCard>
               <View rkCardHeader={true}>
                 <View>
-                  <RkText rkType='header'>{this.state.profile.fName}'s Portfolio Product</RkText>
-                  <RkText rkType='subtitle'>Status: {this.state.product.xpEarned.toString()} / 2000 EXP</RkText>
+                  <RkText rkType='subtitle'>Portfolio Product Status: {this.state.product.xpEarned.toString()} / 2000 EXP</RkText>
                 </View>
-              </View>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ExperienceScreen', {
-                schema: 'productExperienceSchema',
-                experience: this.state.product,
-                function: this.updateExperience
-
-              })}>
-                <Image rkCardImg={true} source={require('../assets/product.png')} />
-              </TouchableOpacity>
-              <View rkCardContent={true}>
-                <RkText rkType='cardText'>
-                  In 15 steps, you will go from a blank canvas to a scalable, performant & useful product in a production environment.
-              </RkText>
               </View>
               <View rkCardFooter={true}>
                 <RkButton rkType='clear link'>
@@ -135,7 +112,8 @@ class StudentProfileScreen extends Component {
                   <RkText rkType='accent' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                     schema: 'productExperienceSchema',
                     experience: this.state.product,
-                    function: this.updateExperience
+                    function: this.updateExperience,
+                    profile: this.state.instructor
                   })}>
                     {this.state.product.achievements.toString()}/15 Achievements
               </RkText>
@@ -143,7 +121,8 @@ class StudentProfileScreen extends Component {
                 <RkButton rkType='clear link' onPress={() => this.props.navigation.navigate('ExperienceScreen', {
                   schema: 'productExperienceSchema',
                   experience: this.state.product,
-                  function: this.updateExperience
+                  function: this.updateExperience,
+                  profile: this.state.instructor
                 })}>
                   <Icon name="send-o" style={iconButton} />
                   <RkText rkType='hint'>View Progress</RkText>
@@ -152,6 +131,8 @@ class StudentProfileScreen extends Component {
             </RkCard>
 
             <Text>{'\n'}</Text>
+            <Text>{'\n'}</Text>
+
           </Content>
         </Container>
       </ScrollView>
