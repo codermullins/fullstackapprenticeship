@@ -60,6 +60,7 @@ export default class EditProfileScreen extends Component {
         editProfile = async () => {
             this.setState({ loading: true })
             const id = await AsyncStorage.getItem('id')
+            const update = this.props.navigation.getParam('editProfile', 'none')
             const body = {
                 fName: this.state.fName,
                 lName: this.state.lName,
@@ -71,17 +72,16 @@ export default class EditProfileScreen extends Component {
                 mentor: this.state.mentor
                 }
               try {
-                  await API.put('pareto', `/users/${id}`, {body})
+                  const updatedProfile = await API.put('pareto', `/users/${id}`, {body})
+                  update(updatedProfile)
                   this.setState({ loading: false })
               } catch (e) {
                   console.log('ERROR: ', e)
               }
               this.setState({
                   attribute: "",
-                  
-             
               })
-              this.props.navigation.navigate('Profile')
+              this.props.navigation.goBack()
           }
 
     render() {
