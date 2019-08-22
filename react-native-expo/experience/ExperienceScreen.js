@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import {Container, Content, List, ListItem, Text, Left, Right, Body} from 'native-base';
 import sanity from "../sanity"
 import orderBy from "lodash.orderby"
+import Icon from "react-native-vector-icons/FontAwesome";
 
 class ExperienceScreen extends Component {
     constructor(props) {
@@ -33,6 +34,7 @@ class ExperienceScreen extends Component {
         const update = this.props.navigation.getParam('function', 'none')
         const origin = this.props.navigation.getParam('origin', 'none')
         const profile = this.props.navigation.getParam('profile', 'none')
+        const likeStyle = [styles.buttonIcon];
 
         return(
           <List>
@@ -62,7 +64,11 @@ class ExperienceScreen extends Component {
                 )}
               </Left>
               <Right>
-                <Text>{list.amount}XP</Text>
+                {complete.completed ? (
+                  <Icon name="check" style={likeStyle} />
+                ) : (
+                  <Text>{list.amount}XP</Text>
+                )}
               </Right>
             </ListItem>
           )}
@@ -83,3 +89,11 @@ class ExperienceScreen extends Component {
 }
 
 export default ExperienceScreen;
+
+let styles = StyleSheet.create({
+  buttonIcon: {
+    marginRight: 7,
+    fontSize: 19.7,
+    color: '#0f0'
+  }
+});
