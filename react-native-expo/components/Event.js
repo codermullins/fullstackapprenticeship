@@ -16,7 +16,7 @@ import { Linking } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"
 
 
-export default class HomeScreen extends React.Component {
+export default class Event extends React.Component {
   constructor(props) {
     super(props);
 

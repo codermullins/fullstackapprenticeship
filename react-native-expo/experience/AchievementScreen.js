@@ -11,6 +11,30 @@ import {
 } from 'react-native-ui-kitten';
 import { Button, Text, Item, Input, Label, Form } from "native-base";
 import { API } from "aws-amplify";
+const blueprint = require('../assets/blueprint.jpg');
+const aws = require('../assets/aws.png')
+const ci = require('../assets/ci.png')
+const cognito = require('../assets/cognito.png')
+const freelance = require('../assets/freelance.jpg')
+const github = require('../assets/github.png')
+const hw = require('../assets/hw.png')
+const logic = require('../assets/logic.jpg')
+const meetup = require('../assets/meetup.png')
+const mvp = require('../assets/mvp.jpg')
+const nodeschool = require('../assets/nodeschool.png')
+const onboarding = require('../assets/onboarding.jpg')
+const pr = require('../assets/pr.png')
+const react = require('../assets/react.png')
+const seo = require('../assets/seo.png')
+const stages = require('../assets/stages.png')
+const state = require('../assets/state.png')
+const swagger = require('../assets/swagger.png')
+const testing = require('../assets/testing.png')
+const ui = require('../assets/ui.png')
+const ux = require('../assets/ux.jpeg')
+const xss = require('../assets/xss.png')
+const stack1 = require('../assets/stack1.png')
+
 const BlockContent = require('@sanity/block-content-to-react')
 
 export default class AchievementScreen extends Component {
@@ -24,7 +48,74 @@ export default class AchievementScreen extends Component {
       weaknesses: [],
       completed: 'boolean',
       approved: 'boolean',
-      origin: 'Apprentice'
+      origin: 'Apprentice',
+      image: ""
+    }
+  }
+
+  selectImage(id) {
+    switch(id) {
+      case "Serverless-Stack Part 1":
+        return stack1; 
+      case "Read 'The Blueprint'":
+        return blueprint;
+      case "Serverless-Stack Part 2":
+        return stack1;
+      case "NodeSchool Module 2":
+        return nodeschool;
+      case "NodeSchool Module 1":
+        return nodeschool;
+      case "My First Freelance Gig!":
+        return freelance;
+      case "Create GitHub Account":
+        return github;
+      case "Full-Stack JumpStart":
+        return blueprint;
+      case "Create AWS Account & Configure CLI":
+        return aws;
+      case "Set-Up Development Environment":
+        return github;
+      case "My First Meetup!":
+        return meetup;
+      case "My First Sprint!":
+        return react;
+      case "My First Pull-Request!":
+        return pr;
+      case "Hello World!":
+        return hw;
+      case "Static UI Components (Completion Check-In)":
+        return ui;
+      case "Onboarding Documentation":
+        return onboarding;
+      case "Top 20% Test Coverage":
+        return testing;
+      case "Implement Navigation":
+        return react;
+      case "Login / Registration":
+        return cognito;
+      case "Swagger Document":
+        return swagger;
+      case "State Management Implementation":
+        return state;
+      case "Business Logic":
+        return logic;
+      case "Test & Production Deployments":
+        return stages;
+      case "Continuous Integration":
+        return ci;
+      case "Security Audit":
+        return xss;
+      case "Architecture Diagram":
+        return react;
+      case "SEO Audit - SSR Implementation":
+        return seo;
+      case "MVP Launch":
+        return mvp;
+      case "UX Re-Implementation/Audit":
+        return ux;
+      default:
+        return blueprint;
+    
     }
   }
 
@@ -109,14 +200,14 @@ export default class AchievementScreen extends Component {
     const profile = this.props.navigation.getParam('profile', 'none');
     const overview = schema.list.overview;
     const complete = schema.complete;
-    console.log(complete)
+    let img = this.selectImage(schema.list.title)
     return (
       <ScrollView>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           delayPressIn={70}
-          activeOpacity={0.8}>
+          activeOpacity={0.8}> */}
           <RkCard rkType='blog' style={styles.card}>
-            <Image rkCardImg source={require('../assets/blueprint.jpg')} />
+            <Image rkCardImg source={img} />
             <View rkCardHeader style={styles.content}>
               <RkText style={{ fontSize: 24 }} rkType='header4'>{schema.list.title}</RkText>
               <RkText style={{ fontSize: 18 }} rkType='header4'>{schema.list.amount} EXP</RkText>
@@ -230,8 +321,7 @@ export default class AchievementScreen extends Component {
             )}
 
 
-          <Text>{'\n'}</Text>
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
       </ScrollView>
     );
   }
@@ -245,7 +335,7 @@ const styles = RkStyleSheet.create(theme => ({
   //   paddingHorizontal: 14,
   // },
   card: {
-    marginVertical: 8,
+    marginVertical: 0,
   },
   userInfo: {
     // flexDirection: 'row',
