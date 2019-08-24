@@ -3,7 +3,7 @@ import { API } from "aws-amplify";
 import { Container, Content, Form, Item, Input, Label, Button, Picker } from 'native-base';
 import Loader from "../components/Loader";
 import { Notifications } from "expo"
-import { Text, TouchableOpacity, View, AsyncStorage } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import CountryPicker from "react-native-country-picker-modal"
 
 export default class EditProfileScreen extends Component {
@@ -15,17 +15,11 @@ export default class EditProfileScreen extends Component {
             fName: `${this.props.navigation.state.params.profile.fName}`,
             lName: `${this.props.navigation.state.params.profile.lName}`,
             city: `${this.props.navigation.state.params.profile.city}`,
-            // region: `${this.props.navigation.state.params.profile.region}`,
             country: `${this.props.navigation.state.params.profile.country}`,
             expo: `${this.props.navigation.state.params.profile.expo}`,
-            // tRank: props.navigation.state.params.tRank,
-            cRank: "",
             github: `${this.props.navigation.state.params.profile.github}`,
             dob: "",
             mbriggs: "",
-            startDateTimePickerVisible: false,
-            endDateTimePickerVisible: false,
-            // xp: `${this.props.navigation.state.params.profile.xp}`,
             loading: false,
             cca2: 'US',
             mentors: [],
@@ -36,9 +30,9 @@ export default class EditProfileScreen extends Component {
 
     async componentDidMount() {
         const mentors = await API.get('pareto', '/mentors')
-        this.setState({ mentors: mentors })
         const notificationToken = await Notifications.getExpoPushTokenAsync();
-        this.setState({ expo: notificationToken })
+        this.setState({ mentors: mentors, expo: notificationToken })
+       
     }
 
     renderMentors(mentors) {
@@ -89,7 +83,6 @@ export default class EditProfileScreen extends Component {
             <Container>
                 <Content>
                 <Loader loading={this.state.loading} />
-
                     <Form>
                     <Item floatingLabel>
                         <Label>First Name</Label>
@@ -101,7 +94,6 @@ export default class EditProfileScreen extends Component {
                             />
                         </Item> 
                         <Item floatingLabel>
-                        
                         <Label>Last Name</Label>
                             <Input 
                             returnKeyType="search"
@@ -119,11 +111,7 @@ export default class EditProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-                       
                         <Text>{`\n`}</Text>
-
-                        
-                        
                         <View style={{flexDirection: 'row', paddingLeft: 15}}>
                         <Text>Tap flag to Select Country: </Text>
                         <CountryPicker
@@ -155,9 +143,7 @@ export default class EditProfileScreen extends Component {
                             autoCapitalize="none"
                             />
                         </Item> 
-
                         <Text>{`\n`}</Text>
-
                         <Button full style={{backgroundColor: "#6200EE"}} onPress={this.editProfile}>
                         <Text style={{color: 'white'}}>Edit Profile</Text>
                         </Button>
