@@ -1,9 +1,8 @@
 import React from 'react';
 import {
   View,
-  StyleSheet,
   ScrollView,
-  Text
+  Platform
 } from 'react-native';
 import {
   RkButton,
@@ -38,9 +37,8 @@ export default class HomeScreen extends React.Component {
     })
   }
 
-  async openCall(link) {
-    const url = link.split('/')
-    await Linking.openURL(`https://plus.google.com/hangouts/_/${url[1]}`);
+  async openCall() {
+    await Linking.openURL(`https://appr.tc`);
   }
 
   async onAdd(start, end) {
@@ -53,16 +51,21 @@ export default class HomeScreen extends React.Component {
     // I want to loop through all the objects until I find a calendar with the title of 'Calendar'
     // Then I take that objects id
 
-    // this works for iOS, at the least
-    const mainCalendar = calArray.find(x => x.title === 'Calendar');
-    await console.log(mainCalendar)
+    if (Platform.OS !== 'android') {
 
-    await Calendar.createEventAsync(mainCalendar.id, {
-      title: this.props.name,
-      startDate: new Date(start),
-      endDate: new Date(end),
-      timeZone: 'PST'
-    } )
+      // this works for iOS, at the least
+      const mainCalendar = calArray.find(x => x.title === 'Calendar');
+      await console.log('Calendar info: ', mainCalendar)
+  
+      await Calendar.createEventAsync(mainCalendar.id, {
+        title: this.props.name,
+        startDate: new Date(start),
+        endDate: new Date(end),
+        timeZone: 'PST'
+      })
+    } else {
+      // Android calendar add
+    }
   }
 
 
@@ -70,8 +73,6 @@ export default class HomeScreen extends React.Component {
 
 
   render() {
-    const { navigation } = this.props;
-
     const date = moment(this.props.start).format('MMMM Do YYYY, h:mm a').split(",")[0]
     const start = moment(this.props.start).format('MMMM Do YYYY, h:mm a').split(",")[1]
     const end = moment(this.props.end).format('MMMM Do YYYY, h:mm a').split(",")[1]
@@ -93,11 +94,14 @@ export default class HomeScreen extends React.Component {
               <RkText rkType='compactCardText'>
                 {this.props.description}
               </RkText>
+              <RkText rkType='compactCardText'>
+                Room Name: {this.props.link}
+              </RkText>
             </View>
             <View rkCardFooter={true}>
               <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                 <RkButton rkType='outline' onPress={() => this.onAdd(this.props.start, this.props.end)}><Ionicons name="md-calendar" size={20} /> Add Event</RkButton>
-                <RkButton rkType='outline' onPress={() => this.openCall(this.props.link)}><Ionicons name="md-call" size={20} /> Join Call</RkButton>
+                <RkButton rkType='outline' onPress={this.openCall}><Ionicons name="md-call" size={20} /> Join Call</RkButton>
               </View>
             </View>
           </RkCard>

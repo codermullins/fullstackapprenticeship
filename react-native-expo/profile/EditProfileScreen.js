@@ -159,7 +159,7 @@ export default class EditProfileScreen extends Component {
                         <Text>{`\n`}</Text>
 
                         <Button full style={{backgroundColor: "#6200EE"}} onPress={this.editProfile}>
-                        <Text style={{color: 'white'}}>Edit Name</Text>
+                        <Text style={{color: 'white'}}>Edit Profile</Text>
                         </Button>
                     </Form>
                 </Content>
