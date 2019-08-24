@@ -14,16 +14,11 @@ export default class CreatEventScreen extends Component {
             description: "",
             start: "",
             end: "",
-            link: "meet.google.com/nvj-yccv-gji",
-            mentorId: 'bdaad57c-2183-468a-a114-493c19327762',
+            link: "Pareto",
+            mentorId: 'b245324f-39d5-4d27-a1a4-e31358ebdb84',
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false
-
         }
-    }
-
-    async componentDidMount() {
-        console.log(this.props.navigation)
     }
 
     handlePress = async () => {
@@ -107,8 +102,6 @@ export default class CreatEventScreen extends Component {
         this.hideEndDateTimePicker();
     };
 
-
-
     render() {
         return (
             <Container>
@@ -135,12 +128,10 @@ export default class CreatEventScreen extends Component {
                             />
                         </Item>
                         <Text>{`\n`}</Text>
-
-
                         <Item stackedLabel>
-                            <Label>Hangouts Link</Label>
+                            <Label>Room Name</Label>
                             <Input
-                                placeholder="meet.google.com/bch-dizr-dkj"
+                                placeholder="pareto"
                                 returnKeyType="search"
                                 value={this.state.link}
                                 onChangeText={(link) => this.setState({ link })}
@@ -178,15 +169,10 @@ export default class CreatEventScreen extends Component {
                             />
                             <Text>End: {this.state.end.toString()} </Text>
                         </View>
-
-
                         <Text>{`\n`}</Text>
                         <Button full style={{ backgroundColor: "#6200EE" }} onPress={this.handlePress}>
                             <Text style={{ color: 'white' }}>Create Event</Text>
-
                         </Button>
-
-
                     </Form>
                 </Content>
             </Container>

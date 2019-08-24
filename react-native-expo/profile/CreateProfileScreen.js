@@ -16,7 +16,7 @@ export default class CreateProfileScreen extends Component {
             name: "",
             city: "",
             region: "",
-            country: "",
+            country: "United States",
             tRank: "",
             cRank: "",
             github: "",
@@ -26,7 +26,7 @@ export default class CreateProfileScreen extends Component {
             endDateTimePickerVisible: false,
             expoToken: "iPhone",
             loading: false,
-            mentor: "Placeholder",
+            mentor: "b245324f-39d5-4d27-a1a4-e31358ebdb84",
             cca2: "US",
             mentors: []
 
@@ -209,7 +209,6 @@ export default class CreateProfileScreen extends Component {
             <Container>
                 <Content>
                 <Loader loading={this.state.loading} />
-
                     <Form>
                         <Item floatingLabel>
                         <Label>First Name</Label>
@@ -221,7 +220,6 @@ export default class CreateProfileScreen extends Component {
                             />
                         </Item> 
                         <Item floatingLabel>
-                        
                         <Label>Last Name</Label>
                             <Input 
                             returnKeyType="search"

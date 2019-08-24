@@ -59,7 +59,6 @@ export default class HomeScreen extends React.Component {
       ];
       await AsyncStorage.multiSet(values);
 
-      await this.fetchEvents();
       await this.fetchProfile(id);
       // await console.log('Profile: ', this.state.profile)
 
@@ -74,6 +73,7 @@ export default class HomeScreen extends React.Component {
 
       this.setState({ xp: xp });
 
+      await this.fetchEvents();
       await this.stopLoading();
 
       // const notificationToken = await Notifications.getExpoPushTokenAsync();
@@ -84,10 +84,10 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-  async fetchEvents() {
+  fetchEvents = async () => {
     const response = await API.get(
       "events",
-      `/events/bdaad57c-2183-468a-a114-493c19327762`
+      `/events/${this.state.profile.mentor}`
     );
     const orderedArray = orderBy(response, function(item) {
       return item.start;
@@ -188,7 +188,7 @@ export default class HomeScreen extends React.Component {
             <Title>{'<Pareto />'}</Title>
           </Body>
           <Right>
-            <Text>v 0.92</Text>
+            <Text>v 0.93.1</Text>
           </Right>
         </Header>
         <ScrollView
