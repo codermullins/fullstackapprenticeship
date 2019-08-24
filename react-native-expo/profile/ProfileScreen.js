@@ -17,10 +17,8 @@ class ProfileScreen extends Component {
   }
 
   async componentDidMount() {
-    const xp = this.props.xp;
-    const profile = this.props.profile;
-    const url = await this.getAvatar(profile.github)
-    await this.setState({ profile: profile, xp: xp, url: url })
+    const url = await this.getAvatar(this.props.profile.github)
+    await this.setState({ url: url })
   }
 
   async getAvatar(github) {
@@ -36,7 +34,7 @@ class ProfileScreen extends Component {
   }
 
   render() {
-    const progressPercent = this.state.xp / 50;
+    const progressPercent = this.props.xp / 50;
     return (
       <Container>
         <Content>
@@ -51,7 +49,7 @@ class ProfileScreen extends Component {
                 )   
               }
                 <Right style={{paddingRight: 40}}>
-                <Text style={{fontSize: 20, paddingBottom: 20, paddingLeft: 5}}>{this.state.profile.fName} {this.state.profile.lName}</Text>
+                <Text style={{fontSize: 20, paddingBottom: 20, paddingLeft: 5}}>{this.props.profile.fName} {this.props.profile.lName}</Text>
                 <ProgressCircle
                   percent={progressPercent}
                   radius={50}
@@ -62,33 +60,33 @@ class ProfileScreen extends Component {
               >
                   <Text style={{ fontSize: 18}}>{progressPercent}%</Text>
               </ProgressCircle>
-              <Text style={{paddingTop: 15, paddingLeft: 5}}>{this.state.xp} / 5000 EXP</Text>
+              <Text style={{paddingTop: 15, paddingLeft: 5}}>{this.props.xp} / 5000 EXP</Text>
                 </Right>
               </View>
 
             <CardItem>
             <Left>
-                <Button transparent textStyle={{color: '#87838B'}} onPress={() => this.props.navigation.navigate('EditProfile', { type: 'EDIT', profile: this.state.profile, editProfile: this.props.editProfile})}>
+                <Button transparent textStyle={{color: '#87838B'}} onPress={() => this.props.navigation.navigate('EditProfile', { type: 'EDIT', profile: this.props.profile, editProfile: this.props.updateProfile})}>
                   <Entypo name="new-message" size={24} />
                   <Text>Edit Profile</Text>
                 </Button>
               </Left>  
                 <Right>
-                <Text style={{fontSize: 20}}>{this.state.profile.technicalRank}{"\n"}<Text note>Technical Rank</Text></Text>
+                <Text style={{fontSize: 20}}>{this.props.profile.technicalRank}{"\n"}<Text note>Technical Rank</Text></Text>
                 </Right>
             </CardItem>
-            <Text style={{textAlign: 'center'}}>I'm a self-taught developer who specializes in React Web & Native development, using Node.js, serverless computing & Amazon Web Services to deliver value to my clients & employers.</Text>
+            {/* <Text style={{textAlign: 'center'}}>I'm a self-taught developer who specializes in React Web & Native development, using Node.js, serverless computing & Amazon Web Services to deliver value to my clients & employers.</Text> */}
             
             <CardItem>
               <Left>
                 <Button transparent textStyle={{color: '#87838B'}}>
                   <Entypo name="github" size={24} />
-                  <Text>{this.state.profile.github}</Text>
+                  <Text>{this.props.profile.github}</Text>
                 </Button>
               </Left>
               <Right>
               <Button transparent textStyle={{color: '#87838B'}}>
-                  <Text>{this.state.profile.city}, {this.state.profile.country}</Text>
+                  <Text>{this.props.profile.city}, {this.props.profile.country}</Text>
                 </Button>
               </Right>
             </CardItem>
