@@ -23,6 +23,7 @@ class StudentProfileScreen extends Component {
       url: null,
       product: { xpEarned: '?', achievements: '?' },
       apprenticeship: { xpEarned: '?', achievements: '?' },
+      origin: 'Instructor'
     }
     this.fetchProduct = this.fetchProduct.bind(this);
     this.fetchApprenticeship = this.fetchApprenticeship.bind(this);
@@ -32,8 +33,8 @@ class StudentProfileScreen extends Component {
   async componentDidMount() {
     const profile = this.props.navigation.getParam('profile', 'Null')
     const instructor = this.props.navigation.getParam('instructor');
-    // console.log(profile)
-    await this.setState({ profile: profile, instructor: instructor })
+    const origin = this.props.navigation.getParam('origin', 'none')
+    await this.setState({ profile: profile, instructor: instructor, origin: origin })
     await this.fetchProduct(profile.productId)
     await this.fetchApprenticeship(profile.apprenticeshipId)
 
@@ -83,7 +84,8 @@ class StudentProfileScreen extends Component {
                     schema: 'apprenticeExperienceSchema',
                     experience: this.state.apprenticeship,
                     function: this.updateExperience,
-                    profile: this.state.instructor
+                    profile: this.state.instructor,
+                    origin: this.state.origin
                   })}>
                     {this.state.apprenticeship.achievements.toString()}/15 Achievements
               </RkText>
@@ -92,7 +94,8 @@ class StudentProfileScreen extends Component {
                   schema: 'apprenticeExperienceSchema',
                   experience: this.state.apprenticeship,
                   function: this.updateExperience,
-                  profile: this.state.instructor
+                  profile: this.state.instructor,
+                  origin: this.state.origin
                 })}>
                   <Icon name="send-o" style={iconButton} />
                   <RkText rkType='hint'>View Progress</RkText>
@@ -113,7 +116,8 @@ class StudentProfileScreen extends Component {
                     schema: 'productExperienceSchema',
                     experience: this.state.product,
                     function: this.updateExperience,
-                    profile: this.state.instructor
+                    profile: this.state.instructor,
+                    origin: this.state.origin
                   })}>
                     {this.state.product.achievements.toString()}/15 Achievements
               </RkText>
@@ -122,7 +126,8 @@ class StudentProfileScreen extends Component {
                   schema: 'productExperienceSchema',
                   experience: this.state.product,
                   function: this.updateExperience,
-                  profile: this.state.instructor
+                  profile: this.state.instructor,
+                  origin: this.state.origin
                 })}>
                   <Icon name="send-o" style={iconButton} />
                   <RkText rkType='hint'>View Progress</RkText>

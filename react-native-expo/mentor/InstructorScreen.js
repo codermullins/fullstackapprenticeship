@@ -116,7 +116,8 @@ export default class HomeScreen extends React.Component {
             <RkCard rkType='shadowed' key={index}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('StudentProfileScreen', {
                 profile: apprentice,
-                instructor: this.state.profile
+                instructor: this.state.profile,
+                origin: 'Instructor'
 
               })}>
                 <RkCard>

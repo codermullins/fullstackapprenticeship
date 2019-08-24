@@ -23,14 +23,20 @@ export default class AchievementScreen extends Component {
       strengths: [],
       weaknesses: [],
       completed: 'boolean',
-      approved: 'boolean'
+      approved: 'boolean',
+      origin: 'Apprentice'
     }
+  }
+
+  componentWillMount() {
+    const origin = this.props.navigation.getParam('origin', 'none');
+    this.setState({ origin: origin })
   }
 
   handlePressStudent = async (achievement) => {
     const schema = this.props.navigation.getParam('schema', 'None')
     const update = this.props.navigation.getParam('function', 'none')
-    const origin = this.props.navigation.getParam('origin', 'none')
+    const origin = this.props.navigation.getParam('origin', 'none');
 
     let key = schema.list.priority;
     let id = schema.experience.id;
@@ -126,7 +132,7 @@ export default class AchievementScreen extends Component {
 
           {/* We need to have alternative views depending on whether their instructor value is false or not */}
 
-          {profile.instructor === false ? (
+          {this.state.origin === 'Apprentice' ? (
             <React.Fragment>
               {complete.completed === false ? (
                 <React.Fragment>
