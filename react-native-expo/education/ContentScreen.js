@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { WebView, StyleSheet, Button } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { RkText, RkCard } from "react-native-ui-kitten"
 import { Container, Header, Content, List, ListItem, Text, Icon, Left, Right, Body } from 'native-base';
 import sanity from "../sanity";
 
@@ -15,46 +16,39 @@ class ContentScreen extends Component {
 
   async componentDidMount() {
     const schema = this.props.navigation.getParam('schema', 'None')
-    const query = `*[_type == '${schema}']{type, _type, text, title, url, _id}`
+    const query = `*[_type == '${schema}']{type, _type, text, summary, title, url, _id}`
     const links = await sanity.fetch(query);
     this.setState({ links })
-  }
-
-  renderContentItems() {
-    return (
-      <Content>
-        <List>
-          {this.state.links.map((link, i) => (
-            <ListItem key={i} onPress={() => this.setState({ showWebView: true, item: link.url })}>
-              <Left>
-                <Text>{link.title}</Text>
-              </Left>
-            </ListItem>
-          )
-          )}
-        </List>
-      </Content>
-    )
-  }
-
-  renderContent = () => {
-    return (
-      <WebView
-        source={{ uri: this.state.item }}
-        startInLoadingState
-        scalesPageToFit
-        javaScriptEnabled
-        style={{ flex: 1 }}
-      />
-    )
   }
 
   render() {
     return (
       <Container>
-        {this.state.showWebView === null
-          ? this.renderContentItems()
-          : this.renderContent()}
+        <RkCard>
+          <View rkCardHeader={true}>
+            <View>
+            <RkText rkType="header">
+                Tap an article below to view it.
+              </RkText> 
+            </View>
+          </View>
+        </RkCard>
+        <Content>
+        <List>
+          {this.state.links.map((link, i) => (
+            <ListItem key={i} onPress={() => this.props.navigation.navigate('WebContentView', {
+              url: link.url
+            })}>
+              <Text style={{display: 'flex', flexDirection: 'column', textAlign: 'left'}}>
+                <Text style={{fontWeight: 'bold', fontSize: 18}}>{link.title}</Text>
+                <Text>{"\n"}</Text>
+                <Text>{link.summary}</Text> 
+              </Text>
+            </ListItem>
+          )
+          )}
+        </List>
+      </Content>
       </Container>
     )
   }
