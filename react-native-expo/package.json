@@ -10,7 +10,6 @@
     "@sanity/block-content-to-react": "^2.0.5",
     "@sanity/client": "^0.138.0",
     "aws-amplify": "^1.1.17",
-    "aws-amplify-react-native": "^2.1.7",
     "emoji-utils": "^1.0.1",
     "expo": "^31.0.2",
     "lodash.orderby": "^4.6.0",
