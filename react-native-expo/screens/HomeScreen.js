@@ -60,10 +60,10 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession()
-    console.log(
-      'TCL: HomeScreen -> componentDidMount -> this.props.screenProps',
-      this.props.screenProps
-    )
+    // console.log(
+    //   'TCL: HomeScreen -> componentDidMount -> this.props.screenProps',
+    //   this.props.screenProps
+    // )
 
     Platform.OS === 'android'
       ? Permissions.askAsync(Permissions.NOTIFICATIONS)

@@ -158,7 +158,7 @@ class App extends Component {
       this.setState({ loading: false })
     } else {
       await this.setState({ profile: profile[0] })
-      console.log('TCL: App -> fetchProfile -> profile', profile)
+      // console.log('TCL: App -> fetchProfile -> profile', profile)
     }
   }
 
@@ -167,11 +167,10 @@ class App extends Component {
       'events',
       `/events/${this.state.profile.mentor}`
     )
-    console.log('TCL: App -> fetchEvents -> response', response)
     const orderedArray = orderBy(response, function(item) {
       return item.start
     })
-    console.log('TCL: App -> orderedArray -> orderedArray', orderedArray)
+    // console.log('TCL: App -> orderedArray -> orderedArray', orderedArray)
     this.setState({ events: orderedArray })
   }
 

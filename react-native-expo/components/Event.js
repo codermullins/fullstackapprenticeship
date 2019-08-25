@@ -46,7 +46,6 @@ export default class Event extends React.Component {
     // console.log('Permissions Object', Permissions)
     await Permissions.askAsync(Permissions.CALENDAR)
     const calArray = await Calendar.getCalendarsAsync()
-    // await console.log(calArray)
 
     // I want to loop through all the objects until I find a calendar with the title of 'Calendar'
     // Then I take that objects id
@@ -57,14 +56,22 @@ export default class Event extends React.Component {
       const mainCalendar = calArray.find(x => x.title === 'Calendar');
       await console.log('Calendar info: ', mainCalendar)
   
-      await Calendar.createEventAsync(mainCalendar.id, {
+       const iosEvent = await Calendar.createEventAsync(mainCalendar.id, {
         title: this.props.name,
         startDate: new Date(start),
         endDate: new Date(end),
         timeZone: 'PST'
       })
+      console.log('iOS event: ', iosEvent)
     } else {
       // Android calendar add
+      const event = await Calendar.createEventAsync(calArray[1].id, {
+        "endDate": new Date(end),
+        "startDate": new Date(start),
+        "timeZone": 'PST',
+        "title": this.props.name,
+      })
+      console.log('Android event created: ', event)
     }
   }
 

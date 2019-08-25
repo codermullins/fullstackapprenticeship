@@ -39,8 +39,8 @@ export default class EditProfileScreen extends Component {
     const mentors = await API.get('pareto', '/mentors')
     this.setState({ mentors: mentors })
     console.log('Mentors in Mount: ', mentors)
-    // const notificationToken = await Notifications.getExpoPushTokenAsync()
-    // this.setState({ expo: notificationToken })
+    const notificationToken = await Notifications.getExpoPushTokenAsync()
+    this.setState({ expo: notificationToken })
   }
 
   renderMentors(mentors) {
