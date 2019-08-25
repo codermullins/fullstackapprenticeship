@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { WebView } from 'react-native';
 import { Container } from 'native-base';
 
-class GithubView extends Component {
+class WebContentView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -28,4 +28,4 @@ class GithubView extends Component {
   }
 }
 
-export default GithubView;
+export default WebContentView;

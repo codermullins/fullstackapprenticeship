@@ -21,7 +21,7 @@ import ChapterScreen from "../education/ChapterScreen";
 import InstructorScreen from "../mentor/InstructorScreen";
 import StudentProfileScreen from "../mentor/StudentProfileScreen";
 import InstructorRegistrationScreen from "../mentor/InstructorRegistrationScreen";
-import GithubView from "../components/GithubView";
+import WebContentView from "../components/WebContentView";
 
 const FeedNavigator = createStackNavigator({
     HomeScreen: { screen: HomeScreen },
@@ -34,7 +34,7 @@ const FeedNavigator = createStackNavigator({
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
     ChapterScreen: { screen: ChapterScreen },
-    GithubView: { screen: GithubView }
+    WebContentView: { screen: WebContentView }
 });
 
 const InstructorFeedNavigator = createStackNavigator({
@@ -44,7 +44,7 @@ const InstructorFeedNavigator = createStackNavigator({
     StudentProfileScreen: { screen: StudentProfileScreen },
     ExperienceScreen: { screen: ExperienceScreen },
     AchievementScreen: { screen: AchievementScreen },
-    GithubView: { screen: GithubView }
+    WebContentView: { screen: WebContentView }
 })
 
 const AppDrawerNavigator = createDrawerNavigator({
