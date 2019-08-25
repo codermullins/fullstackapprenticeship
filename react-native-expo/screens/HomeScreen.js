@@ -188,7 +188,7 @@ export default class HomeScreen extends React.Component {
             <Title>{'<Pareto />'}</Title>
           </Body>
           <Right>
-            <Text>v 0.93.1</Text>
+            <Text>v 0.94</Text>
           </Right>
         </Header>
         <ScrollView
@@ -336,6 +336,32 @@ export default class HomeScreen extends React.Component {
           </RkCard>
           </Tab>
           <Tab heading="Learning">
+          <RkCard rkType="heroImage shadowed">
+            <View>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("BlueprintScreen")}
+              >
+                <Image
+                  rkCardImg={true}
+                  source={require("../assets/blueprint.jpg")}
+                />
+              </TouchableOpacity>
+              <View rkCardImgOverlay={true} style={styles.overlay}>
+                <View style={{ marginBottom: 20 }}>
+                  <RkText rkType="header xxlarge" style={{ color: "white" }}>
+                    The Blueprint
+                  </RkText>
+                  <RkText rkType="subtitle" style={{ color: "white" }}>
+                    Manual covering the tools of our Technical Standard, finding
+                    freelance work, building the right portfolio projects and
+                    adding structure to the learning process.
+                  </RkText>
+                </View>
+              </View>
+            </View>
+          </RkCard>
+
+          <Text>{"\n"}</Text>
           <RkCard rkType="shadowed">
             <View>
               <TouchableOpacity
@@ -372,32 +398,7 @@ export default class HomeScreen extends React.Component {
 
           <Text>{"\n"}</Text>
 
-          <RkCard rkType="heroImage shadowed">
-            <View>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("BlueprintScreen")}
-              >
-                <Image
-                  rkCardImg={true}
-                  source={require("../assets/blueprint.jpg")}
-                />
-              </TouchableOpacity>
-              <View rkCardImgOverlay={true} style={styles.overlay}>
-                <View style={{ marginBottom: 20 }}>
-                  <RkText rkType="header xxlarge" style={{ color: "white" }}>
-                    The Blueprint
-                  </RkText>
-                  <RkText rkType="subtitle" style={{ color: "white" }}>
-                    Manual covering the tools of our Technical Standard, finding
-                    freelance work, building the right portfolio projects and
-                    adding structure to the learning process.
-                  </RkText>
-                </View>
-              </View>
-            </View>
-          </RkCard>
-
-          <Text>{"\n"}</Text>
+          
 
           <RkCard rkType="shadowed">
             <View>
