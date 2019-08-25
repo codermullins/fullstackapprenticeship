@@ -1,13 +1,13 @@
 export const fullStackApprenticeship = [
-    {
-        type: 'nativeSchema',
-        name: 'React Native',
-        description: 'Build iOS & Android applications using only JavaScript, without losing any performance.',
-        tools: ['Expo']
-    },
+    // {
+    //     type: 'nativeSchema',
+    //     name: 'React Native',
+    //     description: 'Build iOS & Android applications using only JavaScript, without losing any performance.',
+    //     tools: ['Expo']
+    // },
     {
         type: 'webSchema',
-        name: 'React Web',
+        name: 'React',
         description: 'It started with the web, but it spread to mobile phones - React is the most effective way of creating digital experiences in 2019.',
         tools: ['Material UI']
     }, 

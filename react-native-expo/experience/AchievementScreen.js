@@ -250,7 +250,7 @@ export default class AchievementScreen extends Component {
                     <Text>Instructor Review: {complete.review}</Text>
                     <Text>Instructor Grade: {complete.grade}</Text>
                     <Text>{`\n`}</Text>
-                    <Button full onPress={() => this.props.navigation.navigate('GithubView', {
+                    <Button full onPress={() => this.props.navigation.navigate('WebContentView', {
                       url: complete.github
                     })}><Text>View Pull Request</Text></Button>
                     <Text>{`\n`}</Text>
@@ -291,7 +291,7 @@ export default class AchievementScreen extends Component {
                 </Form>
                 <Text>{`\n`}</Text>
 
-                <Button full onPress={() => this.props.navigation.navigate('GithubView', {
+                <Button full onPress={() => this.props.navigation.navigate('WebContentView', {
                         url: complete.github
                       })}><Text>View Pull Request</Text></Button>
                   <Text>{`\n`}</Text>
@@ -304,7 +304,7 @@ export default class AchievementScreen extends Component {
                       <Text>Instructor Review: {complete.review}</Text>
                       <Text>Instructor Grade: {complete.grade}</Text>
                       <Text>{`\n`}</Text>
-                      <Button full onPress={() => this.props.navigation.navigate('GithubView', {
+                      <Button full onPress={() => this.props.navigation.navigate('WebContentView', {
                         url: complete.github
                       })}><Text>View Pull Request</Text></Button>
                       <Text>{`\n`}</Text>

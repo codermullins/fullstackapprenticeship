@@ -456,7 +456,7 @@ export default class HomeScreen extends React.Component {
 let styles = StyleSheet.create({
   screen: {
     backgroundColor: "#f0f1f5",
-    padding: 12
+    // padding: 12
   },
   buttonIcon: {
     marginRight: 7,
