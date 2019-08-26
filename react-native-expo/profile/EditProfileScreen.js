@@ -39,7 +39,6 @@ export default class EditProfileScreen extends Component {
   async componentDidMount() {
     const mentors = await API.get('pareto', '/mentors')
     this.setState({ mentors: mentors })
-    console.log('Mentors in Mount: ', mentors)
     const notificationToken = await Notifications.getExpoPushTokenAsync()
     this.setState({ expo: notificationToken })
   }
@@ -54,10 +53,6 @@ export default class EditProfileScreen extends Component {
         />
       )
     })
-    // console.log(
-    //   'TCL: EditProfileScreen -> renderMentors -> mentorList',
-    //   mentorList
-    // )
     return mentorList
   }
 
@@ -170,7 +165,7 @@ export default class EditProfileScreen extends Component {
               style={{ backgroundColor: '#6200EE' }}
               onPress={this.editProfile}
             >
-              <Text style={{ color: 'white' }}>Edit Profile</Text>
+              <Text style={{ color: 'white' }}>Save Changes</Text>
             </Button>
           </Form>
         </Content>

@@ -16,17 +16,19 @@ class ProfileScreen extends Component {
     }
   }
 
-  async componentDidMount() {
-    const url = await this.getAvatar(this.props.profile.github)
-    await this.setState({ url: url })
-  }
+  // async componentDidMount() {
+  //   const url = await this.getAvatar(this.props.profile.github)
+  //   await this.setState({ url: url })
+  // }
 
   async getAvatar(github) {
+    console.log('Github avataoar: ', github)
     const user = await fetch(`https://api.github.com/users/${github}`, {
       headers: {
         'Content-Type': 'application/json'
       }
     })
+    console.log('Fetched github user: ', user)
     const avatar = JSON.parse(user._bodyText);
     const url = avatar.avatar_url;
     this.setState({ url: url })
@@ -35,6 +37,7 @@ class ProfileScreen extends Component {
 
   render() {
     const progressPercent = this.props.xp / 50;
+    const comingSoon = require('../assets/coming-soon.png')
     return (
       <Container>
         <Content>
@@ -42,12 +45,13 @@ class ProfileScreen extends Component {
           <Text>{`\n`}</Text>
             <View style={styles.container}>
 
-                {this.state.url !== null ? (
-                <Thumbnail round large source={{uri: this.state.url}} style={{height: 200, width: '50%', paddingBottom: 40}} /> ) :
+                {/* {this.state.url !== null ? ( */}
+                <Thumbnail round large source={comingSoon} style={{height: 200, width: '50%', paddingBottom: 40}} />
+          {/*   ) :
                 (
                   null
                 )   
-              }
+              } */}
                 <Right style={{paddingRight: 40}}>
                 <Text style={{fontSize: 20, paddingBottom: 20, paddingLeft: 5}}>{this.props.profile.fName} {this.props.profile.lName}</Text>
                 <ProgressCircle

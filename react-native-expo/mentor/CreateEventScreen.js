@@ -67,6 +67,7 @@ export default class CreatEventScreen extends Component {
             })
             await console.log('Response: ', notifications)
             await console.log('Students array: ', students)
+            this.props.screenProps.childProps.fetchEvents()
         } catch (e) {
             console.log('ERROR: ', e)
         }
@@ -103,6 +104,7 @@ export default class CreatEventScreen extends Component {
     };
 
     render() {
+        console.log('Create event: ', this.props.screenProps.childProps)
         return (
             <Container>
                 <Content>
