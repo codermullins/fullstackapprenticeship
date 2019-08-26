@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native'
-import { Notifications, Permissions } from 'expo'
+import * as Permissions from "expo-permissions"
 import {
   RkButton,
   RkText,
@@ -36,7 +36,9 @@ import { UtilStyles } from '../style/styles'
 import { Ionicons } from '@expo/vector-icons'
 import orderBy from 'lodash.orderby'
 import { API, Auth } from 'aws-amplify'
-import ProfileScreen from '../profile/ProfileScreen'
+import ProfileScreen from '../profile/ProfileScreen';
+import Toast from 'react-native-simple-toast'
+
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -60,11 +62,7 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession()
-    // console.log(
-    //   'TCL: HomeScreen -> componentDidMount -> this.props.screenProps',
-    //   this.props.screenProps
-    // )
-
+    
     Platform.OS === 'android'
       ? Permissions.askAsync(Permissions.NOTIFICATIONS)
       : console.log('No iOS')
@@ -94,7 +92,7 @@ export default class HomeScreen extends React.Component {
 
       this.setState({ xp: xp })
 
-      await this.fetchEvents()
+      // await this.fetchEvents()
       await this.stopLoading()
 
       // const notificationToken = await Notifications.getExpoPushTokenAsync();
@@ -150,23 +148,31 @@ export default class HomeScreen extends React.Component {
     this.setState({ loading: false })
   }
 
-  renderEvents = events => {
+  renderEvents = (events) => {
     return (
-      <View>
-        {events.map((event, i) =>
-          new Date().getTime() < new Date(event.start).getTime() ? (
-            <Event
-              key={i}
-              name={event.name}
-              description={event.description}
-              date={event.date}
-              start={event.start}
-              end={event.end}
-              link={event.link}
-            />
-          ) : null
+      <React.Fragment>
+
+        {events.length < 1 ? (
+          null
+        ) : (
+  
+          <View style={{padding: 12}}>
+            {events.map((event, i) =>
+              new Date().getTime() < new Date(event.start).getTime() ? (
+                <Event
+                  key={i}
+                  name={event.name}
+                  description={event.description}
+                  date={event.date}
+                  start={event.start}
+                  end={event.end}
+                  link={event.link}
+                />
+              ) : null
+            )}
+          </View>
         )}
-      </View>
+      </React.Fragment>
     )
   }
 
@@ -188,7 +194,7 @@ export default class HomeScreen extends React.Component {
       styles.buttonIcon,
       { color: RkTheme.current.colors.text.hint }
     ]
-    const { navigation } = this.props
+    const { navigation } = this.props;
 
     return (
       <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
@@ -209,7 +215,7 @@ export default class HomeScreen extends React.Component {
             <Title>{'<Pareto />'}</Title>
           </Body>
           <Right>
-            <Text>v 0.94</Text>
+            {/* <Text>v 0.94</Text> */}
           </Right>
         </Header>
         <ScrollView
@@ -250,7 +256,7 @@ export default class HomeScreen extends React.Component {
                 <View rkCardContent={true}>
                   <RkText rkType="cardText">
                     Work through these 15 tasks to achieve certified status as
-                    an FSA Developer.
+                    an junior Full-Stack Developer.
                   </RkText>
                 </View>
                 <View rkCardFooter={true}>

@@ -4,7 +4,7 @@
     "description": "Pareto offers you the structure, accountability and resources to learn the 20% of developer knowledge needed for 80% of the results you are looking for as you change careers. Our program makes learning fun, with you leveling up and learning experience for doing the daily work of a developer! From creating your GitHub to building a React application's navigation system, earn EXP on your journey. The Pareto Apprenticeship includes curated articles, videos and tutorials to help you learn the necessary skills & modules, such as integrating payments, using Git to manage your codebase & more! ",
     "slug": "paretoapprenticeship",
     "privacy": "public",
-    "sdkVersion": "31.0.0",
+    "sdkVersion": "33.0.0",
     "platforms": [
       "ios",
       "android"

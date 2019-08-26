@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native'
 import Amplify, { Auth, API } from 'aws-amplify'
 import { withAuthenticator } from 'aws-amplify-react-native'
 import { Platform } from 'react-native'
-import { Font, AppLoading, Notifications, Permissions } from 'expo'
+import { Notifications} from 'expo'
 import { Root } from 'native-base'
 import AppNavigator from './config/navigation'
 import config from './config/config'
@@ -43,15 +43,15 @@ class App extends Component {
     }
   }
 
-  localNotificationExample() {
-    Expo.Notifications.presentLocalNotificationAsync({
-      title: 'New Event',
-      body: 'Event Posted',
-      android: {
-        channelId: 'events'
-      }
-    })
-  }
+  // localNotificationExample() {
+  //   Expo.Notifications.presentLocalNotificationAsync({
+  //     title: 'New Event',
+  //     body: 'Event Posted',
+  //     android: {
+  //       channelId: 'events'
+  //     }
+  //   })
+  // }
 
   expoApiObjectExample() {
     const batch = [
@@ -76,24 +76,24 @@ class App extends Component {
       })
   }
 
-  setupNotifications() {
-    if (Platform.OS === 'android') {
-      Expo.Notifications.createChannelAndroidAsync('events', {
-        name: 'Events',
-        sound: true,
-        vibrate: [0, 250, 250, 250],
-        priority: 'max'
-      })
-      // Expo.Notifications.createChannelAndroidAsync('exp', {
-      //     name: 'Experience',
-      //     sound: true,
-      //   });
-      //   Expo.Notifications.createChannelAndroidAsync('payments', {
-      //     name: 'Payments',
-      //     sound: true,
-      //   });
-    }
-  }
+  // setupNotifications() {
+  //   if (Platform.OS === 'android') {
+  //     Expo.Notifications.createChannelAndroidAsync('events', {
+  //       name: 'Events',
+  //       sound: true,
+  //       vibrate: [0, 250, 250, 250],
+  //       priority: 'max'
+  //     })
+  //     // Expo.Notifications.createChannelAndroidAsync('exp', {
+  //     //     name: 'Experience',
+  //     //     sound: true,
+  //     //   });
+  //     //   Expo.Notifications.createChannelAndroidAsync('payments', {
+  //     //     name: 'Payments',
+  //     //     sound: true,
+  //     //   });
+  //   }
+  // }
 
   async componentDidMount() {
     await Expo.Font.loadAsync({
@@ -105,13 +105,13 @@ class App extends Component {
     let iPhoneToken
 
     // Need to update default notification alert settings
-    Platform.OS === 'android'
-      ? (androidToken = await Notifications.getExpoPushTokenAsync())
-      : console.log('No iOS Notifications')
+    
+    
 
     const session = await Auth.currentSession()
 
     try {
+      
       const username = await session.accessToken.payload.username
       const token = await session.accessToken.jwtToken
       const id = await session.accessToken.payload.sub
@@ -145,6 +145,9 @@ class App extends Component {
     } catch (e) {
       console.log('TCL: App -> componentDidMount -> e', e)
     }
+    Platform.OS === 'android'
+      ? (androidToken = await Notifications.getExpoPushTokenAsync())
+      : console.log('No iOS Notifications')
   }
 
   async fetchProfile(id) {
@@ -170,14 +173,18 @@ class App extends Component {
     const orderedArray = orderBy(response, function(item) {
       return item.start
     })
-    // console.log('TCL: App -> orderedArray -> orderedArray', orderedArray)
+    console.log('TCL: App -> orderedArray -> orderedArray', orderedArray)
     this.setState({ events: orderedArray })
   }
 
   render() {
+    const childProps = {
+      fetchEvents: this.fetchEvents,
+      events: this.state.events
+    }
     return this.state.fontLoaded ? (
       <Root>
-        <AppNavigator screenProps={{ ...this.props, ...this.state }} />
+        <AppNavigator screenProps={{ ...this.props, ...this.state, childProps }} />
       </Root>
     ) : null
   }

@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native';
-import { Notifications, Permissions } from "expo"
+import * as Permissions from "expo-permissions"
 import {
   RkButton,
   RkText,

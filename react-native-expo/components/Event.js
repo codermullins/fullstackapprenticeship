@@ -9,12 +9,12 @@ import {
   RkText,
   RkCard,
 } from 'react-native-ui-kitten';
-import { Calendar, Permissions } from "expo"
-import { UtilStyles } from '../style/styles';
+import { Calendar } from "expo"
 import moment from "moment";
 import { Linking } from 'react-native';
 import { Ionicons } from "@expo/vector-icons"
-
+import Toast from 'react-native-simple-toast'
+import * as Permissions from "expo-permissions"
 
 export default class Event extends React.Component {
   constructor(props) {
@@ -42,14 +42,11 @@ export default class Event extends React.Component {
   }
 
   async onAdd(start, end) {
-    // console.log('Calendar object: ', Calendar)
-    // console.log('Permissions Object', Permissions)
     await Permissions.askAsync(Permissions.CALENDAR)
     const calArray = await Calendar.getCalendarsAsync()
 
-    // I want to loop through all the objects until I find a calendar with the title of 'Calendar'
-    // Then I take that objects id
-
+    try { 
+      
     if (Platform.OS !== 'android') {
 
       // this works for iOS, at the least
@@ -62,7 +59,8 @@ export default class Event extends React.Component {
         endDate: new Date(end),
         timeZone: 'PST'
       })
-      console.log('iOS event: ', iosEvent)
+      Toast.show('Successfully added event')
+
     } else {
       // Android calendar add
       const event = await Calendar.createEventAsync(calArray[1].id, {
@@ -71,8 +69,12 @@ export default class Event extends React.Component {
         "timeZone": 'PST',
         "title": this.props.name,
       })
-      console.log('Android event created: ', event)
+      Toast.show('Successfully added event')
     }
+   } catch(e) {
+      Toast.show(e)
+    }
+    
   }
 
 
