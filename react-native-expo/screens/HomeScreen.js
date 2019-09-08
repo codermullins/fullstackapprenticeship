@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   AsyncStorage
 } from 'react-native'
-import * as Permissions from "expo-permissions"
+import * as Permissions from 'expo-permissions'
 import {
   RkButton,
   RkText,
@@ -36,9 +36,8 @@ import { UtilStyles } from '../style/styles'
 import { Ionicons } from '@expo/vector-icons'
 import orderBy from 'lodash.orderby'
 import { API, Auth } from 'aws-amplify'
-import ProfileScreen from '../profile/ProfileScreen';
-import Toast from 'react-native-simple-toast'
-
+import ProfileScreen from '../profile/ProfileScreen'
+// import Toast from 'react-native-simple-toast'
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -62,7 +61,7 @@ export default class HomeScreen extends React.Component {
 
   async componentDidMount() {
     const session = await Auth.currentSession()
-    
+
     Platform.OS === 'android'
       ? Permissions.askAsync(Permissions.NOTIFICATIONS)
       : console.log('No iOS')
@@ -148,15 +147,11 @@ export default class HomeScreen extends React.Component {
     this.setState({ loading: false })
   }
 
-  renderEvents = (events) => {
+  renderEvents = events => {
     return (
       <React.Fragment>
-
-        {events.length < 1 ? (
-          null
-        ) : (
-  
-          <View style={{padding: 12}}>
+        {events.length < 1 ? null : (
+          <View style={{ padding: 12 }}>
             {events.map((event, i) =>
               new Date().getTime() < new Date(event.start).getTime() ? (
                 <Event
@@ -194,7 +189,7 @@ export default class HomeScreen extends React.Component {
       styles.buttonIcon,
       { color: RkTheme.current.colors.text.hint }
     ]
-    const { navigation } = this.props;
+    const { navigation } = this.props
 
     return (
       <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
@@ -214,9 +209,7 @@ export default class HomeScreen extends React.Component {
           <Body>
             <Title>{'<Pareto />'}</Title>
           </Body>
-          <Right>
-            {/* <Text>v 0.94</Text> */}
-          </Right>
+          <Right>{/* <Text>v 0.94</Text> */}</Right>
         </Header>
         <ScrollView
           automaticallyAdjustContentInsets={true}

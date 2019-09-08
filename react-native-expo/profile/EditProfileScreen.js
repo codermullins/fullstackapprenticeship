@@ -14,7 +14,7 @@ import Loader from '../components/Loader'
 import { Notifications } from 'expo'
 import { Text, View, AsyncStorage } from 'react-native'
 import CountryPicker from 'react-native-country-picker-modal'
-import Toast from 'react-native-simple-toast'
+// import Toast from 'react-native-simple-toast'
 
 export default class EditProfileScreen extends Component {
   constructor(props) {
@@ -80,10 +80,10 @@ export default class EditProfileScreen extends Component {
       const updatedProfile = await API.put('pareto', `/users/${id}`, { body })
       update(updatedProfile)
       this.setState({ loading: false })
-      Toast.show('Profile saved');
+      // Toast.show('Profile saved');
     } catch (e) {
       console.log('ERROR: ', e)
-      Toast.show('An error occurred');
+      // Toast.show('An error occurred');
     }
     this.setState({
       attribute: ''
