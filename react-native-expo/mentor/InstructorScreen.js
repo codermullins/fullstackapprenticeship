@@ -254,6 +254,35 @@ export default class HomeScreen extends React.Component {
                   </TouchableOpacity>
                 </View>
               </RkCard>
+              <RkCard rkType="heroImage shadowed">
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('CreateSprintScreen', {
+                        keys: this.state.apprenticeKeys
+                      })
+                    }
+                  >
+                    <Image
+                      rkCardImg={true}
+                      source={require('../assets/calendar.png')}
+                    />
+                    <View rkCardImgOverlay={true} style={styles.overlay}>
+                      <View style={{ marginBottom: 20 }}>
+                        <RkText
+                          rkType="header xxlarge"
+                          style={{ color: 'white' }}
+                        >
+                          Create Sprint
+                        </RkText>
+                        <RkText rkType="subtitle" style={{ color: 'white' }}>
+                          Create a sprint
+                        </RkText>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </RkCard>
               <Text>{'\n'}</Text>
 
               <Text
