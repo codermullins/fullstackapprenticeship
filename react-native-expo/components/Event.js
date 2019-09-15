@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons'
 // import Toast from 'react-native-simple-toast'
 import * as Permissions from 'expo-permissions'
 
+//TODO: pass in requesting form type to switch logic between Sprint event, etc.
 export default class Event extends React.Component {
   constructor(props) {
     super(props)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {
   View,
   StyleSheet,
@@ -8,25 +8,20 @@ import {
   Platform,
   TouchableOpacity,
   AsyncStorage
-} from 'react-native';
-import * as Permissions from "expo-permissions"
-import {
-  RkButton,
-  RkText,
-  RkCard,
-  RkTheme,
-} from 'react-native-ui-kitten';
-import Event from "../components/Event"
-import Loader from "../components/Loader";
-import { Header, Left, Body, Right, Button, Title } from "native-base"
-import { UtilStyles } from '../style/styles';
-import { Ionicons, Entypo } from "@expo/vector-icons"
-import orderBy from "lodash.orderby";
-import { API, Auth } from "aws-amplify"
+} from 'react-native'
+import * as Permissions from 'expo-permissions'
+import { RkButton, RkText, RkCard, RkTheme } from 'react-native-ui-kitten'
+import Event from '../components/Event'
+import Loader from '../components/Loader'
+import { Header, Left, Body, Right, Button, Title } from 'native-base'
+import { UtilStyles } from '../style/styles'
+import { Ionicons, Entypo } from '@expo/vector-icons'
+import orderBy from 'lodash.orderby'
+import { API, Auth } from 'aws-amplify'
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       events: [],
@@ -37,34 +32,38 @@ export default class HomeScreen extends React.Component {
       loading: true,
       apprentices: [],
       instructor: false
-
     }
     this.updateProfile = this.updateProfile.bind(this)
   }
   static navigationOptions = {
-    header: null,
-  };
+    header: null
+  }
 
   async componentDidMount() {
     const session = await Auth.currentSession()
 
-    Platform.OS === 'android' ? Permissions.askAsync(Permissions.NOTIFICATIONS) : console.log('No iOS')
+    Platform.OS === 'android'
+      ? Permissions.askAsync(Permissions.NOTIFICATIONS)
+      : console.log('No iOS')
     try {
-      const username = await session.accessToken.payload.username;
-      const token = await session.accessToken.jwtToken;
-      const id = await session.accessToken.payload.sub;
-      const values = [['accessToken', token], ['username', username], ['id', id]]
+      const username = await session.accessToken.payload.username
+      const token = await session.accessToken.jwtToken
+      const id = await session.accessToken.payload.sub
+      const values = [
+        ['accessToken', token],
+        ['username', username],
+        ['id', id]
+      ]
       await AsyncStorage.multiSet(values)
 
       await this.fetchProfile(id)
 
-      await this.fetchApprentices(id);
+      await this.fetchApprentices(id)
 
-      await this.stopLoading();
+      await this.stopLoading()
 
       // const notificationToken = await Notifications.getExpoPushTokenAsync();
       // console.log('Notification Token: ', notificationToken)
-
     } catch (e) {
       // Improve error handling here
       this.setState({ loading: false })
@@ -88,59 +87,67 @@ export default class HomeScreen extends React.Component {
   }
 
   async fetchApprentices(id) {
-    const response = await API.get('pareto', `/mentor/${id}`);
+    const response = await API.get('pareto', `/mentor/${id}`)
     await this.setState({ apprentices: response })
     let apprenticeKeys = []
-    response.forEach(function (apprentice) {
+    response.forEach(function(apprentice) {
       apprenticeKeys.push(apprentice.expo)
     })
     this.setState({ apprenticeKeys: apprenticeKeys })
   }
 
   async calculateExperience() {
-    let productXP = this.state.product.xpEarned;
-    let apprenticeshipXP = this.state.apprenticeship.xpEarned;
-    const xp = productXP + apprenticeshipXP;
-    return xp;
+    let productXP = this.state.product.xpEarned
+    let apprenticeshipXP = this.state.apprenticeship.xpEarned
+    const xp = productXP + apprenticeshipXP
+    return xp
   }
 
   async stopLoading() {
     this.setState({ loading: false })
   }
 
-  renderApprentices = (apprentices) => {
+  renderApprentices = apprentices => {
     return (
       <View>
         {apprentices.map((apprentice, index) => {
           return (
-            <RkCard rkType='shadowed' key={index}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('StudentProfileScreen', {
-                profile: apprentice,
-                instructor: this.state.profile,
-                origin: 'Instructor'
-
-              })}>
+            <RkCard rkType="shadowed" key={index}>
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('StudentProfileScreen', {
+                    profile: apprentice,
+                    instructor: this.state.profile,
+                    origin: 'Instructor'
+                  })
+                }
+              >
                 <RkCard>
                   <View rkCardHeader={true}>
-                    <RkText rkType='header'>{apprentice.fName} {apprentice.lName}</RkText>
-                    <RkText rkType='subtitle'>{apprentice.technicalRank}</RkText>
+                    <RkText rkType="header">
+                      {apprentice.fName} {apprentice.lName}
+                    </RkText>
+                    <RkText rkType="subtitle">
+                      {apprentice.technicalRank}
+                    </RkText>
                   </View>
                   <View rkCardFooter={true}>
                     <Left>
-
-                      <RkText rkType='header'><Entypo name="github" size={24} /> {apprentice.github}</RkText>
+                      <RkText rkType="header">
+                        <Entypo name="github" size={24} /> {apprentice.github}
+                      </RkText>
                     </Left>
                     <Right>
-
-                      <RkText>{apprentice.city}, {apprentice.country}</RkText>
+                      <RkText>
+                        {apprentice.city}, {apprentice.country}
+                      </RkText>
                     </Right>
                   </View>
                 </RkCard>
               </TouchableOpacity>
             </RkCard>
           )
-        })
-        }
+        })}
       </View>
     )
   }
@@ -153,20 +160,27 @@ export default class HomeScreen extends React.Component {
     }
   }
 
-
-
   render() {
-
-    const likeStyle = [styles.buttonIcon, { color: RkTheme.colors.accent }];
-    const iconButton = [styles.buttonIcon, { color: RkTheme.current.colors.text.hint }];
-    const { navigation } = this.props;
+    const likeStyle = [styles.buttonIcon, { color: RkTheme.colors.accent }]
+    const iconButton = [
+      styles.buttonIcon,
+      { color: RkTheme.current.colors.text.hint }
+    ]
+    const { navigation } = this.props
 
     return (
       <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
         <Header>
           <Left>
             <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-              <Ionicons style={{ color: Platform.OS === 'android' ? 'white' : 'black', paddingLeft: 10 }} name="md-menu" size={32} />
+              <Ionicons
+                style={{
+                  color: Platform.OS === 'android' ? 'white' : 'black',
+                  paddingLeft: 10
+                }}
+                name="md-menu"
+                size={32}
+              />
             </TouchableOpacity>
           </Left>
           <Body>
@@ -178,72 +192,138 @@ export default class HomeScreen extends React.Component {
         </Header>
         <ScrollView
           automaticallyAdjustContentInsets={true}
-          style={[UtilStyles.container, styles.screen]}>
-
+          style={[UtilStyles.container, styles.screen]}
+        >
           {this.state.profile.instructor === false ? (
-            <RkCard rkType='heroImage shadowed'>
+            <RkCard rkType="heroImage shadowed">
               <View>
-                <TouchableOpacity onPress={() => navigation.navigate('InstructorRegistrationScreen', {
-                  function: this.updateProfile
-                })}>
-                  <Image rkCardImg={true} source={require('../assets/mentors.png')} />
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('InstructorRegistrationScreen', {
+                      function: this.updateProfile
+                    })
+                  }
+                >
+                  <Image
+                    rkCardImg={true}
+                    source={require('../assets/mentors.png')}
+                  />
                 </TouchableOpacity>
                 <View rkCardImgOverlay={true} style={styles.overlay}>
                   <View style={{ marginBottom: 20 }}>
-                    <RkText rkType='header xxlarge' style={{ color: 'white' }}>Become an Instructor</RkText>
-                    <RkText rkType='subtitle' style={{ color: 'white' }}>Apply to become a senior member of the FSA, and mentor the next generation of full-stack developers.</RkText>
+                    <RkText rkType="header xxlarge" style={{ color: 'white' }}>
+                      Become an Instructor
+                    </RkText>
+                    <RkText rkType="subtitle" style={{ color: 'white' }}>
+                      Apply to become a senior member of the FSA, and mentor the
+                      next generation of full-stack developers.
+                    </RkText>
                   </View>
                 </View>
               </View>
             </RkCard>
           ) : (
-              <View>
-                <RkCard rkType='heroImage shadowed'>
-                  <View>
-                    <TouchableOpacity onPress={() => navigation.navigate('CreateEventScreen', { keys: this.state.apprenticeKeys })}>
-                      <Image rkCardImg={true} source={require('../assets/calendar.png')} />
-                    </TouchableOpacity>
+            <View>
+              <RkCard rkType="heroImage shadowed">
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('CreateEventScreen', {
+                        keys: this.state.apprenticeKeys
+                      })
+                    }
+                  >
+                    <Image
+                      rkCardImg={true}
+                      source={require('../assets/calendar.png')}
+                    />
                     <View rkCardImgOverlay={true} style={styles.overlay}>
                       <View style={{ marginBottom: 20 }}>
-                        <RkText rkType='header xxlarge' style={{ color: 'white' }}>Create Event</RkText>
-                        <RkText rkType='subtitle' style={{ color: 'white' }}>Organize your apprentices learning process & alart them through push notifications.</RkText>
+                        <RkText
+                          rkType="header xxlarge"
+                          style={{ color: 'white' }}
+                        >
+                          Create Event
+                        </RkText>
+                        <RkText rkType="subtitle" style={{ color: 'white' }}>
+                          Organize your apprentices learning process & alart
+                          them through push notifications.
+                        </RkText>
                       </View>
                     </View>
-                  </View>
-                </RkCard>
-                <Text>{'\n'}</Text>
+                  </TouchableOpacity>
+                </View>
+              </RkCard>
+              <RkCard rkType="heroImage shadowed">
+                <View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('CreateSprintScreen', {
+                        keys: this.state.apprenticeKeys
+                      })
+                    }
+                  >
+                    <Image
+                      rkCardImg={true}
+                      source={require('../assets/calendar.png')}
+                    />
+                    <View rkCardImgOverlay={true} style={styles.overlay}>
+                      <View style={{ marginBottom: 20 }}>
+                        <RkText
+                          rkType="header xxlarge"
+                          style={{ color: 'white' }}
+                        >
+                          Create Sprint
+                        </RkText>
+                        <RkText rkType="subtitle" style={{ color: 'white' }}>
+                          Create a sprint
+                        </RkText>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </RkCard>
+              <Text>{'\n'}</Text>
 
-                <Text style={{ textAlign: 'left', fontSize: 30, paddingTop: 10, paddingLeft: 14 }}>My Students</Text>
-                <Text>{'\n'}</Text>
+              <Text
+                style={{
+                  textAlign: 'left',
+                  fontSize: 30,
+                  paddingTop: 10,
+                  paddingLeft: 14
+                }}
+              >
+                My Students
+              </Text>
+              <Text>{'\n'}</Text>
 
-                {this.renderApprentices(this.state.apprentices)}
-              </View>
-            )
-          }
+              {this.renderApprentices(this.state.apprentices)}
+            </View>
+          )}
           <Loader loading={this.state.loading} />
         </ScrollView>
       </View>
-    );
+    )
   }
 }
 
 let styles = StyleSheet.create({
   screen: {
     backgroundColor: '#f0f1f5',
-    padding: 12,
+    padding: 12
   },
   buttonIcon: {
     marginRight: 7,
-    fontSize: 19.7,
+    fontSize: 19.7
   },
   footer: {
-    marginHorizontal: 20,
+    marginHorizontal: 20
   },
   avatar: {
     width: 42,
     height: 42,
     borderRadius: 21,
-    marginRight: 17,
+    marginRight: 17
   },
   header: {
     fontSize: 30,
@@ -254,7 +334,7 @@ let styles = StyleSheet.create({
     fontSize: 6.5,
     color: '#0000008e',
     marginLeft: 2.5,
-    marginVertical: 10,
+    marginVertical: 10
   },
   floating: {
     width: 56,
@@ -266,11 +346,11 @@ let styles = StyleSheet.create({
     backgroundColor: 'purple'
   },
   footerButtons: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   overlay: {
     justifyContent: 'flex-end',
     paddingVertical: 23,
-    paddingHorizontal: 16,
-  },
-});
+    paddingHorizontal: 16
+  }
+})
