@@ -29,8 +29,8 @@ export default class Event extends React.Component {
     })
   }
 
-  async openCall() {
-    await Linking.openURL(`https://appr.tc`)
+  async openCall(link) {
+    await Linking.openURL(`https://appr.tc/r/${link}`)
   }
 
   async onAdd(start, end) {
@@ -78,10 +78,6 @@ export default class Event extends React.Component {
 
     return (
       <View style={{ flex: 1, paddingBottom: 15 }}>
-        <ScrollView
-        // automaticallyAdjustContentInsets={true}
-        // style={[UtilStyles.container, styles.screen]}
-        >
           <RkCard>
             <View rkCardHeader={true}>
               <View>
@@ -93,9 +89,9 @@ export default class Event extends React.Component {
             </View>
             <View rkCardContent={true} style={{ paddingTop: 0 }}>
               <RkText rkType="compactCardText">{this.props.description}</RkText>
-              <RkText rkType="compactCardText">
+              {/* <RkText rkType="compactCardText">
                 Room Name: {this.props.link}
-              </RkText>
+              </RkText> */}
             </View>
             <View rkCardFooter={true}>
               <View
@@ -111,13 +107,12 @@ export default class Event extends React.Component {
                 >
                   <Ionicons name="md-calendar" size={20} /> Add Event
                 </RkButton>
-                <RkButton rkType="outline" onPress={this.openCall}>
+                <RkButton rkType="outline" onPress={() => this.openCall(this.props.link)}>
                   <Ionicons name="md-call" size={20} /> Join Call
                 </RkButton>
               </View>
             </View>
           </RkCard>
-        </ScrollView>
       </View>
     )
   }
