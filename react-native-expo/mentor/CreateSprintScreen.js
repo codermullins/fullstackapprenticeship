@@ -4,11 +4,7 @@ import DateTimePicker from 'react-native-modal-datetime-picker'
 import {
   Container,
   Content,
-  Form,
-  Item,
-  Input,
-  Label,
-  Button
+  Picker,
 } from 'native-base'
 
 import {
@@ -34,69 +30,36 @@ export default class CreateSprintScreen extends Component {
       link: 'Pareto',
       mentorId: 'b245324f-39d5-4d27-a1a4-e31358ebdb84',
       startDateTimePickerVisible: false,
-      endDateTimePickerVisible: false
+      endDateTimePickerVisible: false,
+      test: "bleh",
+      planning: {start: '', end: ''},
+      standup1: {start: '', end: ''},
+      standup2: {},
+      standup3: {},
+      standup4: {},
+      standup5: {},
+      retro: {start: '', end: ''},
+      init: true,
+      standup: false,
+      finit: false, 
+      mentor: {},
+      mentee: {},
+      apprentices: []
     }
   }
 
-  handlePress = async () => {
-    let uri = 'https://exp.host/--/api/v2/push/send'
-
-    generateNotification = key => {
-      let notification = {
-        to: key,
-        title: this.state.name,
-        body: this.state.description,
-        ttl: 0,
-        priority: 'high'
-      }
-      return notification
-    }
-    const keys = this.props.navigation.getParam('keys', 'none')
-    let students = []
-
-    for (i = 0; i < keys.length; i++) {
-      if (keys[i].length < 10) {
-        continue
-      } else {
-        let student = generateNotification(keys[i])
-        students.push(student)
-      }
-    }
-
-    const body = {
-      id: uuidv4(),
-      mentorId: this.state.mentorId,
-      name: this.state.name,
-      description: this.state.description,
-      link: this.state.link,
-      date: this.state.chosenDate,
-      start: this.state.start,
-      end: this.state.end,
-      createdAt: Date.now()
-    }
-    try {
-      const response = await API.post('events', '/events', { body })
-      await console.log('Lambda Response: ', response)
-      let notifications = await fetch(uri, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(students)
-      })
-      await console.log('Response: ', notifications)
-      await console.log('Students array: ', students)
-      this.props.screenProps.childProps.fetchEvents()
-    } catch (e) {
-      console.log('ERROR: ', e)
-    }
+  async componentDidMount() {
+    const mentor = this.props.navigation.getParam('mentor', 'none');
+    const apprentices = this.props.navigation.getParam('apprentices', 'none');
     this.setState({
-      name: '',
-      description: '',
-      chosenDate: new Date(),
-      start: '',
-      end: '',
-      id: ''
+      mentor: mentor, apprentices: apprentices
     })
-    this.props.navigation.goBack()
+  }
+
+  onMenteeChange = value => {
+    this.setState({
+      mentee: value
+    })
   }
 
   showStartDateTimePicker = () =>
@@ -112,72 +75,136 @@ export default class CreateSprintScreen extends Component {
     this.setState({ endDateTimePickerVisible: false })
 
   handleStartDatePicked = date => {
-    console.log('A date has been picked: ', date)
     this.setState({ start: date })
     this.hideStartDateTimePicker()
   }
 
   handleEndDatePicked = date => {
-    console.log('A date has been picked: ', date)
     this.setState({ end: date })
-
     this.hideEndDateTimePicker()
   }
 
+  savePlanning = () => {
+    try {
+      this.setState({ init: false, standup: true, start: '', end: '', planning: { start: this.state.start, end: this.state.end} })
+    } catch(e) {
+      console.log('Saving planning ', e)
+    }
+  }
+
+  saveStandup = () => {
+    try {
+      this.setState({ standup: false, finit: true, start: '', end: '', standup1: { start: this.state.start, end: this.state.end}   })
+    } catch(e) {
+      console.log('Saving planning ', e)
+    }
+  }
+
+  anotherStandup = () => {
+    try {
+      this.setState({ start: '', end: ''  })
+    } catch(e) {
+      console.log('Saving planning ', e)
+    }
+  }
+
+  saveRetro = async () => {
+
+    let retro = {
+      end: this.state.end,
+      start: this.state.start,
+      name: 'Sprint Retrospective',
+      createdAt: Date.now(),
+      description: 'The meeting where we review the estimates we created at the Sprint Planning meeting, comparing them to how much time it actually took to complete those ticket items.',
+      link: uuidv4(),
+      type: 'Appr'
+    }
+
+    let planning = {
+      end: this.state.planning.start,
+      start: this.state.planning.end,
+      name: 'Sprint Planning',
+      createdAt: Date.now(),
+      description: 'The meeting where we review the product backlog, and determine what ticket items we work on this week. We then estimate how many items each developer can accomplish, based on estimated length or through story points.',
+      link: uuidv4(),
+      type: 'Appr'
+    }
+
+    let standup1 = {
+      end: this.state.standup1.start,
+      start: this.state.standup1.end,
+      name: 'Standup Meeting',
+      createdAt: Date.now(),
+      description: 'A quick 15 minute for us to check in, explaining what we accomplished yesterday and what we will work on today. A time to share what may be blocking you in your work, leading to conversations after the meeting to resolve those issues. ',
+      link: uuidv4(),
+      type: 'Appr'
+    }
+
+    let body = {
+      id: uuidv4(),
+      menteeId: this.state.mentee,
+      mentorId: this.state.mentor.id,
+      startDate: this.state.planning.start,
+      endDate: this.state.planning.end,
+      events: [planning, standup1, retro],
+      studySessions: [],
+      createdAt: Date.now()
+    }
+    try {
+      this.setState({ retro: { start: this.state.start, end: this.state.end} })
+      const response = await API.post('pareto', '/sprints', {body})
+    } catch(e) {
+      console.log('Saving planning ', e)
+    }
+    this.props.navigation.goBack()
+  }
+
+  renderMentees(mentee) {
+    let menteeList = mentee.map((mentor, i) => {
+      return (
+        <Picker.Item
+          key={i}
+          label={`${mentor.fName} ${mentor.lName}`}
+          value={mentor.id}
+        />
+      )
+    })
+    return menteeList
+  }
+  
+
   render() {
-    console.log('Create Sprint: ', this.props.screenProps.childProps)
     return (
       <Container>
-        <RkCard>
-          <View rkCardHeader>
-            <Text>Header</Text>
-          </View>
-          <View rkCardContent>
-            <RkTextInput placeholder="Login" />
-          </View>
-          <View rkCardFooter>
-            <Text>Footer</Text>
-          </View>
-          <RkButton>Accept</RkButton>
-          <RkButton>Cancel</RkButton>
-        </RkCard>
         <Content>
-          <Form>
-            <Item floatingLabel>
-              <Label>Event Name</Label>
-              <Input
-                // placeholder="Name"
-                returnKeyType="search"
-                value={this.state.name}
-                onChangeText={name => this.setState({ name })}
-                autoCapitalize="none"
-              />
-            </Item>
-            <Item floatingLabel>
-              <Label>Description</Label>
-              <Input
-                placeholder=""
-                returnKeyType="search"
-                value={this.state.description}
-                onChangeText={description => this.setState({ description })}
-                autoCapitalize="none"
-              />
-            </Item>
-            <Text>{`\n`}</Text>
-            <Item stackedLabel>
-              <Label>Room Name</Label>
-              <Input
-                placeholder="pareto"
-                returnKeyType="search"
-                value={this.state.link}
-                onChangeText={link => this.setState({ link })}
-                autoCapitalize="none"
-              />
-            </Item>
+        <Text
+                style={{
+                  textAlign: 'left',
+                  fontSize: 30,
+                  paddingTop: 10,
+                  paddingLeft: 14
+                }}
+              >
+                Sprint Scheduling
+              </Text>
+              <Text style={{
+                  textAlign: 'left',
+                  fontSize: 14,
+                  paddingLeft: 14,
 
-            <Text>{`\n`}</Text>
-
-            <View style={{ paddingLeft: 15 }}>
+                }}>Sprint Participant</Text>
+                <Picker
+                  mode="dropdown"
+                  header="Mentor"
+                  selectedValue={this.state.mentee}
+                  onValueChange={this.onMenteeChange}
+                  placeholder="Choose Mentee"
+                >
+                  {this.renderMentees(this.state.apprentices)}
+                </Picker>
+          {this.state.init === true ? (
+            <React.Fragment>
+              <View style={{ paddingLeft: 15, paddingTop: 10 }}>
               <TouchableOpacity onPress={this.showStartDateTimePicker}>
                 <Text style={{ textDecorationLine: 'underline' }}>
                   Select Start Time
@@ -208,15 +235,103 @@ export default class CreateSprintScreen extends Component {
               />
               <Text>End: {this.state.end.toString()} </Text>
             </View>
+            <Text>{'\n'}</Text>
+              <RkButton rkType="xlarge" onPress={this.savePlanning}>Submit</RkButton>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+
+              <Text style={{ paddingLeft: 15 }}>Planning Meeting Time: {this.state.planning.start.toString()}</Text>
+              <Text style={{ paddingLeft: 15 }}>Planning Meeting End: {this.state.planning.end.toString()}</Text>
+            </React.Fragment>
+          )}
+
+          {this.state.standup === true ? (
+            <React.Fragment>
+              <View style={{ paddingLeft: 15, paddingTop: 10 }}>
+              <TouchableOpacity onPress={this.showStartDateTimePicker}>
+                <Text style={{ textDecorationLine: 'underline' }}>
+                  Select Start Time
+                </Text>
+              </TouchableOpacity>
+              <DateTimePicker
+                isVisible={this.state.startDateTimePickerVisible}
+                onConfirm={this.handleStartDatePicked}
+                onCancel={this.hideStartDateTimePicker}
+                mode="datetime"
+              />
+              <Text style={{ paddingLeft: 15 }}>Start: {this.state.start.toString()}</Text>
+            </View>
+
+            <View style={{ paddingLeft: 15 }}>
+              <TouchableOpacity onPress={this.showEndDateTimePicker}>
+                <Text style={{ textDecorationLine: 'underline' }}>
+                  Select End Time
+                </Text>
+              </TouchableOpacity>
+              <DateTimePicker
+                isVisible={this.state.endDateTimePickerVisible}
+                onConfirm={this.handleEndDatePicked}
+                onCancel={this.hideEndDateTimePicker}
+                mode="datetime"
+              />
+              <Text>End: {this.state.end.toString()} </Text>
+            </View>
+              {/* <RkButton>Schedule Another Standup</RkButton> */}
+              <RkButton rkType="xlarge" onPress={this.saveStandup}>Save Standup Meeting</RkButton>
+
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              {this.state.standup1.start.toString().length > 0 ? (
+
+                <Text style={{ paddingLeft: 15 }}>Standup Time: {this.state.standup1.start.toString()}</Text>
+              ) : (
+                null
+              )}
+            </React.Fragment>
+          )}
+
+          {this.state.finit === true ? (
+            <React.Fragment>
+              <View style={{ paddingLeft: 15, paddingTop: 10 }}>
+              <TouchableOpacity onPress={this.showStartDateTimePicker}>
+                <Text style={{ textDecorationLine: 'underline' }}>
+                  Select Start Time
+                </Text>
+              </TouchableOpacity>
+              <DateTimePicker
+                isVisible={this.state.startDateTimePickerVisible}
+                onConfirm={this.handleStartDatePicked}
+                onCancel={this.hideStartDateTimePicker}
+                mode="datetime"
+              />
+              <Text style={{ paddingLeft: 15 }}>Start: {this.state.start.toString()}</Text>
+            </View>
+
             <Text>{`\n`}</Text>
-            <Button
-              full
-              style={{ backgroundColor: '#6200EE' }}
-              onPress={this.handlePress}
-            >
-              <Text style={{ color: 'white' }}>Create Event</Text>
-            </Button>
-          </Form>
+
+            <View style={{ paddingLeft: 15 }}>
+              <TouchableOpacity onPress={this.showEndDateTimePicker}>
+                <Text style={{ textDecorationLine: 'underline' }}>
+                  Select End Time
+                </Text>
+              </TouchableOpacity>
+              <DateTimePicker
+                isVisible={this.state.endDateTimePickerVisible}
+                onConfirm={this.handleEndDatePicked}
+                onCancel={this.hideEndDateTimePicker}
+                mode="datetime"
+              />
+              <Text style={{ paddingLeft: 15 }}>End: {this.state.end.toString()} </Text>
+            </View>
+              <RkButton rkType="xlarge" onPress={this.saveRetro}>Schedule Sprint Retrospective</RkButton>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <Text></Text>
+            </React.Fragment>
+          )}
         </Content>
       </Container>
     )
