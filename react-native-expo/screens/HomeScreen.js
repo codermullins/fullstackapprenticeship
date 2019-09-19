@@ -196,9 +196,15 @@ export default class HomeScreen extends React.Component {
     )
   }
 
-  markComplete(index) {
+  markComplete = async (index, task) => {
+    let completedTask = Object.assign(task);
+    completedTask.complete = !task.complete;
+    let newTasks = Object.assign(this.state.mentorship[0])
+    newTasks[index] = completedTask;
+    console.log('New Tasks Array: ', newTasks)
     try {
-      console.log('API request goes here');
+      const response = await API.put('pareto', `/relationship/${this.state.mentorship[0].id}`, {body: { tasks: newTasks }})
+      console.log('Updated API request: ', response)
     } catch(e) {
       console.log(e)
     }
@@ -207,15 +213,18 @@ export default class HomeScreen extends React.Component {
   renderTasks(mentorship) {
     return mentorship.tasks.map((task, i) => {
       return (
-        <View>
-          <RkCard rkType="shadowed" key={i}>
+        <React.Fragment key={i}>
+          {task.complete === false ? (
+
+        <View style={{padding: 12}}>
+          <RkCard rkType="shadowed">
                   <RkCard>
                     <View rkCardHeader={true}>
                       <RkText rkType="header">
                         {task.title}
                       </RkText>
                       {/* <RkText>Edit</RkText> */}
-                      <RkButton onPress={() => markComplete(i)}>Mark Complete</RkButton>
+                      <RkButton onPress={() => this.markComplete(i, task)}>Mark Complete</RkButton>
                     </View>
                     <View rkCardFooter={true} style={{display: 'flex', flexDirection: 'column'}}>
                     <RkText rkType="subtitle">
@@ -226,6 +235,8 @@ export default class HomeScreen extends React.Component {
                   </RkCard>
               </RkCard>
             </View>
+          ) : ( null )}
+        </React.Fragment>
 
       )
     })
@@ -250,7 +261,7 @@ export default class HomeScreen extends React.Component {
       { color: RkTheme.current.colors.text.hint }
     ]
     const { navigation } = this.props;
-    console.log('Mentee sprints: ', this.state.sprints)
+    // console.log('Mentee sprints: ', this.state.sprints)
 
     return (
       <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
