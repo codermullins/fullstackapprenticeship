@@ -28,12 +28,15 @@ export default class CreateProfileScreen extends Component {
             loading: false,
             mentor: "b245324f-39d5-4d27-a1a4-e31358ebdb84",
             cca2: "US",
-            mentors: []
+            mentors: [],
+            email: ""
 
         }
     }
 
     async componentDidMount() {
+        const session = await Auth.currentSession()
+        this.setState({ email: session.idToken.payload.email })
         const notificationToken = await Notifications.getExpoPushTokenAsync();
         console.log('Notification Token: ', notificationToken)
         
@@ -88,6 +91,7 @@ export default class CreateProfileScreen extends Component {
             id: id,
             fName: this.state.fName,
             lName: this.state.lName,
+            email: this.state.email,
             mentor: this.state.mentor,
             xp: 0,
             city: this.state.city,

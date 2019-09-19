@@ -14,7 +14,7 @@ export default class CreatEventScreen extends Component {
             description: "",
             start: "",
             end: "",
-            link: "Pareto",
+            link: "",
             mentorId: 'b245324f-39d5-4d27-a1a4-e31358ebdb84',
             startDateTimePickerVisible: false,
             endDateTimePickerVisible: false
@@ -51,7 +51,7 @@ export default class CreatEventScreen extends Component {
             mentorId: this.state.mentorId,
             name: this.state.name,
             description: this.state.description,
-            link: this.state.link,
+            link: uuidv4(),
             date: this.state.chosenDate,
             start: this.state.start,
             end: this.state.end,
@@ -130,10 +130,10 @@ export default class CreatEventScreen extends Component {
                             />
                         </Item>
                         <Text>{`\n`}</Text>
-                        <Item stackedLabel>
+                        {/* <Item stackedLabel>
                             <Label>Room Name</Label>
                             <Input
-                                placeholder="pareto"
+                                placeholder="Please enter a unique room"
                                 returnKeyType="search"
                                 value={this.state.link}
                                 onChangeText={(link) => this.setState({ link })}
@@ -141,7 +141,7 @@ export default class CreatEventScreen extends Component {
                             />
                         </Item>
 
-                        <Text>{`\n`}</Text>
+                        <Text>{`\n`}</Text> */}
 
 
                         <View style={{ paddingLeft: 15 }}>

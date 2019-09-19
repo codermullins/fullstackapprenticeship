@@ -31,7 +31,8 @@ export default class HomeScreen extends React.Component {
       xp: null,
       loading: true,
       apprentices: [],
-      instructor: false
+      instructor: false,
+      apprenticeOptions: []
     }
     this.updateProfile = this.updateProfile.bind(this)
   }
@@ -74,7 +75,7 @@ export default class HomeScreen extends React.Component {
 
   async fetchProfile(id) {
     const profile = await API.get('pareto', `/users/${id}`)
-    console.log('Instructor Profile: ', profile[0])
+    // console.log('Instructor Profile: ', profile[0])
     if (profile[0].instructor === false) {
       console.log('Not an instructor')
     } else {
@@ -87,13 +88,25 @@ export default class HomeScreen extends React.Component {
   }
 
   async fetchApprentices(id) {
-    const response = await API.get('pareto', `/mentor/${id}`)
-    await this.setState({ apprentices: response })
+    // const response = await API.get('pareto', `/mentor/${id}`)
+    const response = await API.get('pareto', `/relationship/mentor/${id}`)
+    let apprentices = [];
+    response.map((relationship, i) => {
+      apprentices.push(relationship.mentee)
+    })
+    await this.setState({ apprentices: apprentices })
     let apprenticeKeys = []
-    response.forEach(function(apprentice) {
+    apprentices.forEach(function(apprentice) {
       apprenticeKeys.push(apprentice.expo)
     })
     this.setState({ apprenticeKeys: apprenticeKeys })
+
+    let apprenticeOptions = [];
+    apprentices.forEach(function(apprentice) {
+      let appr = { id: apprentice.id, fName: apprentice.fName, lName: apprentice.lName, email: apprentice.email }
+      apprenticeOptions.push(appr);
+    })
+    await this.setState({ apprenticeOptions: apprenticeOptions })
   }
 
   async calculateExperience() {
@@ -139,7 +152,7 @@ export default class HomeScreen extends React.Component {
                     </Left>
                     <Right>
                       <RkText>
-                        {apprentice.city}, {apprentice.country}
+                        {apprentice.city}
                       </RkText>
                     </Right>
                   </View>
@@ -166,8 +179,7 @@ export default class HomeScreen extends React.Component {
       styles.buttonIcon,
       { color: RkTheme.current.colors.text.hint }
     ]
-    const { navigation } = this.props
-
+    const { navigation } = this.props;
     return (
       <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
         <Header>
@@ -224,67 +236,6 @@ export default class HomeScreen extends React.Component {
             </RkCard>
           ) : (
             <View>
-              <RkCard rkType="heroImage shadowed">
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('CreateEventScreen', {
-                        keys: this.state.apprenticeKeys
-                      })
-                    }
-                  >
-                    <Image
-                      rkCardImg={true}
-                      source={require('../assets/calendar.png')}
-                    />
-                    <View rkCardImgOverlay={true} style={styles.overlay}>
-                      <View style={{ marginBottom: 20 }}>
-                        <RkText
-                          rkType="header xxlarge"
-                          style={{ color: 'white' }}
-                        >
-                          Create Event
-                        </RkText>
-                        <RkText rkType="subtitle" style={{ color: 'white' }}>
-                          Organize your apprentices learning process & alart
-                          them through push notifications.
-                        </RkText>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </RkCard>
-              <RkCard rkType="heroImage shadowed">
-                <View>
-                  <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate('CreateSprintScreen', {
-                        keys: this.state.apprenticeKeys
-                      })
-                    }
-                  >
-                    <Image
-                      rkCardImg={true}
-                      source={require('../assets/calendar.png')}
-                    />
-                    <View rkCardImgOverlay={true} style={styles.overlay}>
-                      <View style={{ marginBottom: 20 }}>
-                        <RkText
-                          rkType="header xxlarge"
-                          style={{ color: 'white' }}
-                        >
-                          Create Sprint
-                        </RkText>
-                        <RkText rkType="subtitle" style={{ color: 'white' }}>
-                          Create a sprint
-                        </RkText>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-              </RkCard>
-              <Text>{'\n'}</Text>
-
               <Text
                 style={{
                   textAlign: 'left',
@@ -296,8 +247,34 @@ export default class HomeScreen extends React.Component {
                 My Students
               </Text>
               <Text>{'\n'}</Text>
+             {this.renderApprentices(this.state.apprentices)}
+             <Text>{'\n'}</Text>
 
-              {this.renderApprentices(this.state.apprentices)}
+             {/* <RkText rkType="subtitle" style={{textAlign: 'center'}}>
+                    Organize an event for your mentees & alert
+                    them through email.
+              </RkText>
+              <Text>{'\n'}</Text> */}
+             <RkButton rkType="xlarge" onPress={() =>
+                      navigation.navigate('CreateEventScreen', {
+                        keys: this.state.apprenticeKeys
+                      })
+                    }>Create Event</RkButton>
+              <Text>{'\n'}</Text>
+              {/* <RkText rkType="subtitle" style={{textAlign: 'center'}}>
+                    Organize your apprentices learning process by organizing sprint planning meetings, standups and retrospectives with your mentees.
+              </RkText>
+              <Text>{'\n'}</Text> */}
+
+              <RkButton rkType="xlarge" onPress={() =>
+                      navigation.navigate('CreateSprintScreen', {
+                        keys: this.state.apprenticeKeys,
+                        apprentices: this.state.apprenticeOptions,
+                        mentor: this.state.profile
+
+                      })
+                    }>Create Sprint</RkButton>
+              
             </View>
           )}
           <Loader loading={this.state.loading} />

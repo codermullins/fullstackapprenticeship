@@ -27,6 +27,7 @@ import {
   Button,
   Title,
   Segment,
+  Content,
   Container,
   Tabs,
   Tab
@@ -45,11 +46,17 @@ export default class HomeScreen extends React.Component {
 
     this.state = {
       events: [],
-      profile: null,
+      profile: {
+        instructor: false
+      },
       product: { xpEarned: 0, achievements: 0 },
       apprenticeship: { xpEarned: 0, achievements: 0 },
       xp: null,
-      loading: true
+      loading: true,
+      sprints: [{ 
+        events: [],
+      }],
+      mentorship: [{tasks: []}]
     }
     this.updateExperience = this.updateExperience.bind(this)
     this.fetchEvents = this.fetchEvents.bind(this)
@@ -87,9 +94,15 @@ export default class HomeScreen extends React.Component {
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
       // await console.log('Apprenticeship: ', this.state.apprenticeship)
 
+      await this.fetchSprints(id);
+
+      await this.fetchMentorship(id);
+
+
       const xp = await this.calculateExperience()
 
       this.setState({ xp: xp })
+
 
       // await this.fetchEvents()
       await this.stopLoading()
@@ -111,6 +124,18 @@ export default class HomeScreen extends React.Component {
       return item.start
     })
     this.setState({ events: orderedArray })
+  }
+
+  async fetchSprints(id) {
+    const response = await API.get('pareto', `/sprints/mentee/${id}`);
+    console.log('Sprints Request: ', response)
+    this.setState({ sprints: response })
+  }
+
+  async fetchMentorship(id) {
+    const response = await API.get('pareto', `/relationship/mentee/${id}`);
+    console.log('Mentorship: ', response);
+    this.setState({ mentorship: response})
   }
 
   async fetchProfile(id) {
@@ -150,7 +175,7 @@ export default class HomeScreen extends React.Component {
   renderEvents = events => {
     return (
       <React.Fragment>
-        {events.length < 1 ? null : (
+        {events.length < 1 ? (<Text>Your Mentor has not scheduled any upcoming meetings. Click here to ping them and remind them!</Text>) : (
           <View style={{ padding: 12 }}>
             {events.map((event, i) =>
               new Date().getTime() < new Date(event.start).getTime() ? (
@@ -165,10 +190,56 @@ export default class HomeScreen extends React.Component {
                 />
               ) : null
             )}
-          </View>
-        )}
+          </View> 
+               )}
       </React.Fragment>
     )
+  }
+
+  markComplete = async (index, task) => {
+    let completedTask = Object.assign(task);
+    completedTask.complete = !task.complete;
+    let newTasks = Object.assign(this.state.mentorship[0])
+    newTasks[index] = completedTask;
+    console.log('New Tasks Array: ', newTasks)
+    try {
+      const response = await API.put('pareto', `/relationship/${this.state.mentorship[0].id}`, {body: { tasks: newTasks }})
+      console.log('Updated API request: ', response)
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  renderTasks(mentorship) {
+    return mentorship.tasks.map((task, i) => {
+      return (
+        <React.Fragment key={i}>
+          {task.complete === false ? (
+
+        <View style={{padding: 12}}>
+          <RkCard rkType="shadowed">
+                  <RkCard>
+                    <View rkCardHeader={true}>
+                      <RkText rkType="header">
+                        {task.title}
+                      </RkText>
+                      {/* <RkText>Edit</RkText> */}
+                      <RkButton onPress={() => this.markComplete(i, task)}>Mark Complete</RkButton>
+                    </View>
+                    <View rkCardFooter={true} style={{display: 'flex', flexDirection: 'column'}}>
+                    <RkText rkType="subtitle">
+                          {task.details}
+                        </RkText>
+                        <RkText>Due Date: {task.dueDate}</RkText>
+                    </View>
+                  </RkCard>
+              </RkCard>
+            </View>
+          ) : ( null )}
+        </React.Fragment>
+
+      )
+    })
   }
 
   updateExperience(name, obj) {
@@ -189,7 +260,8 @@ export default class HomeScreen extends React.Component {
       styles.buttonIcon,
       { color: RkTheme.current.colors.text.hint }
     ]
-    const { navigation } = this.props
+    const { navigation } = this.props;
+    // console.log('Mentee sprints: ', this.state.sprints)
 
     return (
       <View style={{ flex: 1, marginTop: Platform.OS === 'android' ? 24 : 0 }}>
@@ -216,9 +288,17 @@ export default class HomeScreen extends React.Component {
           style={[UtilStyles.container, styles.screen]}
         >
           <Loader loading={this.state.loading} />
-          {this.renderEvents(this.props.screenProps.events)}
-
           <Tabs>
+            {this.state.profile.instructor === false ? (
+
+            <Tab heading="Mentor">
+                {this.renderTasks(this.state.mentorship[0])}
+                {this.renderEvents(this.props.screenProps.events)}
+                {this.renderEvents(this.state.sprints[0].events)}
+            </Tab>
+            ) : (
+              null
+            )}
             <Tab heading="Experience">
               <RkCard>
                 <View rkCardHeader={true}>
@@ -380,7 +460,7 @@ export default class HomeScreen extends React.Component {
                 <View rkCardHeader={true} style={{ paddingBottom: 2.5 }}>
                   <View>
                     <RkText rkType="header xxlarge">
-                      FSA Technical Standard
+                      The Pareto Stack
                     </RkText>
                     <RkText rkType="subtitle">Curated Knowledge Base</RkText>
                   </View>
@@ -397,35 +477,7 @@ export default class HomeScreen extends React.Component {
                 </View>
               </RkCard>
 
-              <Text>{'\n'}</Text>
-
-              <RkCard rkType="heroImage shadowed">
-                <View>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate('BlueprintScreen')}
-                  >
-                    <Image
-                      rkCardImg={true}
-                      source={require('../assets/blueprint.jpg')}
-                    />
-                  </TouchableOpacity>
-                  <View rkCardImgOverlay={true} style={styles.overlay}>
-                    <View style={{ marginBottom: 20 }}>
-                      <RkText
-                        rkType="header xxlarge"
-                        style={{ color: 'white' }}
-                      >
-                        The Blueprint
-                      </RkText>
-                      <RkText rkType="subtitle" style={{ color: 'white' }}>
-                        Manual covering the tools of our Technical Standard,
-                        finding freelance work, building the right portfolio
-                        projects and adding structure to the learning process.
-                      </RkText>
-                    </View>
-                  </View>
-                </View>
-              </RkCard>
+             
 
               <Text>{'\n'}</Text>
 
@@ -468,6 +520,35 @@ export default class HomeScreen extends React.Component {
                 </View>
                 <View rkCardFooter={true}>
                   <View style={styles.footerButtons} />
+                </View>
+              </RkCard>
+              <Text>{'\n'}</Text>
+
+              <RkCard rkType="heroImage shadowed">
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate('BlueprintScreen')}
+                  >
+                    <Image
+                      rkCardImg={true}
+                      source={require('../assets/blueprint.jpg')}
+                    />
+                  </TouchableOpacity>
+                  <View rkCardImgOverlay={true} style={styles.overlay}>
+                    <View style={{ marginBottom: 20 }}>
+                      <RkText
+                        rkType="header xxlarge"
+                        style={{ color: 'white' }}
+                      >
+                        The Blueprint
+                      </RkText>
+                      <RkText rkType="subtitle" style={{ color: 'white' }}>
+                        Manual covering the tools of our Technical Standard,
+                        finding freelance work, building the right portfolio
+                        projects and adding structure to the learning process.
+                      </RkText>
+                    </View>
+                  </View>
                 </View>
               </RkCard>
             </Tab>

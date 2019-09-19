@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { API } from 'aws-amplify'
+import { API, Auth } from 'aws-amplify'
 import {
   Container,
   Content,
@@ -32,13 +32,17 @@ export default class EditProfileScreen extends Component {
       loading: false,
       cca2: 'US',
       mentors: [],
-      mentor: `${this.props.navigation.state.params.profile.mentor}`
+      mentor: `${this.props.navigation.state.params.profile.mentor}`,
+      session: {},
+      email: ""
     }
   }
 
   async componentDidMount() {
     const mentors = await API.get('pareto', '/mentors')
     this.setState({ mentors: mentors })
+    const session = await Auth.currentSession()
+    this.setState({ email: session.idToken.payload.email })
     const notificationToken = await Notifications.getExpoPushTokenAsync()
     this.setState({ expo: notificationToken })
   }
@@ -69,6 +73,7 @@ export default class EditProfileScreen extends Component {
     const body = {
       fName: this.state.fName,
       lName: this.state.lName,
+      email: this.state.email,
       city: this.state.city,
       country: this.state.country,
       tRank: 'Developer',
@@ -92,7 +97,6 @@ export default class EditProfileScreen extends Component {
   }
 
   render() {
-    // console.log(this.state.mentors)
     return (
       <Container>
         <Content>
@@ -139,7 +143,7 @@ export default class EditProfileScreen extends Component {
             <Text style={{ paddingLeft: 15 }}>{this.state.country}</Text>
 
             <Text>{'\n'}</Text>
-            <Text style={{ paddingLeft: 15 }}>Your Mentor</Text>
+            {/* <Text style={{ paddingLeft: 15 }}>Your Mentor</Text>
             <Picker
               mode="dropdown"
               header="Mentor"
@@ -148,7 +152,7 @@ export default class EditProfileScreen extends Component {
               placeholder="Select Here"
             >
               {this.renderMentors(this.state.mentors)}
-            </Picker>
+            </Picker> */}
 
             <Item stackedLabel>
               <Label>GitHub Username</Label>
