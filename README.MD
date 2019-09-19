@@ -19,6 +19,8 @@ The FSA Mobile application offers a way to access the gamified experience system
     * New UI released, Experience Preview
 * 0.3/4
     * Experience system, profile directory released.
+* 0.9
+    * Released on Android Play Store, not technically marked here on GitHub though. Next release will be.
 
 ## Contributing
 
@@ -49,19 +51,6 @@ Requirements are simple:
 - You must commit to attending sprint 'stand-up' meetings on Tuesday & Thursday sometime between 5-8pm (or in the am if that works best) - like a real stand-up meeting, it should only last 10 minutes and is an opportunity for professional counsel & accountability. Blocked on something? Stay on the call after the meeting to talk it over.
 
 We will be meeting on Google Hangouts, the link will be refreshed on the Slack channel or Meetup page.
-
-# Directory Structure
-## fsa-cms
-This is where our Sanity.io powered Content-Management System lives.
-
-## react-web
-This is where our React application lives.
-
-## react-native-expo
-Where our React-Native application lives, built to work together with the React-Web repository.
-
-## fsa-db
-Where our Mongo & serverless Dynamo functions live.
 
 ## git troubleshooting
 Had trouble pulling from github, had to do the following commands to pull
