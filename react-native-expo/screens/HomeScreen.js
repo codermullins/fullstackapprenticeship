@@ -51,6 +51,7 @@ export default class HomeScreen extends React.Component {
       },
       product: { xpEarned: 0, achievements: 0 },
       apprenticeship: { xpEarned: 0, achievements: 0 },
+      algorithms: {xpEarned: 0, achievements: 0 },
       xp: null,
       loading: true,
       sprints: [{ 
@@ -93,6 +94,8 @@ export default class HomeScreen extends React.Component {
 
       await this.fetchApprenticeship(this.state.profile.apprenticeshipId)
       // await console.log('Apprenticeship: ', this.state.apprenticeship)
+
+      await this.fetchAlgorithms(this.state.profile.masteryId)
 
       await this.fetchSprints(id);
 
@@ -159,6 +162,11 @@ export default class HomeScreen extends React.Component {
   async fetchApprenticeship(id) {
     const apprenticeship = await API.get('pareto', `/experience/${id}`)
     await this.setState({ apprenticeship: apprenticeship[0] })
+  }
+
+  async fetchAlgorithms(id) {
+    const algorithms = await API.get('pareto', `/experience/${id}`);
+    await this.setState({ algorithms: algorithms[0]})
   }
 
   async calculateExperience() {
@@ -249,8 +257,10 @@ export default class HomeScreen extends React.Component {
   updateExperience(name, obj) {
     if (name === 'Product') {
       this.setState({ product: obj })
-    } else {
+    } else if (name === 'Apprenticeship') {
       this.setState({ apprenticeship: obj })
+    } else {
+      this.setState({ algorithms: obj})
     }
   }
 
@@ -396,7 +406,7 @@ export default class HomeScreen extends React.Component {
                 </View>
               </RkCard>
 
-              <Text>{'\n'}</Text>
+                {/* Portfolio Product Module */}
 
               <RkCard>
                 <View rkCardHeader={true}>
@@ -466,6 +476,78 @@ export default class HomeScreen extends React.Component {
                   </RkButton>
                 </View>
               </RkCard>
+
+              {/* Data Structures and Algorithms Module */}
+
+              <RkCard>
+                <View rkCardHeader={true}>
+                  <View>
+                    <RkText rkType="header">Data Structures & Algorithms</RkText>
+                    <RkText rkType="subtitle">
+                      Status: {this.state.algorithms.xpEarned.toString()} / 2000
+                      EXP
+                    </RkText>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('ExperienceScreen', {
+                      schema: 'interviewSchema',
+                      experience: this.state.algorithms,
+                      function: this.updateExperience,
+                      origin: 'Apprentice',
+                      profile: this.state.profile
+                    })
+                  }
+                >
+                  <Image
+                    rkCardImg={true}
+                    source={require('../assets/dsa2.png')}
+                  />
+                </TouchableOpacity>
+                <View rkCardContent={true}>
+                  <RkText rkType="cardText">
+                    Work through excercises to solidify your computer science instincts, and get an introduction to crafting search and sort algorithms.
+                  </RkText>
+                </View>
+                <View rkCardFooter={true}>
+                  <RkButton rkType="clear link">
+                    <Icon name="check" style={likeStyle} />
+                    <RkText
+                      rkType="accent"
+                      onPress={() =>
+                        this.props.navigation.navigate('ExperienceScreen', {
+                          schema: 'interviewSchema',
+                          experience: this.state.algorithms,
+                          function: this.updateExperience,
+                          origin: 'Apprentice',
+                          profile: this.state.profile
+                        })
+                      }
+                    >
+                      {this.state.algorithms.achievements.toString()}/15
+                      Achievements
+                    </RkText>
+                  </RkButton>
+                  <RkButton
+                    rkType="clear link"
+                    onPress={() =>
+                      this.props.navigation.navigate('ExperienceScreen', {
+                        schema: 'interviewSchema',
+                        experience: this.state.algorithms,
+                        function: this.updateExperience,
+                        origin: 'Apprentice',
+                        profile: this.state.profile
+                      })
+                    }
+                  >
+                    <Icon name="send-o" style={iconButton} />
+                    <RkText rkType="hint">View Progress</RkText>
+                  </RkButton>
+                </View>
+              </RkCard>
+
+
             </Tab>
             <Tab heading="Learning">
               <RkCard rkType="shadowed">
