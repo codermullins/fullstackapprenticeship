@@ -173,7 +173,7 @@ class App extends Component {
     const orderedArray = orderBy(response, function(item) {
       return item.start
     })
-    console.log('TCL: App -> orderedArray -> orderedArray', orderedArray)
+    // console.log('TCL: App -> orderedArray -> orderedArray', orderedArray)
     this.setState({ events: orderedArray })
   }
 

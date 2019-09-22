@@ -47,7 +47,7 @@ class StudentProfileScreen extends Component {
 
   async fetchMentorship(id) {
     const relationship = await API.get('pareto', `/relationship/mentee/${id}`)
-    console.log('Relationship: ', relationship)
+    // console.log('Relationship: ', relationship)
     this.setState({ mentorship: relationship[0]})
   }
 
@@ -74,7 +74,7 @@ class StudentProfileScreen extends Component {
   renderTasks(mentorship) {
     return mentorship.tasks.map((task, i) => {
       return (
-        <View>
+        <View key={i}>
           <RkCard rkType="shadowed">
                   <RkCard>
                     <View rkCardHeader={true}>

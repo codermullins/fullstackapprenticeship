@@ -56,7 +56,7 @@ export default class HomeScreen extends React.Component {
       sprints: [{ 
         events: [],
       }],
-      mentorship: [{tasks: []}]
+      mentorship: {tasks: []}
     }
     this.updateExperience = this.updateExperience.bind(this)
     this.fetchEvents = this.fetchEvents.bind(this)
@@ -134,8 +134,8 @@ export default class HomeScreen extends React.Component {
 
   async fetchMentorship(id) {
     const response = await API.get('pareto', `/relationship/mentee/${id}`);
-    console.log('Mentorship: ', response);
-    this.setState({ mentorship: response})
+    // console.log('Mentorship: ', response);
+    this.setState({ mentorship: response[0]})
   }
 
   async fetchProfile(id) {
@@ -199,12 +199,16 @@ export default class HomeScreen extends React.Component {
   markComplete = async (index, task) => {
     let completedTask = Object.assign(task);
     completedTask.complete = !task.complete;
-    let newTasks = Object.assign(this.state.mentorship[0])
+    let newTasks = Object.assign(this.state.mentorship.tasks)
     newTasks[index] = completedTask;
     console.log('New Tasks Array: ', newTasks)
+
+    let body = { tasks: newTasks }
     try {
-      const response = await API.put('pareto', `/relationship/${this.state.mentorship[0].id}`, {body: { tasks: newTasks }})
+      console.log('Body: ', body)
+      const response = await API.put('pareto', `/relationship/${this.state.mentorship.id}`, {body})
       console.log('Updated API request: ', response)
+      this.updateMentorship(response)
     } catch(e) {
       console.log(e)
     }
@@ -254,6 +258,10 @@ export default class HomeScreen extends React.Component {
     this.setState({ profile: obj })
   }
 
+  updateMentorship(obj) {
+    this.setState({ mentorship: obj})
+  }
+
   render() {
     const likeStyle = [styles.buttonIcon, { color: RkTheme.colors.accent }]
     const iconButton = [
@@ -292,9 +300,28 @@ export default class HomeScreen extends React.Component {
             {this.state.profile.instructor === false ? (
 
             <Tab heading="Mentor">
-                {this.renderTasks(this.state.mentorship[0])}
+                {this.renderTasks(this.state.mentorship)}
                 {this.renderEvents(this.props.screenProps.events)}
-                {this.renderEvents(this.state.sprints[0].events)}
+                {this.state.sprints.length > 0 ? (
+                  <React.Fragment>
+
+                    {this.renderEvents(this.state.sprints[0].events)}
+                  </React.Fragment>
+
+                ) : (
+                  <React.Fragment>
+                    <Text
+                style={{
+                  textAlign: 'center',
+                  fontSize: 30,
+                  paddingTop: 10,
+                  paddingLeft: 14
+                }}
+              >
+               Your Mentor has not yet scheduled any events.
+              </Text>
+                  </React.Fragment>
+                )}
             </Tab>
             ) : (
               null
